@@ -1,0 +1,152 @@
+.waffle-fig {
+  margin: 44px 0 0;
+}
+
+.waffle-cap {
+  font-size: var(--text-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.waffle-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 56px;
+  align-items: start;
+  padding-top: 28px;
+}
+
+.waffle-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 22px);
+  /* 2px surface gap between fills keeps adjacent cells legible. */
+  gap: 4px;
+}
+
+.waffle-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+}
+
+.waffle-side {
+  padding-top: 4px;
+}
+
+.waffle-big {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.waffle-big strong {
+  font-size: 76px;
+  font-weight: 250;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.waffle-big span {
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--color-muted);
+}
+
+.waffle-big-label {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--color-ink-2);
+  max-width: 22ch;
+  line-height: 1.45;
+}
+
+.waffle-legend {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.waffle-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--color-rule);
+  font-size: 15px;
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  flex: none;
+}
+
+.legend-label {
+  color: var(--color-ink-2);
+}
+
+.legend-val {
+  margin-left: auto;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.waffle-source {
+  margin-top: 26px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.waffle-source a {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.waffle-source a:hover {
+  border-bottom-color: var(--color-brand-a);
+  color: var(--color-ink);
+}
+
+@media (max-width: 1080px) {
+  .waffle-body {
+    gap: 0 36px;
+  }
+
+  .waffle-grid {
+    grid-template-columns: repeat(10, 18px);
+  }
+
+  .waffle-cell {
+    width: 18px;
+    height: 18px;
+  }
+
+  .waffle-big strong {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 840px) {
+  .waffle-body {
+    grid-template-columns: 1fr;
+    gap: 32px 0;
+  }
+
+  .waffle-grid {
+    grid-template-columns: repeat(10, 1fr);
+  }
+
+  .waffle-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+  }
+}
