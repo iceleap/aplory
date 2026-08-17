@@ -6,7 +6,6 @@ import Hero from "./components/Hero";
 import Problem from "./components/Problem";
 import Services from "./components/Services";
 import Flow from "./components/Flow";
-import Results from "./components/Results";
 import Faq from "./components/Faq";
 import Contact from "./components/Contact";
 
@@ -24,7 +23,6 @@ export default function App() {
         <Problem />
         <Services />
         <Flow />
-        <Results />
         <Faq />
         <Contact />
       </main>

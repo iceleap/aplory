@@ -26,7 +26,6 @@ export default {
       problem: "Problem",
       resenje: "Solution",
       rezultat: "Outcome",
-      istrazivanja: "Research",
       pitanja: "Questions",
     },
   },

@@ -209,6 +209,15 @@
     max-width: 19ch;
   }
 
+  /* One step below .h2, for a movement inside a section rather than a section of
+     its own — the research block under Problem. */
+  .h3 {
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
@@ -297,6 +306,9 @@
     .h2 {
       font-size: 32px;
     }
+    .h3 {
+      font-size: 24px;
+    }
     .grid2 {
       grid-template-columns: 180px 1fr;
       gap: 0 40px;
@@ -311,6 +323,9 @@
     }
     .h2 {
       font-size: 27px;
+    }
+    .h3 {
+      font-size: 22px;
     }
     .wrap {
       width: calc(100% - 40px);

@@ -1,4 +1,5 @@
 import CallWaffle from "./CallWaffle";
+import Research from "./Research";
 import { useCopy } from "../i18n";
 import "./Problem.css";
 
@@ -31,6 +32,21 @@ export default function Problem() {
               </li>
             ))}
           </ul>
+
+        </div>
+      </div>
+
+      {/* The outside figures close the argument the cards make, but they are a
+          movement of their own — so they get the same rail-and-content structure
+          a section would, rather than trailing the cards. */}
+      <div className="wrap grid2 mt-16 border-t border-rule pt-12 lg:mt-20 lg:pt-16">
+        <div className="rail">
+          <p className="eyebrow" aria-hidden="true">
+            {copy.research.eyebrow}
+          </p>
+        </div>
+        <div>
+          <Research />
         </div>
       </div>
     </section>

@@ -4,11 +4,7 @@ import { useCopy, useLanguage } from "../i18n";
 
 /* No "Kontakt" tab here on purpose: the CTA button already points at #kontakt,
    and two adjacent links to the same target is a redundant link. */
-const TAB_IDS = ["problem", "resenje", "rezultat", "istrazivanja", "pitanja"];
-
-/* Crowds the CTA off-screen in the inline nav between md and lg; shown in the
-   mobile dropdown and again once there is room. */
-const TIGHT = new Set(["istrazivanja"]);
+const TAB_IDS = ["problem", "resenje", "rezultat", "pitanja"];
 
 /* How far a finger has to travel before it counts as scrolling rather than
    tapping, and so dismisses the open menu. */
@@ -188,7 +184,7 @@ export default function Header() {
               rows, so the items have to sit flush. */}
           <ul className="flex flex-col md:flex-row md:items-center md:gap-7">
             {TAB_IDS.map((id) => (
-              <li key={id} className={TIGHT.has(id) ? "md:hidden lg:block" : undefined}>
+              <li key={id}>
                 <a
                   href={`#${id}`}
                   onClick={(e) => go(e, id)}
