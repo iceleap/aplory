@@ -10,6 +10,10 @@ const SPREAD = 72; // px from the centre line to each branch
    on — one shared stopping point is the whole layout model. */
 const END_PCT = 62;
 
+/* Where the phone hangs off the success endpoint on wide screens. */
+const PHONE_GAP = 18; // px between the endpoint dot and the phone's edge
+const SUCCESS_Y = 160 + SPREAD; // success line, measured from the fork's own top
+
 function Endpoint({ branch }) {
   const good = branch.tone === "good";
   // Losing path on top, ours below, so the section ends on the good outcome.
@@ -82,7 +86,7 @@ function Endpoint({ branch }) {
           is what made the section read as repetitive. */}
       <span
         style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max md:-translate-x-1/2 ${outward}`}
+        className={`hidden md:block md:absolute md:w-max md:-translate-x-1/2 xl:-translate-x-full ${outward}`}
       >
         {branch.terminal ? (
           <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
@@ -190,17 +194,16 @@ function Fork() {
     <div className="relative md:h-80">
       <ForkList />
 
-      {/* The success branch carries on into the phone rather than stopping at a
-          divider — but only where the two actually sit side by side. When the
-          phone stacks underneath it is tied to the branch by a left rule
-          instead; a line pointing down at a phone that is over to the left
-          would connect nothing. */}
+      {/* Just enough line to bridge the endpoint dot and the phone's edge. It
+          deliberately does not run further: both branches stop at END_PCT, and
+          a success line drawn longer than the failure one would read as the
+          slower path rather than the better one. */}
       <span
         aria-hidden="true"
         style={{
           left: `${END_PCT}%`,
           top: `calc(50% + ${SPREAD}px)`,
-          width: `calc(${100 - END_PCT}% + 2.5rem)`,
+          width: `${PHONE_GAP}px`,
         }}
         className="hidden xl:block xl:absolute xl:h-px xl:bg-rule"
       />
@@ -358,12 +361,16 @@ export default function Flow() {
             Razliku pravi jedna automatska poruka, poslata odmah.
           </p>
 
-          {/* The phone belongs to the success branch, so it sits beside it where
-              there is room and directly beneath it where there isn't — joined by
-              the connector either way, never split off behind a divider. */}
-          <div className="mt-10 md:mt-14 xl:grid xl:grid-cols-[1fr_300px] xl:items-center xl:gap-10">
+          {/* On wide screens the phone hangs directly off the success endpoint,
+              centred on that branch's line, so the branch ends in it. Narrower
+              than xl there is no room beside the fork, so it stacks and is tied
+              to the branch by a left rule in the same colour instead. */}
+          <div className="relative mt-10 md:mt-14 xl:h-117.5">
             <Fork />
-            <div className="mt-10 border-l-2 border-live/40 pl-5 xl:mt-0 xl:border-l-0 xl:pl-0">
+            <div
+              style={{ left: `calc(${END_PCT}% + ${PHONE_GAP}px)`, top: `${SUCCESS_Y}px` }}
+              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:-translate-y-1/2 xl:border-l-0 xl:pl-0"
+            >
               <PhoneMockup branch={outcomeFork.branches.find((b) => b.terminal)} />
             </div>
           </div>
