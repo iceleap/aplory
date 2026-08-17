@@ -24,8 +24,8 @@ export default function Problem() {
           <CallWaffle />
 
           <ul className="prob-list" data-reveal>
-            {copy.problem.cards.map((card) => (
-              <li key={card.title}>
+            {copy.problem.cards.map((card, i) => (
+              <li key={i}>
                 <h3>{card.title}</h3>
                 <p>{card.body}</p>
               </li>

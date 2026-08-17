@@ -66,7 +66,6 @@ export default function Services() {
           <p className="eyebrow" aria-hidden="true">
             {copy.services.eyebrow}
           </p>
-          <p className="rail-note">{copy.services.railNote}</p>
         </div>
         <div>
           <h2 id="resenje-title" className="h2" data-reveal>
@@ -82,7 +81,7 @@ export default function Services() {
           >
             {copy.services.items.map((service, i) => (
               <li
-                key={service.name}
+                key={ICON_ORDER[i]}
                 className="flex flex-col gap-3 bg-paper p-5 transition-colors hover:bg-surface"
               >
                 <Icon name={ICON_ORDER[i]} />

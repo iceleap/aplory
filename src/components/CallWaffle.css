@@ -52,8 +52,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Matches the research figures, where the suffix is set at the figure's own
+   size — "62%" should read as one number, not a number with a footnote. */
 .waffle-big span {
-  font-size: 28px;
+  font-size: 46px;
   font-weight: 300;
   color: var(--color-muted);
 }

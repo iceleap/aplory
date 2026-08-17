@@ -1,4 +1,5 @@
 import { benchmarks } from "../data/research";
+import CountUp from "../lib/CountUp";
 import { useCopy } from "../i18n";
 
 export default function Results() {
@@ -20,9 +21,11 @@ export default function Results() {
           <ul className="mt-11 grid list-none gap-x-12 gap-y-8 p-0 sm:grid-cols-3" data-reveal>
             {benchmarks.map((item, i) => (
               <li key={item.value}>
-                <p className="text-[46px] leading-none font-[250] tracking-[-0.04em] tabular-nums">
-                  {item.value}
-                </p>
+                {/* A heading, not a styled paragraph: at 46px it reads as one,
+                    and the label under it is the rest of the entry. */}
+                <h3 className="text-[46px] leading-none font-[250] tracking-[-0.04em] tabular-nums">
+                  <CountUp>{item.value}</CountUp>
+                </h3>
                 <p className="mt-3 text-[15px] leading-snug text-ink-2">
                   {copy.research.labels[i]}
                 </p>

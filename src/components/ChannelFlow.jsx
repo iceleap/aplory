@@ -80,7 +80,7 @@ export default function ChannelFlow() {
 
       {/* Channel rows */}
       {ICONS.map((channel, i) => (
-        <g key={copy.hero.channels[i]}>
+        <g key={ROW_Y[i]}>
           <rect
             x="1"
             y={ROW_Y[i] - 19}

@@ -17,6 +17,14 @@ function headerOffset() {
 }
 
 /**
+ * The Lenis instance ref, for code that has to pause the scroll loop — freezing
+ * the page under an open menu, say. Null while Lenis isn't running.
+ */
+export function useLenis() {
+  return useContext(LenisContext);
+}
+
+/**
  * Scrolls to a section id through Lenis when it's running, falling back to the
  * native jump when it isn't (reduced motion, or before Lenis has mounted).
  */

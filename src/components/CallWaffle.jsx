@@ -1,4 +1,5 @@
 import { callOutcomes } from "../data/research";
+import CountUp from "../lib/CountUp";
 import { useCopy } from "../i18n";
 import "./CallWaffle.css";
 
@@ -32,7 +33,9 @@ export default function CallWaffle() {
 
         <div className="waffle-side">
           <p className="waffle-big">
-            <strong>{headline}</strong>
+            <strong>
+              <CountUp>{headline}</CountUp>
+            </strong>
             <span>%</span>
           </p>
           <p className="waffle-big-label">{copy.chart.headlineLabel}</p>

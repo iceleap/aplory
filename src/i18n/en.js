@@ -20,7 +20,8 @@ export default {
     cta: "Book a call",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    language: "Language",
+    // Names the action, not the control: the button switches to the other one.
+    languageToggle: "Switch to Serbian",
     tabs: {
       problem: "Problem",
       resenje: "Solution",
@@ -79,7 +80,6 @@ export default {
 
   services: {
     eyebrow: "Solution",
-    railNote: "Start with one. The rest gets added when you need it.",
     title: "We catch every enquiry and answer on your behalf.",
     items: [
       {
@@ -105,7 +105,6 @@ export default {
 
   fork: {
     eyebrow: "Outcome",
-    railNote: "The same missed call, only with a different ending.",
     title: "Two endings to the same call.",
     lead: "The difference is one automatic message, sent instantly.",
     origin: { time: "09:41", title: "Missed call" },
@@ -175,7 +174,7 @@ export default {
     lede: "Let us know how many calls and messages you get each day. We'll come back with a concrete proposal — no obligation and no long sales call.",
     cta: "Write to us",
     newWindow: " (opens in a new window)",
-    channels: { email: "Email", phone: "Phone", other: "Also on" },
+    channels: { email: "Email", phone: "Phone" },
     otherValue: "WhatsApp · Viber · SMS",
     footer: {
       rights: "© 2026 APLORY",

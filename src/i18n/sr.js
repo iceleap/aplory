@@ -19,7 +19,8 @@ export default {
     cta: "Zakažite razgovor",
     openMenu: "Otvori meni",
     closeMenu: "Zatvori meni",
-    language: "Jezik",
+    // Names the action, not the control: the button switches to the other one.
+    languageToggle: "Prebaci na engleski",
     tabs: {
       problem: "Problem",
       resenje: "Rešenje",
@@ -78,7 +79,6 @@ export default {
 
   services: {
     eyebrow: "Rešenje",
-    railNote: "Počnite od jedne stvari. Ostalo se dodaje kad zatreba.",
     title: "Hvatamo svaki upit i odgovaramo umesto vas.",
     items: [
       {
@@ -104,7 +104,6 @@ export default {
 
   fork: {
     eyebrow: "Rezultat",
-    railNote: "Isti propušten poziv, samo sa drugačijim krajem.",
     title: "Dva kraja istog poziva.",
     lead: "Razliku pravi jedna automatska poruka, poslata odmah.",
     origin: { time: "09:41", title: "Propušten poziv" },
@@ -173,7 +172,7 @@ export default {
     lede: "Javite nam koliko poziva i poruka dnevno primate. Vraćamo se sa konkretnim predlogom — bez obaveze i bez dugog prodajnog razgovora.",
     cta: "Pišite nam",
     newWindow: " (otvara se u novom prozoru)",
-    channels: { email: "Email", phone: "Telefon", other: "Dostupni i na" },
+    channels: { email: "Email", phone: "Telefon" },
     otherValue: "WhatsApp · Viber · SMS",
     footer: {
       rights: "© 2026 APLORY",

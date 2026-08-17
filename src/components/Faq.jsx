@@ -19,8 +19,8 @@ export default function Faq() {
           {/* Answers are open by default — nothing here is long enough to be worth
               a click, and hiding it just costs the reader a step. */}
           <dl className="mt-12 grid gap-x-14 gap-y-10 sm:grid-cols-2" data-reveal>
-            {copy.faq.items.map((item) => (
-              <div key={item.q} className="border-t border-rule pt-6">
+            {copy.faq.items.map((item, i) => (
+              <div key={i} className="border-t border-rule pt-6">
                 <dt className="text-[19px] leading-snug font-semibold tracking-[-0.015em] text-ink">
                   {item.q}
                 </dt>

@@ -14,14 +14,18 @@ import { useLayoutEffect } from "react";
  *
  * Under `prefers-reduced-motion` the class is never added, so nothing is hidden
  * and nothing animates.
+ *
+ * The node list is not fixed at mount: a `MutationObserver` picks up anything
+ * added later. Without it, an element React rebuilds — a language switch
+ * remounting a keyed list, say — would be hidden by the CSS with nothing left to
+ * ever reveal it.
  */
 export default function useReveal() {
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (typeof IntersectionObserver === "undefined") return;
 
-    const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
-    if (!nodes.length) return;
+    if (!document.querySelector("[data-reveal]")) return;
 
     const root = document.documentElement;
     root.classList.add("reveal-ready");
@@ -40,9 +44,25 @@ export default function useReveal() {
       { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
     );
 
-    nodes.forEach((node) => observer.observe(node));
+    // Observing twice is harmless, but the WeakSet keeps a DOM-wide re-scan from
+    // re-arming elements that have already had their turn.
+    const seen = new WeakSet();
+
+    const observeAll = () => {
+      document.querySelectorAll("[data-reveal]:not(.is-visible)").forEach((node) => {
+        if (seen.has(node)) return;
+        seen.add(node);
+        observer.observe(node);
+      });
+    };
+
+    observeAll();
+
+    const mutations = new MutationObserver(observeAll);
+    mutations.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      mutations.disconnect();
       observer.disconnect();
       root.classList.remove("reveal-ready");
     };

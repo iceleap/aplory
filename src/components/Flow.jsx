@@ -36,8 +36,8 @@ function Endpoint({ branch }) {
   /* The branch's own labels go on the inward side and the ending goes outward.
      Keeping them on opposite sides of the line is what stops them colliding
      when the column narrows — they can never share a horizontal band. */
-  const inward = good ? "md:-translate-y-[calc(100%+10px)]" : "md:translate-y-2.5";
-  const outward = good ? "md:translate-y-3" : "md:-translate-y-[calc(100%+12px)]";
+  const inward = good ? "xl:-translate-y-[calc(100%+10px)]" : "xl:translate-y-2.5";
+  const outward = good ? "xl:translate-y-3" : "xl:-translate-y-[calc(100%+12px)]";
 
   return (
     <>
@@ -49,10 +49,10 @@ function Endpoint({ branch }) {
           top: `calc(50% + ${dy}px)`,
           width: `calc(${END_PCT}% - ${FORK_X + RADIUS}px)`,
         }}
-        className={`hidden md:block md:absolute md:h-px ${
+        className={`hidden xl:block xl:absolute xl:h-px ${
           good
-            ? "md:bg-rule"
-            : "md:bg-[repeating-linear-gradient(to_right,var(--color-rule)_0_4px,transparent_4px_9px)]"
+            ? "xl:bg-rule"
+            : "xl:bg-[repeating-linear-gradient(to_right,var(--color-rule)_0_4px,transparent_4px_9px)]"
         }`}
       />
 
@@ -60,7 +60,7 @@ function Endpoint({ branch }) {
           the split stays quiet — the branch name now lives at the far end. */}
       <span
         style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max ${inward}`}
+        className={`hidden xl:block xl:absolute xl:w-max ${inward}`}
       >
         {branch.start ? (
           <>
@@ -79,7 +79,7 @@ function Endpoint({ branch }) {
         <span
           aria-hidden="true"
           style={{ left: `${FORK_X + RADIUS}px`, top: `calc(50% + ${dy}px)` }}
-          className="hidden md:block md:absolute md:size-2.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:bg-brand-a md:ring-4 md:ring-paper"
+          className="hidden xl:block xl:absolute xl:size-2.5 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:rounded-full xl:bg-brand-a xl:ring-4 xl:ring-paper"
         />
       )}
 
@@ -88,8 +88,8 @@ function Endpoint({ branch }) {
       <span
         aria-hidden="true"
         style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:size-3.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:ring-4 md:ring-paper ${
-          good ? "md:bg-live" : "md:bg-c-none"
+        className={`hidden xl:block xl:absolute xl:size-3.5 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:rounded-full xl:ring-4 xl:ring-paper ${
+          good ? "xl:bg-live" : "xl:bg-c-none"
         }`}
       />
       {/* Both endings are written the same way and sit to the right of their
@@ -99,7 +99,7 @@ function Endpoint({ branch }) {
           opening and closing nodes. */}
       <span
         style={{ left: `calc(${END_PCT}% + 22px)`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max ${outward}`}
+        className={`hidden xl:block xl:absolute xl:w-max ${outward}`}
       >
         <span
           className={`block text-xs font-bold tracking-[0.14em] uppercase ${
@@ -126,13 +126,28 @@ function Endpoint({ branch }) {
   );
 }
 
-/** Stacked, connector-free rendering used below md. */
+/** How a branch finishes: the closing time, what happened, and the outcome. */
+function BranchEnd({ end, good }) {
+  return (
+    <>
+      <p className="mt-2">
+        <span className="text-[12.5px] font-semibold text-muted tabular-nums">{end.time}</span>
+        <span className="ml-2 text-[15px] text-ink">{end.title}</span>
+      </p>
+      <p className={`mt-1 text-[13px] font-semibold ${good ? "text-live" : "text-c-none"}`}>
+        {end.outcome}
+      </p>
+    </>
+  );
+}
+
+/** Stacked, connector-free rendering used below xl. */
 function ForkList() {
   const copy = useCopy();
   const branches = useBranches();
 
   return (
-    <div className="md:hidden">
+    <div className="xl:hidden">
       <p className="flex items-baseline gap-3">
         <span className="size-3 shrink-0 translate-y-0.5 rounded-full bg-muted" aria-hidden="true" />
         <span>
@@ -168,19 +183,10 @@ function ForkList() {
               ) : (
                 <p className="mt-1.5 text-[13px] text-muted">{branch.path}</p>
               )}
-              <p className="mt-2">
-                <span className="text-[12.5px] font-semibold text-muted tabular-nums">
-                  {branch.end.time}
-                </span>
-                <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
-              </p>
-              <p
-                className={`mt-1 text-[13px] font-semibold ${
-                  good ? "text-live" : "text-c-none"
-                }`}
-              >
-                {branch.end.outcome}
-              </p>
+              {/* The branch that carries the mockup ends after it, not here:
+                  the booking is what the conversation produces, so it cannot be
+                  printed above the conversation. */}
+              {!branch.mockup && <BranchEnd end={branch.end} good={good} />}
             </div>
           );
         })}
@@ -195,14 +201,14 @@ function Fork() {
   const origin = copy.fork.origin;
 
   return (
-    <div className="relative md:h-80">
+    <div className="relative xl:h-80">
       <ForkList />
 
       {/* Shared stem out to the fork point. */}
       <span
         aria-hidden="true"
         style={{ width: `${FORK_X}px` }}
-        className="hidden md:block md:absolute md:top-1/2 md:left-0 md:h-px md:bg-rule"
+        className="hidden xl:block xl:absolute xl:top-1/2 xl:left-0 xl:h-px xl:bg-rule"
       />
 
       {/* Riser plus the two rounded elbows that turn each branch outward. */}
@@ -213,7 +219,7 @@ function Fork() {
           top: `calc(50% - ${SPREAD - RADIUS}px)`,
           height: `${(SPREAD - RADIUS) * 2}px`,
         }}
-        className="hidden md:block md:absolute md:w-px md:bg-rule"
+        className="hidden xl:block xl:absolute xl:w-px xl:bg-rule"
       />
       <span
         aria-hidden="true"
@@ -224,7 +230,7 @@ function Fork() {
           height: `${RADIUS}px`,
           borderTopLeftRadius: `${RADIUS}px`,
         }}
-        className="hidden md:block md:absolute md:border-t md:border-l md:border-rule"
+        className="hidden xl:block xl:absolute xl:border-t xl:border-l xl:border-rule"
       />
       <span
         aria-hidden="true"
@@ -235,15 +241,15 @@ function Fork() {
           height: `${RADIUS}px`,
           borderBottomLeftRadius: `${RADIUS}px`,
         }}
-        className="hidden md:block md:absolute md:border-b md:border-l md:border-rule"
+        className="hidden xl:block xl:absolute xl:border-b xl:border-l xl:border-rule"
       />
 
       {/* Shared origin — the same missed call either way, so it stays neutral. */}
       <span
         aria-hidden="true"
-        className="hidden md:block md:absolute md:top-1/2 md:left-0 md:size-3.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:bg-muted md:ring-4 md:ring-paper"
+        className="hidden xl:block xl:absolute xl:top-1/2 xl:left-0 xl:size-3.5 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:rounded-full xl:bg-muted xl:ring-4 xl:ring-paper"
       />
-      <span className="hidden md:block md:absolute md:top-1/2 md:left-0 md:w-max md:translate-y-3">
+      <span className="hidden xl:block xl:absolute xl:top-1/2 xl:left-0 xl:w-max xl:translate-y-3">
         <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
           {origin.time}
         </span>
@@ -287,11 +293,11 @@ function PhoneMockup() {
         </div>
 
         <ol className="flex list-none flex-col gap-2.5 p-4">
-          {messages.map((msg) => {
+          {messages.map((msg, i) => {
             const ours = msg.from === "us";
             return (
               <li
-                key={msg.text}
+                key={i}
                 className={`flex max-w-[86%] flex-col gap-1 ${
                   ours ? "self-start" : "items-end self-end"
                 }`}
@@ -336,9 +342,8 @@ export default function Flow() {
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">
-            Rezultat
+            {copy.fork.eyebrow}
           </p>
-          <p className="rail-note">Sve se odlučuje u prva tri minuta.</p>
         </div>
         <div>
           <h2 id="rezultat-title" className="h2" data-reveal>
@@ -349,16 +354,23 @@ export default function Flow() {
           </p>
 
           {/* On wide screens the phone hangs directly off the success endpoint,
-              centred on that branch's line, so the branch ends in it. Narrower
-              than xl there is no room beside the fork, so it stacks and is tied
-              to the branch by a left rule in the same colour instead. */}
+              centred on that branch's line, so the branch ends in it. Below xl
+              there is no room beside the fork for it, so the whole thing drops to
+              the stacked list and the phone continues the success branch's own
+              left rule — padding rather than margin, so that rule runs from the
+              branch straight into the mockup without a break. */}
           <div className="relative mt-10 md:mt-14 xl:h-165">
             <Fork />
             <div
               style={{ left: `${PHONE_X}px`, top: `${SUCCESS_Y}px` }}
-              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:translate-y-4 xl:border-l-0 xl:pl-0"
+              className="border-l-2 border-live/40 pt-8 pl-4 xl:absolute xl:w-75 xl:translate-y-4 xl:border-l-0 xl:pt-0 xl:pl-0"
             >
               <PhoneMockup />
+              {/* The success branch's ending, which below xl belongs after the
+                  conversation. At xl the diagram's own Endpoint prints it. */}
+              <div className="pt-4 xl:hidden">
+                <BranchEnd end={copy.fork.branches.withUs.end} good />
+              </div>
             </div>
           </div>
         </div>

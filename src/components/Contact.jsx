@@ -7,19 +7,13 @@ const ICONS = {
     </>
   ),
   phone: <path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2Z" />,
-  chat: (
-    <>
-      <path d="M3.5 6.5h17v10h-9.5l-4 3v-3h-3.5Z" />
-      <path d="M8 11.5h8" />
-    </>
-  ),
 };
 
-/* Values are language-neutral; only the labels translate. */
+/* Values are language-neutral; only the labels translate. One number covers the
+   call and every messenger running on it, so they share a cell. */
 const CHANNELS = [
   { icon: "mail", key: "email", value: "stefanvujic869@gmail.com", href: "mailto:stefanvujic869@gmail.com" },
-  { icon: "phone", key: "phone", value: "069 844 0 885", href: "tel:+381698440885" },
-  { icon: "chat", key: "other" },
+  { icon: "phone", key: "phone", value: "069 844 0 885", href: "tel:+381698440885", note: true },
 ];
 
 /* Links that leave the page open in a new tab; screen readers are told so,
@@ -36,7 +30,6 @@ function Outbound({ href, className, children }) {
 
 function Tile({ channel, index }) {
   const copy = useCopy();
-  const value = channel.value ?? copy.contact.otherValue;
 
   const body = (
     <>
@@ -55,23 +48,24 @@ function Tile({ channel, index }) {
         {copy.contact.channels[channel.key]}
       </span>
       <span className="mt-1 block text-[17px] font-light tracking-[-0.01em] wrap-break-word">
-        {value}
+        {channel.value}
       </span>
+      {channel.note && (
+        <span className="mt-1 block text-[13.5px] text-muted">{copy.contact.otherValue}</span>
+      )}
     </>
   );
 
+  /* `h-full` so both cells match the tallest one — the phone cell carries an
+     extra line, and a short email card beside it looks unfinished. */
   const shell =
-    "group block rounded-xl border border-rule bg-paper p-5 transition-colors hover:border-brand-a";
+    "group block h-full rounded-xl border border-rule bg-paper p-5 transition-colors hover:border-brand-a";
 
   return (
     <li data-reveal style={{ "--reveal-delay": `${index * 70}ms` }}>
-      {channel.href ? (
-        <Outbound href={channel.href} className={shell}>
-          {body}
-        </Outbound>
-      ) : (
-        <div className={shell}>{body}</div>
-      )}
+      <Outbound href={channel.href} className={shell}>
+        {body}
+      </Outbound>
     </li>
   );
 }
@@ -107,9 +101,12 @@ export default function Contact() {
           </div>
         </div>
 
-        <ul className="mt-12 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
+        <ul className="mt-12 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+          {/* Keyed by the channel, never by its label: a label-keyed element is
+              torn down and rebuilt on a language switch, and the rebuilt node is
+              one the reveal observer has never seen — it would stay invisible. */}
           {CHANNELS.map((channel, i) => (
-            <Tile key={copy.contact.channels[channel.key]} channel={channel} index={i} />
+            <Tile key={channel.key} channel={channel} index={i} />
           ))}
         </ul>
 
