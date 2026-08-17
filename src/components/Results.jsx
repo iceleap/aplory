@@ -2,7 +2,7 @@ import { benchmarks } from "../data/research";
 
 export default function Results() {
   return (
-    <section className="sec bg-surface" aria-labelledby="istrazivanja-title">
+    <section className="sec bg-surface" id="istrazivanja" aria-labelledby="istrazivanja-title">
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">

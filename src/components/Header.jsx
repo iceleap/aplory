@@ -7,6 +7,9 @@ const TABS = [
   { id: "problem", label: "Problem" },
   { id: "resenje", label: "Rešenje" },
   { id: "rezultat", label: "Rezultat" },
+  // Crowds the CTA off-screen in the inline nav between md and lg; shown in
+  // the mobile dropdown and again once there is room.
+  { id: "istrazivanja", label: "Istraživanja", tight: true },
   { id: "pitanja", label: "Pitanja" },
 ];
 
@@ -75,7 +78,7 @@ export default function Header() {
         >
           <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-8">
             {TABS.map((tab) => (
-              <li key={tab.id}>
+              <li key={tab.id} className={tab.tight ? "md:hidden lg:block" : undefined}>
                 <a
                   href={`#${tab.id}`}
                   onClick={(e) => go(e, tab.id)}

@@ -67,7 +67,7 @@ js = (DIST / "assets" / js_src.group(1)).read_text(encoding="utf-8")
 html = html.replace(js_src.group(0), '<script type="module">\n%s\n</script>' % js)
 
 # The favicon link points at a file that will not exist alongside the artifact.
-html = re.sub(r'<link rel="icon"[^>]*>\s*', "", html)
+html = re.sub(r'<link rel="(icon|apple-touch-icon)"[^>]*>\s*', "", html)
 html = re.sub(r'<link rel="preload"[^>]*>\s*', "", html)
 
 # Strip the document shell, keeping head and body contents in order.
