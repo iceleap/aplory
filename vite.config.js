@@ -7,6 +7,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
+    // The modulepreload polyfill gets hoisted into a shared chunk as soon as
+    // there is more than one entry, which leaves the main bundle starting with
+    // a relative `import`. That breaks the single-file artifact build, where
+    // there is no sibling chunk to resolve. We don't need the polyfill (it
+    // targets older Safari), so drop it and keep each entry self-contained.
+    modulePreload: { polyfill: false },
     rollupOptions: {
       // Multi-page: the legal documents are real URLs, not client-side routes,
       // so they stay crawlable and need no SPA fallback on the host.

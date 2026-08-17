@@ -89,6 +89,16 @@ if leftover:
         % ", ".join(leftover)
     )
 
+# An inlined module that still imports a sibling chunk fails to execute, and a
+# failed module renders *nothing* — the page goes blank with no error on screen.
+# Cheap to check, so check rather than trust the build's chunking.
+dangling = sorted(set(re.findall(r"""(?:import|from)\s*["'](\.{0,2}/[^"']+)["']""", page)))
+if dangling:
+    raise SystemExit(
+        "bundle-artifact: the inlined script imports chunks that won't exist "
+        "standalone, which renders a blank page: %s" % ", ".join(dangling)
+    )
+
 out = OUT / "index.html"
 out.write_text(page, encoding="utf-8")
 print("wrote %s — %d KB" % (out, round(out.stat().st_size / 1024)))
