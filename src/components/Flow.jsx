@@ -252,7 +252,7 @@ function PhoneMockup() {
   return (
     <figure className="m-0 w-full max-w-82.5">
 
-      <div className="overflow-hidden rounded-[22px] border border-rule bg-paper shadow-[0_20px_50px_-30px_rgba(11,18,32,0.5)]">
+      <div className="overflow-hidden rounded-[22px] border border-rule bg-paper shadow-[0_20px_50px_-24px_rgba(0,0,0,0.75)]">
         <div className="flex items-center gap-2.5 border-b border-rule-soft bg-surface px-4 py-3">
           <span
             aria-hidden="true"

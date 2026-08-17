@@ -41,7 +41,7 @@ function Tile({ channel, index }) {
     <>
       <span
         aria-hidden="true"
-        className="grid size-9 place-items-center rounded-lg bg-white/8 text-[#7fb6f6] transition-colors group-hover:bg-white/14"
+        className="grid size-9 place-items-center rounded-lg bg-surface-2 text-brand-soft transition-colors group-hover:bg-paper"
       >
         <svg
           viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ function Tile({ channel, index }) {
           {ICONS[channel.icon]}
         </svg>
       </span>
-      <span className="mt-4 block text-eyebrow font-bold tracking-[0.14em] text-white/45 uppercase">
+      <span className="mt-4 block text-eyebrow font-bold tracking-[0.14em] text-muted uppercase">
         {channel.label}
       </span>
       <span className="mt-1 block text-[17px] font-light tracking-[-0.01em] wrap-break-word">
@@ -60,7 +60,7 @@ function Tile({ channel, index }) {
   );
 
   const shell =
-    "group block rounded-xl border border-white/12 p-5 transition-colors hover:border-white/35 hover:bg-white/[0.03]";
+    "group block rounded-xl border border-rule bg-paper p-5 transition-colors hover:border-brand-a";
 
   return (
     <li data-reveal style={{ "--reveal-delay": `${index * 70}ms` }}>
@@ -77,19 +77,19 @@ function Tile({ channel, index }) {
 
 export default function Contact() {
   return (
-    <section className="bg-ink pt-24 pb-12 text-white" id="kontakt" aria-labelledby="kontakt-title">
+    <section className="border-t border-rule bg-surface pt-24 pb-12" id="kontakt" aria-labelledby="kontakt-title">
       <div className="wrap">
         {/* Heading and CTA share a row so the ask sits level with the invitation
             rather than trailing a paragraph. */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div data-reveal>
-            <p className="eyebrow text-[#7fb6f6]" aria-hidden="true">
+            <p className="eyebrow" aria-hidden="true">
               Kontakt
             </p>
-            <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch] text-white">
+            <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch]">
               Recite nam kuda vam stižu upiti.
             </h2>
-            <p className="mt-5 max-w-[52ch] text-[15px] text-white/65">
+            <p className="mt-5 max-w-[52ch] text-[15px] text-muted">
               Javite nam koliko poziva i poruka dnevno primate. Vraćamo se sa konkretnim
               predlogom — bez obaveze i bez dugog prodajnog razgovora.
             </p>
@@ -112,10 +112,10 @@ export default function Contact() {
         </ul>
 
         {/* Footer lives inside the dark section for now, on the same ground. */}
-        <div className="mt-16 flex flex-wrap items-center gap-6 border-t border-white/15 pt-8">
-          <span className="logo h-6 w-28 brightness-0 invert" role="img" aria-label="APLORY" />
-          <p className="text-[13.5px] text-white/60">Automatizacija odgovora na upite</p>
-          <p className="ml-auto text-[13.5px] text-white/45">Pravni podaci se dopunjuju</p>
+        <div className="mt-16 flex flex-wrap items-center gap-6 border-t border-rule pt-8">
+          <span className="logo h-6 w-28" role="img" aria-label="APLORY" />
+          <p className="text-[13.5px] text-muted">Automatizacija odgovora na upite</p>
+          <p className="ml-auto text-[13.5px] text-faint">Pravni podaci se dopunjuju</p>
         </div>
       </div>
     </section>

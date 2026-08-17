@@ -22,26 +22,34 @@
   /* Brand — sampled from the leftmost and rightmost strokes of the logo */
   --color-brand-a: #2e8ff1;
   --color-brand-b: #465ec2;
+  /* A lifted tint of the accent, for accent-coloured text on the dark ground
+     where #465ec2 sits too close to the surface to read. */
+  --color-brand-soft: #8fbefa;
 
-  /* Ground and ink — neutrals biased toward the brand blue, never pure grey */
-  --color-paper: #ffffff;
-  --color-surface: #f2f6fb;
-  --color-surface-2: #e9f0f9;
-  --color-rule: #dce4ef;
-  --color-rule-soft: #eaeff6;
-  --color-ink: #0b1220;
-  --color-ink-2: #243248;
-  --color-muted: #5d6b82;
-  --color-faint: #a7b3c6;
+  /* Deep indigo-violet: sits under the logo's indigo end, so it reads purple
+     without fighting the blue half of the gradient. */
+  --color-paper: #14122b;
+  --color-surface: #1b1838;
+  --color-surface-2: #262250;
+  --color-rule: #2e2a57;
+  --color-rule-soft: #241f45;
+  --color-ink: #edebfa;
+  --color-ink-2: #b9b4d8;
+  --color-muted: #8b85b0;
+  --color-faint: #6a6490;
 
-  /* Semantic, kept separate from the accent */
-  --color-live: #16a47a;
+  /* Semantic, kept separate from the accent. Lifted from the light theme's
+     #16a47a, which goes muddy against a dark ground. */
+  --color-live: #2fd39a;
 
-  /* Chart status colors — validated for colorblind separation against a light
-     surface. Do not reuse these three as brand accents. */
+  /* Chart status colors — re-validated against the dark surface rather than
+     carried over. Both warm steps had to be re-stepped: the old amber sat above
+     the dark lightness band, and the old orange-red collided with it once
+     darkened. The red now leans magenta, which is what buys the colourblind
+     separation. Do not reuse these three as brand accents. */
   --color-c-live: #2e8ff1;
-  --color-c-vm: #e0a33c;
-  --color-c-none: #d2564b;
+  --color-c-vm: #b98b1b;
+  --color-c-none: #ce4f62;
 
   /* Type scale */
   --text-display: 68px;
@@ -156,7 +164,7 @@
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-brand-b);
+    color: var(--color-brand-soft);
     line-height: 1.4;
   }
 
@@ -198,12 +206,12 @@
       var(--color-brand-b)
     );
     color: #fff;
-    box-shadow: 0 1px 2px rgba(11, 18, 32, 0.16);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(46, 143, 241, 0.3);
+    box-shadow: 0 8px 22px rgba(46, 143, 241, 0.45);
   }
 
   .btn-ghost {
@@ -239,6 +247,9 @@
   /* The site logo, used at two sizes. */
   .logo {
     display: block;
+    /* The source wordmark is dark; one filter lights it everywhere it appears. */
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
     background-image: url("/logo-mark.png");
     background-size: contain;
     background-repeat: no-repeat;

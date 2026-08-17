@@ -51,15 +51,20 @@ renaming an asset can't silently ship a dead link.
 - **Color** tokens live in the `@theme` block of `src/base.css`, which is also
   what generates the Tailwind utilities. The brand blues (`--color-brand-a`,
   `--color-brand-b`) were sampled from the logo's own gradient.
+- **The site is dark-only** — a deep indigo-violet ground chosen to sit under the
+  logo's indigo end. There is no light theme and no toggle, so every colour can be
+  tuned for one ground. `--color-brand-soft` exists because `--color-brand-b` is
+  too close to the surface to use for text here.
 - **Scrolling** is driven by Lenis. Do **not** add `scroll-behavior: smooth` to
   the CSS — Lenis owns the scroll loop and the two together make anchor jumps
   double-animate. Nav anchors go through `useScrollTo()`, which applies
   `HEADER_OFFSET` so targets clear the sticky header. Lenis is not instantiated
   at all under `prefers-reduced-motion: reduce`.
-- **Chart colors** (`--color-c-live`, `--color-c-vm`, `--color-c-none`) are a separate status
-  palette, validated for colorblind separation. The amber falls just under 3:1
-  against white, so every chart segment carries a visible text label — don't
-  remove those labels, and don't reuse these three as brand accents.
+- **Chart colors** (`--color-c-live`, `--color-c-vm`, `--color-c-none`) are a separate
+  status palette, validated for colourblind separation **against the dark surface**
+  — not flipped from a light theme. If the ground ever changes, re-run the
+  validator rather than eyeballing: the amber and red are close enough in hue that
+  small shifts break their separation. Don't reuse these three as brand accents.
 
 ## What we claim
 

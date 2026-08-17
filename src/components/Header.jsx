@@ -72,7 +72,7 @@ export default function Header() {
         <nav
           id="site-nav"
           aria-label="Sekcije"
-          className={`absolute inset-x-0 top-full border-b border-rule bg-paper p-5 shadow-[0_18px_40px_-28px_rgba(11,18,32,0.5)] md:static md:ml-auto md:border-0 md:bg-transparent md:p-0 md:shadow-none ${
+          className={`absolute inset-x-0 top-full border-b border-rule bg-paper p-5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.75)] md:static md:ml-auto md:border-0 md:bg-transparent md:p-0 md:shadow-none ${
             open ? "block" : "hidden md:block"
           }`}
         >
