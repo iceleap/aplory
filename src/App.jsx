@@ -14,6 +14,7 @@ export default function App() {
 
   return (
     <SmoothScroll>
+      <div className="min-h-screen bg-paper text-ink">
       <Header />
       <main>
         {/* Problem -> Rešenje -> Rezultat: what's broken, what we do, what changes. */}
@@ -25,6 +26,7 @@ export default function App() {
         <Faq />
         <Contact />
       </main>
+      </div>
     </SmoothScroll>
   );
 }

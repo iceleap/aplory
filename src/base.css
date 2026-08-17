@@ -145,6 +145,10 @@
 
   .sec {
     padding-block: 96px;
+    /* Explicit, not inherited from body: a transparent section borrows whatever
+       ground the embedding page paints. `bg-surface` still overrides this,
+       since Tailwind utilities outrank the components layer. */
+    background: var(--color-paper);
   }
 
   .sec + .sec {

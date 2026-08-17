@@ -2,7 +2,7 @@
 
 /**
  * Services APLORY can deliver today. Anything not on this list must not appear
- * as an offer — see `upcoming` below for work in progress.
+ * as an offer.
  */
 export const services = [
   {
@@ -36,13 +36,6 @@ export const services = [
     icon: "layout",
   },
 ];
-
-/** Not sold yet. Shown so the roadmap is visible without promising a date. */
-export const upcoming = {
-  name: "Glasovni agent",
-  line: "Radimo na tome. Javićemo kad bude spreman za korišćenje.",
-  icon: "phone",
-};
 
 /**
  * One missed call at 09:41, two endings three minutes later.

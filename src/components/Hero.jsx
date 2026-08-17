@@ -13,7 +13,7 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="flex min-h-[calc(100svh-var(--header-h))] items-center border-b border-rule py-16 md:py-20"
+      className="flex min-h-[calc(100svh-var(--header-h))] items-center border-b border-rule bg-paper py-16 md:py-20"
     >
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_520px] lg:gap-16">
         <div>

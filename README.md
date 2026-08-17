@@ -68,10 +68,14 @@ renaming an asset can't silently ship a dead link.
 
 ## What we claim
 
-The site advertises only what APLORY can deliver today. The voice agent is listed
-once, greyed, as `U pripremi`, with a matching FAQ answer saying it isn't for sale
-yet — see `upcoming` in `src/data/content.js`. Don't promote it into the services
-list until it actually works.
+The site advertises only what APLORY can deliver today — the six entries in
+`services`. The voice agent is not offered anywhere; the only mention left is an
+FAQ answer saying it isn't for sale yet.
+
+Every section paints its own background rather than inheriting from `body`. That
+is deliberate: when the page is embedded somewhere that paints its own ground
+first, transparent sections show that through, and near-white text on a light
+ground disappears. Keep `background` on `.sec` and on any new section.
 
 ## About the timings in Rezultat
 
