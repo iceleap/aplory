@@ -51,34 +51,44 @@ export const upcoming = {
  * and only the ending differs. One short line per step; the contrast does the
  * explaining, so nothing here needs a paragraph.
  */
-export const outcomeTimeline = {
-  /* Axis length in minutes from 09:41. 09:52 lands at 11 of 12, leaving a
-     little room at the right for the last label. */
-  spanMin: 12,
-  tracks: [
-    {
-      key: "without",
-      label: "Bez APLORY",
-      outcome: "Upit izgubljen",
-      tone: "bad",
-      /* Silence is not an event — it is the stretch between the two that are,
-         so it renders as the empty run of axis rather than a node. */
-      gap: { fromMin: 0, toMin: 11, label: "11 minuta tišine" },
-      nodes: [
-        { atMin: 0, time: "09:41", title: "Propušten poziv", tone: "miss" },
-        { atMin: 11, time: "09:52", title: "Zove sledećeg na spisku", tone: "lost" },
-      ],
-    },
+/**
+ * One missed call forking into two futures.
+ *
+ * Three nodes only — the shared origin and the two endings. What happens along
+ * each path is written on the branch rather than given its own node, which keeps
+ * the diagram readable.
+ *
+ * The 09:47 on the failure branch is an illustrative scenario, not a measured
+ * figure: roughly the time it takes to hang up, reopen the search results, pick
+ * the next listing and dial it. The cited research lives in research.js.
+ */
+export const outcomeFork = {
+  spanMin: 8,
+  origin: { time: "09:41", title: "Propušten poziv" },
+  branches: [
     {
       key: "withUs",
       label: "Sa APLORY",
-      outcome: "Klijent zadržan — sve gotovo za 3 minuta",
       tone: "good",
-      nodes: [
-        { atMin: 0, time: "09:41", title: "Propušten poziv", tone: "miss" },
-        { atMin: 0.5, time: "+30 sek", title: "Automatska poruka", tone: "send" },
-        { atMin: 3, time: "09:44", title: "Termin zakazan", tone: "done" },
-      ],
+      path: "Automatska poruka odlazi za 30 sekundi",
+      end: {
+        atMin: 3,
+        time: "09:44",
+        title: "Termin zakazan",
+        outcome: "Klijent zadržan",
+      },
+    },
+    {
+      key: "without",
+      label: "Bez APLORY",
+      tone: "bad",
+      path: "Niko ne uzvrati",
+      end: {
+        atMin: 6,
+        time: "09:47",
+        title: "Zove sledećeg na spisku",
+        outcome: "Klijent izgubljen",
+      },
     },
   ],
 };

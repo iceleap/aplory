@@ -33,13 +33,16 @@ src/
   data/
     content.js      all page copy — edit text here, not in the JSX
     research.js     every statistic, each with its primary source
-public/             served at the site root (logo, font)
-source/             original material: company context doc, master logos
+public/             served at the site root — one logo, one font
 ```
 
 Only two components keep a separate `.css` file — `Problem.css` and
 `CallWaffle.css`. That section is deliberately frozen, and hand-converting a
 100-cell chart grid to utilities is how drift gets introduced.
+
+`bundle-artifact.py` flattens `dist/` into a single self-contained HTML file. It
+discovers `url(/…)` references in the built CSS and inlines whatever it finds, so
+renaming an asset can't silently ship a dead link.
 
 ## Design notes
 
@@ -64,6 +67,13 @@ The site advertises only what APLORY can deliver today. The voice agent is liste
 once, greyed, as `U pripremi`, with a matching FAQ answer saying it isn't for sale
 yet — see `upcoming` in `src/data/content.js`. Don't promote it into the services
 list until it actually works.
+
+## About the timings in Rezultat
+
+The fork diagram in `src/data/content.js` (`outcomeFork`) is an **illustrative
+scenario, not measured data** — 09:47 is roughly how long it takes someone to
+hang up, reopen search results and dial the next listing. Keep it distinct from
+the cited research below.
 
 ## About the numbers
 

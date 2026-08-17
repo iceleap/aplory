@@ -1,114 +1,206 @@
-import { Fragment } from "react";
-import { outcomeTimeline, recoveryThread } from "../data/content";
+import { outcomeFork, recoveryThread } from "../data/content";
 
-/* Dot colour per event. `miss` is shared by both tracks — it is the same missed
-   call in each — so it stays neutral; what happens after is the point. */
-const DOT = {
-  miss: "bg-muted",
-  lost: "bg-c-none",
-  send: "bg-brand-a",
-  done: "bg-live",
-};
+/* Where the branches split away from the shared stem, and how far apart they
+   sit vertically. Fixed pixels: only the horizontal extents are fluid. */
+const FORK_X = 130; // px from the left edge — clears the origin label
+const RADIUS = 16; // corner radius of the elbows
+const SPREAD = 72; // px from the centre line to each branch
 
-/* Anchor a label by where it sits on the axis, not by its index: centred in the
-   middle, but flush left near 0% and flush right near the end, so nothing
-   overflows the container. */
+/* Anchor a label by where it sits on the axis so nothing overflows the
+   container: flush left near 0%, flush right near the end, centred between. */
 function anchor(pct) {
   if (pct <= 10) return "";
   if (pct >= 70) return "md:-translate-x-full";
   return "md:-translate-x-1/2";
 }
 
-function Track({ track, spanMin }) {
-  const bad = track.tone === "bad";
-  // The axis stops at the last event. The success track therefore ends a quarter
-  // of the way across while the other runs on — the comparison the section is for.
-  const endPct = (track.nodes[track.nodes.length - 1].atMin / spanMin) * 100;
+function Endpoint({ branch, spanMin }) {
+  const good = branch.tone === "good";
+  const pct = (branch.end.atMin / spanMin) * 100;
+  const dy = good ? -SPREAD : SPREAD;
 
   return (
-    <div className="pt-2">
-      <h3
-        className={`text-xs font-bold tracking-[0.14em] uppercase ${
-          bad ? "text-muted" : "text-brand-b"
+    <>
+      {/* Branch line, from the elbow out to the endpoint. */}
+      <span
+        aria-hidden="true"
+        style={{
+          left: `${FORK_X + RADIUS}px`,
+          top: `calc(50% + ${dy}px)`,
+          width: `calc(${pct}% - ${FORK_X + RADIUS}px)`,
+        }}
+        className={`hidden md:block md:absolute md:h-px ${
+          good
+            ? "md:bg-rule"
+            : "md:bg-[repeating-linear-gradient(to_right,var(--color-rule)_0_4px,transparent_4px_9px)]"
+        }`}
+      />
+
+      {/* Everything for a branch sits on its outward side — success above its
+          line, failure below its own — so the two never compete for the middle.
+          Only the path text reaches inward, where there is nothing else. */}
+      <span
+        aria-hidden="true"
+        style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden text-[12.5px] text-muted md:block md:absolute ${
+          good ? "md:translate-y-2" : "md:-translate-y-[calc(100%+8px)]"
         }`}
       >
-        {track.label}
-      </h3>
+        {branch.path}
+      </span>
 
-      {/* Below md the absolute positioning never applies, so the same nodes
-          simply stack as a list. One set of markup, two layouts. */}
-      <div className="relative mt-4 md:mt-9 md:h-24">
+      <span
+        aria-hidden="true"
+        style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden md:block md:absolute md:size-3.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:ring-4 md:ring-paper ${
+          good ? "md:bg-live" : "md:bg-c-none"
+        }`}
+      />
+
+      <span
+        style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden md:block md:absolute md:w-max ${anchor(pct)} ${
+          good ? "md:-translate-y-[calc(100%+12px)]" : "md:translate-y-3"
+        }`}
+      >
+        <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
+          {branch.end.time}
+        </span>
+        <span className="block text-[15px] text-ink">{branch.end.title}</span>
         <span
-          aria-hidden="true"
-          style={{ width: `${endPct}%` }}
-          className={`hidden md:block md:absolute md:top-7.5 md:left-0 md:h-px ${
-            bad
-              ? "md:bg-[repeating-linear-gradient(to_right,var(--color-rule)_0_4px,transparent_4px_9px)]"
-              : "md:bg-rule"
+          className={`mt-0.5 block text-[13px] font-semibold ${
+            good ? "text-live" : "text-c-none"
           }`}
-        />
+        >
+          {branch.end.outcome}
+        </span>
+      </span>
 
-        <ol className="flex list-none flex-col gap-3 p-0 md:block">
-          {track.nodes.map((node, i) => {
-            const pct = (node.atMin / spanMin) * 100;
-            // Alternate labels above/below the axis: 09:41 and +30 sek sit only
-            // ~4% apart and would otherwise overlap.
-            const below = i % 2 === 1;
-
-            return (
-              <Fragment key={`${node.time}-${node.title}`}>
-              <li
-                style={{ "--x": `${pct}%` }}
-                className="flex items-center gap-3 md:absolute md:top-0 md:left-(--x) md:block md:h-24"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`size-3 shrink-0 rounded-full ring-4 ring-paper md:absolute md:top-6 md:left-0 md:-translate-x-1/2 ${DOT[node.tone]}`}
-                />
-                <span
-                  className={`block md:absolute md:left-0 md:w-max ${
-                    below ? "md:top-11.5" : "md:top-0"
-                  } ${anchor(pct)}`}
-                >
-                  <span className="text-[12.5px] font-semibold text-muted tabular-nums">
-                    {node.time}
-                  </span>
-                  <span
-                    className={`ml-2 text-[15px] md:mt-0.5 md:ml-0 md:block ${
-                      bad ? "text-ink-2" : "text-ink"
-                    }`}
-                  >
-                    {node.title}
-                  </span>
-                </span>
-              </li>
-
-              {/* The silence sits inside the list so it survives both layouts:
-                  a line between the two events on mobile, a caption floating
-                  over the empty stretch of axis from md up. */}
-              {track.gap && i === 0 && (
-                <li
-                  style={{
-                    "--gx": `${((track.gap.fromMin + track.gap.toMin) / 2 / spanMin) * 100}%`,
-                  }}
-                  className="pl-6 text-[13px] text-muted md:absolute md:top-9.5 md:left-(--gx) md:-translate-x-1/2 md:pl-0 md:text-[12.5px]"
-                >
-                  {track.gap.label}
-                </li>
-              )}
-              </Fragment>
-            );
-          })}
-        </ol>
-      </div>
-
-      <p
-        className={`mt-4 border-t border-rule pt-3 text-[15px] font-semibold md:mt-2 ${
-          bad ? "text-c-none" : "text-live"
-        }`}
+      <span
+        style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden text-xs font-bold tracking-[0.14em] uppercase md:block md:absolute ${
+          good ? "md:-translate-y-[calc(100%+12px)]" : "md:translate-y-3"
+        } ${good ? "text-brand-b" : "text-muted"}`}
       >
-        {track.outcome}
+        {branch.label}
+      </span>
+    </>
+  );
+}
+
+/** Stacked, connector-free rendering used below md. */
+function ForkList() {
+  return (
+    <div className="md:hidden">
+      <p className="flex items-baseline gap-3">
+        <span className="size-3 shrink-0 translate-y-0.5 rounded-full bg-muted" aria-hidden="true" />
+        <span>
+          <span className="text-[12.5px] font-semibold text-muted tabular-nums">
+            {outcomeFork.origin.time}
+          </span>
+          <span className="ml-2 text-[15px]">{outcomeFork.origin.title}</span>
+        </span>
       </p>
+
+      <div className="mt-5 flex flex-col gap-5">
+        {outcomeFork.branches.map((branch) => {
+          const good = branch.tone === "good";
+          return (
+            <div
+              key={branch.key}
+              className={`border-l-2 pl-4 ${good ? "border-live/40" : "border-c-none/30"}`}
+            >
+              <p
+                className={`text-xs font-bold tracking-[0.14em] uppercase ${
+                  good ? "text-brand-b" : "text-muted"
+                }`}
+              >
+                {branch.label}
+              </p>
+              <p className="mt-1.5 text-[13px] text-muted">{branch.path}</p>
+              <p className="mt-2">
+                <span className="text-[12.5px] font-semibold text-muted tabular-nums">
+                  {branch.end.time}
+                </span>
+                <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+              </p>
+              <p
+                className={`mt-1 text-[13px] font-semibold ${
+                  good ? "text-live" : "text-c-none"
+                }`}
+              >
+                {branch.end.outcome}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Fork() {
+  const { spanMin, origin, branches } = outcomeFork;
+
+  return (
+    <div className="relative md:h-80">
+      <ForkList />
+
+      {/* Shared stem out to the fork point. */}
+      <span
+        aria-hidden="true"
+        style={{ width: `${FORK_X}px` }}
+        className="hidden md:block md:absolute md:top-1/2 md:left-0 md:h-px md:bg-rule"
+      />
+
+      {/* Riser plus the two rounded elbows that turn each branch outward. */}
+      <span
+        aria-hidden="true"
+        style={{
+          left: `${FORK_X}px`,
+          top: `calc(50% - ${SPREAD - RADIUS}px)`,
+          height: `${(SPREAD - RADIUS) * 2}px`,
+        }}
+        className="hidden md:block md:absolute md:w-px md:bg-rule"
+      />
+      <span
+        aria-hidden="true"
+        style={{
+          left: `${FORK_X}px`,
+          top: `calc(50% - ${SPREAD}px)`,
+          width: `${RADIUS}px`,
+          height: `${RADIUS}px`,
+          borderTopLeftRadius: `${RADIUS}px`,
+        }}
+        className="hidden md:block md:absolute md:border-t md:border-l md:border-rule"
+      />
+      <span
+        aria-hidden="true"
+        style={{
+          left: `${FORK_X}px`,
+          top: `calc(50% + ${SPREAD - RADIUS}px)`,
+          width: `${RADIUS}px`,
+          height: `${RADIUS}px`,
+          borderBottomLeftRadius: `${RADIUS}px`,
+        }}
+        className="hidden md:block md:absolute md:border-b md:border-l md:border-rule"
+      />
+
+      {/* Shared origin — the same missed call either way, so it stays neutral. */}
+      <span
+        aria-hidden="true"
+        className="hidden md:block md:absolute md:top-1/2 md:left-0 md:size-3.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:bg-muted md:ring-4 md:ring-paper"
+      />
+      <span className="hidden md:block md:absolute md:top-1/2 md:left-0 md:w-max md:translate-y-3">
+        <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
+          {origin.time}
+        </span>
+        <span className="block text-[15px] text-ink">{origin.title}</span>
+      </span>
+
+      {branches.map((branch) => (
+        <Endpoint key={branch.key} branch={branch} spanMin={spanMin} />
+      ))}
     </div>
   );
 }
@@ -124,7 +216,10 @@ function PhoneMockup() {
 
       <div className="overflow-hidden rounded-[22px] border border-rule bg-paper shadow-[0_20px_50px_-30px_rgba(11,18,32,0.5)]">
         <div className="flex items-center gap-2.5 border-b border-rule-soft bg-surface px-4 py-3">
-          <span aria-hidden="true" className="grid size-6 place-items-center rounded-full bg-c-none/12">
+          <span
+            aria-hidden="true"
+            className="grid size-6 place-items-center rounded-full bg-c-none/12"
+          >
             <svg
               viewBox="0 0 20 20"
               className="size-3 fill-none stroke-c-none stroke-[1.7] [stroke-linecap:round]"
@@ -142,7 +237,9 @@ function PhoneMockup() {
             return (
               <li
                 key={msg.text}
-                className={`flex max-w-[86%] flex-col gap-1 ${ours ? "self-start" : "self-end items-end"}`}
+                className={`flex max-w-[86%] flex-col gap-1 ${
+                  ours ? "self-start" : "items-end self-end"
+                }`}
               >
                 <span
                   className={`rounded-2xl px-3.5 py-2.5 text-[13px] leading-snug ${
@@ -190,13 +287,11 @@ export default function Flow() {
             Tri minuta umesto izgubljenog klijenta.
           </h2>
 
-          <div className="mt-10 flex flex-col gap-10 md:mt-12 md:gap-6">
-            {outcomeTimeline.tracks.map((track) => (
-              <Track key={track.key} track={track} spanMin={outcomeTimeline.spanMin} />
-            ))}
+          <div className="mt-10 md:mt-14">
+            <Fork />
           </div>
 
-          <div className="mt-12 border-t border-rule pt-10">
+          <div className="mt-12 border-t border-rule pt-10 md:mt-14">
             <PhoneMockup />
           </div>
         </div>
