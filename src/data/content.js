@@ -44,27 +44,60 @@ export const upcoming = {
   icon: "phone",
 };
 
-/** The three steps in the Rezultat section. */
-export const recoveryFlow = [
-  {
-    time: "09:41",
-    title: "Upit stigne, a vi ste zauzeti",
-    body: "Poziv koji ne stignete da javite, ili poruka van radnog vremena.",
-    tone: "miss",
-  },
-  {
-    time: "09:41 + 30s",
-    title: "Automatska poruka odlazi",
-    body: "„Zdravo, videli smo vaš upit. Kako možemo da pomognemo?“",
-    tone: "send",
-  },
-  {
-    time: "09:44",
-    title: "Razgovor se nastavlja",
-    body: "Klijent odgovara na WhatsAppu i termin je zakazan.",
-    tone: "done",
-  },
-];
+/**
+ * The Rezultat section: one missed inquiry, two endings.
+ *
+ * Both columns open on the same 09:41 event on purpose — the input is identical
+ * and only the ending differs. One short line per step; the contrast does the
+ * explaining, so nothing here needs a paragraph.
+ */
+export const outcomeTimeline = {
+  /* Axis length in minutes from 09:41. 09:52 lands at 11 of 12, leaving a
+     little room at the right for the last label. */
+  spanMin: 12,
+  tracks: [
+    {
+      key: "without",
+      label: "Bez APLORY",
+      outcome: "Upit izgubljen",
+      tone: "bad",
+      /* Silence is not an event — it is the stretch between the two that are,
+         so it renders as the empty run of axis rather than a node. */
+      gap: { fromMin: 0, toMin: 11, label: "11 minuta tišine" },
+      nodes: [
+        { atMin: 0, time: "09:41", title: "Propušten poziv", tone: "miss" },
+        { atMin: 11, time: "09:52", title: "Zove sledećeg na spisku", tone: "lost" },
+      ],
+    },
+    {
+      key: "withUs",
+      label: "Sa APLORY",
+      outcome: "Klijent zadržan — sve gotovo za 3 minuta",
+      tone: "good",
+      nodes: [
+        { atMin: 0, time: "09:41", title: "Propušten poziv", tone: "miss" },
+        { atMin: 0.5, time: "+30 sek", title: "Automatska poruka", tone: "send" },
+        { atMin: 3, time: "09:44", title: "Termin zakazan", tone: "done" },
+      ],
+    },
+  ],
+};
+
+/** The message thread shown in the phone mockup under the success track. */
+export const recoveryThread = {
+  caption: "Ovo klijent dobije",
+  missed: { label: "Propušten poziv", time: "09:41" },
+  messages: [
+    {
+      from: "us",
+      time: "09:41",
+      text: "Zdravo! Videli smo vaš poziv — kako možemo da pomognemo?",
+    },
+    { from: "client", time: "09:43", text: "Treba mi termin, može danas u 17:20?" },
+    { from: "us", time: "09:44", text: "Naravno, zakazano za 17:20. Vidimo se!" },
+  ],
+  confirmation: "Termin zakazan · upisano u kalendar",
+};
 
 export const faq = [
   {
