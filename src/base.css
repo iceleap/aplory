@@ -110,6 +110,11 @@
 
   body {
     margin: 0;
+    /* A safety net, not a fix: whatever a translation does to a line's width, it
+       can never turn the page into a sideways-scrolling, zoom-prone one. `clip`
+       rather than `hidden` — `hidden` would make the body a scroll container and
+       break the sticky header. */
+    overflow-x: clip;
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);

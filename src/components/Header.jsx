@@ -162,9 +162,12 @@ export default function Header() {
       id="site-header"
       className="sticky top-0 z-50 border-b border-rule bg-paper/85 backdrop-blur-md"
     >
-      <div className="wrap flex h-16 items-center gap-3 md:h-[72px] md:gap-6">
+      {/* Sized down a step on the narrowest phones: at 360px the Serbian CTA is
+          156px wide, and at full size the row ran past the viewport, which left
+          the page horizontally scrollable and reading as a slight zoom. */}
+      <div className="wrap flex h-16 items-center gap-2 sm:gap-3 md:h-[72px] md:gap-6">
         <a
-          className="logo mr-auto h-[26px] w-[126px] shrink-0"
+          className="logo mr-auto h-[21px] w-[104px] shrink-0 sm:h-[26px] sm:w-[126px]"
           href="#top"
           onClick={(e) => go(e, "top")}
           aria-label={copy.nav.home}
@@ -225,7 +228,7 @@ export default function Header() {
         </div>
 
         <a
-          className={`btn btn-primary shrink-0 px-4 py-2.5 text-sm md:inline-flex md:px-5 ${
+          className={`btn btn-primary shrink-0 px-3 py-2.5 text-sm sm:px-4 md:inline-flex md:px-5 ${
             open ? "hidden" : "inline-flex"
           }`}
           href="#kontakt"

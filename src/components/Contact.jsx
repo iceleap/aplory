@@ -114,18 +114,23 @@ export default function Contact() {
         <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">
           <span className="logo h-6 w-28" role="img" aria-label="APLORY" />
           <span>{copy.contact.footer.rights}</span>
-          <a className="ml-auto transition-colors hover:text-ink" href="/politika-privatnosti.html">
-            {copy.contact.footer.privacy}
-            {copy.contact.footer.legalNote && (
-              <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
-            )}
-          </a>
-          <a className="transition-colors hover:text-ink" href="/uslovi-koriscenja.html">
-            {copy.contact.footer.terms}
-            {copy.contact.footer.legalNote && (
-              <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
-            )}
-          </a>
+          {/* The two documents travel together. `w-full` drops the pair onto its
+              own centred line while the footer is stacked; from sm up the wrapper
+              takes over the right-alignment the first link used to carry. */}
+          <div className="flex w-full justify-center gap-x-6 sm:ml-auto sm:w-auto">
+            <a className="transition-colors hover:text-ink" href="/politika-privatnosti.html">
+              {copy.contact.footer.privacy}
+              {copy.contact.footer.legalNote && (
+                <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+              )}
+            </a>
+            <a className="transition-colors hover:text-ink" href="/uslovi-koriscenja.html">
+              {copy.contact.footer.terms}
+              {copy.contact.footer.legalNote && (
+                <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+              )}
+            </a>
+          </div>
         </div>
       </div>
     </section>
