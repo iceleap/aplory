@@ -65,19 +65,9 @@ export const upcoming = {
 export const outcomeFork = {
   spanMin: 8,
   origin: { time: "09:41", title: "Propušten poziv" },
+  /* Order is render order: the losing path runs along the top, ours along the
+     bottom, so the page ends on the good outcome. */
   branches: [
-    {
-      key: "withUs",
-      label: "Sa APLORY",
-      tone: "good",
-      path: "Automatska poruka odlazi za 30 sekundi",
-      end: {
-        atMin: 3,
-        time: "09:44",
-        title: "Termin zakazan",
-        outcome: "Klijent zadržan",
-      },
-    },
     {
       key: "without",
       label: "Bez APLORY",
@@ -88,6 +78,21 @@ export const outcomeFork = {
         time: "09:47",
         title: "Zove sledećeg na spisku",
         outcome: "Klijent izgubljen",
+      },
+    },
+    {
+      key: "withUs",
+      label: "Sa APLORY",
+      tone: "good",
+      /* Pinned to the start of the branch rather than a point on the axis —
+         "odmah" is the claim, and 30 seconds is too narrow to place honestly
+         on an eight-minute scale. */
+      start: { time: "odmah", title: "Automatski odgovor" },
+      end: {
+        atMin: 3,
+        time: "09:44",
+        title: "Termin zakazan",
+        outcome: "Klijent zadržan",
       },
     },
   ],

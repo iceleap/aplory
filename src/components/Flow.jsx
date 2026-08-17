@@ -17,7 +17,14 @@ function anchor(pct) {
 function Endpoint({ branch, spanMin }) {
   const good = branch.tone === "good";
   const pct = (branch.end.atMin / spanMin) * 100;
-  const dy = good ? -SPREAD : SPREAD;
+  // Losing path on top, ours below, so the section ends on the good outcome.
+  const dy = good ? SPREAD : -SPREAD;
+
+  /* The branch's own labels go on the inward side and the ending goes outward.
+     Keeping them on opposite sides of the line is what stops them colliding
+     when the column narrows — they can never share a horizontal band. */
+  const inward = good ? "md:-translate-y-[calc(100%+10px)]" : "md:translate-y-2.5";
+  const outward = good ? "md:translate-y-3" : "md:-translate-y-[calc(100%+12px)]";
 
   return (
     <>
@@ -36,19 +43,40 @@ function Endpoint({ branch, spanMin }) {
         }`}
       />
 
-      {/* Everything for a branch sits on its outward side — success above its
-          line, failure below its own — so the two never compete for the middle.
-          Only the path text reaches inward, where there is nothing else. */}
+      {/* Inward: branch name, then either its opening node or the path text. */}
       <span
-        aria-hidden="true"
         style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden text-[12.5px] text-muted md:block md:absolute ${
-          good ? "md:translate-y-2" : "md:-translate-y-[calc(100%+8px)]"
-        }`}
+        className={`hidden md:block md:absolute md:w-max ${inward}`}
       >
-        {branch.path}
+        <span
+          className={`block text-xs font-bold tracking-[0.14em] uppercase ${
+            good ? "text-brand-b" : "text-muted"
+          }`}
+        >
+          {branch.label}
+        </span>
+        {branch.start ? (
+          <span className="mt-1 block">
+            <span className="text-[12.5px] font-semibold text-brand-b">
+              {branch.start.time}
+            </span>
+            <span className="ml-2 text-[13.5px] text-ink-2">{branch.start.title}</span>
+          </span>
+        ) : (
+          <span className="mt-1 block text-[12.5px] text-muted">{branch.path}</span>
+        )}
       </span>
 
+      {/* Opening node, pinned where the branch leaves the fork. */}
+      {branch.start && (
+        <span
+          aria-hidden="true"
+          style={{ left: `${FORK_X + RADIUS}px`, top: `calc(50% + ${dy}px)` }}
+          className="hidden md:block md:absolute md:size-2.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:bg-brand-a md:ring-4 md:ring-paper"
+        />
+      )}
+
+      {/* Outward: the ending. */}
       <span
         aria-hidden="true"
         style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
@@ -56,12 +84,9 @@ function Endpoint({ branch, spanMin }) {
           good ? "md:bg-live" : "md:bg-c-none"
         }`}
       />
-
       <span
         style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max ${anchor(pct)} ${
-          good ? "md:-translate-y-[calc(100%+12px)]" : "md:translate-y-3"
-        }`}
+        className={`hidden md:block md:absolute md:w-max ${anchor(pct)} ${outward}`}
       >
         <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
           {branch.end.time}
@@ -74,15 +99,6 @@ function Endpoint({ branch, spanMin }) {
         >
           {branch.end.outcome}
         </span>
-      </span>
-
-      <span
-        style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden text-xs font-bold tracking-[0.14em] uppercase md:block md:absolute ${
-          good ? "md:-translate-y-[calc(100%+12px)]" : "md:translate-y-3"
-        } ${good ? "text-brand-b" : "text-muted"}`}
-      >
-        {branch.label}
       </span>
     </>
   );
@@ -117,7 +133,16 @@ function ForkList() {
               >
                 {branch.label}
               </p>
-              <p className="mt-1.5 text-[13px] text-muted">{branch.path}</p>
+              {branch.start ? (
+                <p className="mt-1.5">
+                  <span className="text-[12.5px] font-semibold text-brand-b">
+                    {branch.start.time}
+                  </span>
+                  <span className="ml-2 text-[13.5px] text-ink-2">{branch.start.title}</span>
+                </p>
+              ) : (
+                <p className="mt-1.5 text-[13px] text-muted">{branch.path}</p>
+              )}
               <p className="mt-2">
                 <span className="text-[12.5px] font-semibold text-muted tabular-nums">
                   {branch.end.time}
