@@ -75,31 +75,43 @@ function Endpoint({ branch }) {
         }`}
       />
       {/* Centred on the endpoint and offset outward, which leaves the line
-          itself clear for the connector running on to the phone. */}
+          itself clear for the connector running on to the phone.
+
+          A branch the phone terminates shows only its time here — its name,
+          title and outcome are printed on the phone, and rendering them twice
+          is what made the section read as repetitive. */}
       <span
         style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
         className={`hidden md:block md:absolute md:w-max md:-translate-x-1/2 ${outward}`}
       >
-        <span
-          className={`block text-xs font-bold tracking-[0.14em] uppercase ${
-            good ? "text-brand-b" : "text-muted"
-          }`}
-        >
-          {branch.label}
-        </span>
-        <span className="mt-1.5 block">
-          <span className="text-[12.5px] font-semibold text-muted tabular-nums">
+        {branch.terminal ? (
+          <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
             {branch.end.time}
           </span>
-          <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
-        </span>
-        <span
-          className={`mt-0.5 block text-[13px] font-semibold ${
-            good ? "text-live" : "text-c-none"
-          }`}
-        >
-          {branch.end.outcome}
-        </span>
+        ) : (
+          <>
+            <span
+              className={`block text-xs font-bold tracking-[0.14em] uppercase ${
+                good ? "text-brand-b" : "text-muted"
+              }`}
+            >
+              {branch.label}
+            </span>
+            <span className="mt-1.5 block">
+              <span className="text-[12.5px] font-semibold text-muted tabular-nums">
+                {branch.end.time}
+              </span>
+              <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+            </span>
+            <span
+              className={`mt-0.5 block text-[13px] font-semibold ${
+                good ? "text-live" : "text-c-none"
+              }`}
+            >
+              {branch.end.outcome}
+            </span>
+          </>
+        )}
       </span>
     </>
   );
@@ -148,15 +160,21 @@ function ForkList() {
                 <span className="text-[12.5px] font-semibold text-muted tabular-nums">
                   {branch.end.time}
                 </span>
-                <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+                {!branch.terminal && (
+                  <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+                )}
               </p>
-              <p
-                className={`mt-1 text-[13px] font-semibold ${
-                  good ? "text-live" : "text-c-none"
-                }`}
-              >
-                {branch.end.outcome}
-              </p>
+              {/* A branch the phone terminates stops here: the phone sits
+                  directly below and carries the title and outcome. */}
+              {!branch.terminal && (
+                <p
+                  className={`mt-1 text-[13px] font-semibold ${
+                    good ? "text-live" : "text-c-none"
+                  }`}
+                >
+                  {branch.end.outcome}
+                </p>
+              )}
             </div>
           );
         })}
@@ -246,13 +264,19 @@ function Fork() {
   );
 }
 
-function PhoneMockup() {
-  const { caption, missed, messages, confirmation } = recoveryThread;
+/**
+ * The success branch's ending. It carries that branch's name and outcome, which
+ * is why neither is printed on the fork itself.
+ */
+function PhoneMockup({ branch }) {
+  const { missed, messages, confirmation } = recoveryThread;
 
   return (
     <figure className="m-0 w-full max-w-82.5">
-      <figcaption className="mb-3 text-xs font-bold tracking-[0.14em] text-muted uppercase">
-        {caption}
+      {/* Below md the stacked list already names the branch, so this heading
+          would be the second one on screen. */}
+      <figcaption className="mb-3 hidden text-xs font-bold tracking-[0.14em] text-brand-b uppercase md:block">
+        {branch.label}
       </figcaption>
 
       <div className="overflow-hidden rounded-[22px] border border-rule bg-paper shadow-[0_20px_50px_-30px_rgba(11,18,32,0.5)]">
@@ -309,6 +333,9 @@ function PhoneMockup() {
           <span className="text-[12.5px] font-semibold">{confirmation}</span>
         </p>
       </div>
+
+      {/* The branch's outcome, mirroring the red one under the losing path. */}
+      <p className="mt-3 text-[13px] font-semibold text-live">{branch.end.outcome}</p>
     </figure>
   );
 }
@@ -337,7 +364,7 @@ export default function Flow() {
           <div className="mt-10 md:mt-14 xl:grid xl:grid-cols-[1fr_300px] xl:items-center xl:gap-10">
             <Fork />
             <div className="mt-10 border-l-2 border-live/40 pl-5 xl:mt-0 xl:border-l-0 xl:pl-0">
-              <PhoneMockup />
+              <PhoneMockup branch={outcomeFork.branches.find((b) => b.terminal)} />
             </div>
           </div>
         </div>

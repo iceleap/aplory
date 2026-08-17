@@ -91,6 +91,10 @@ export const outcomeFork = {
       key: "withUs",
       label: "Sa APLORY",
       tone: "good",
+      /* This branch ends in the phone mockup rather than a text block, so the
+         fork renders only its time marker — the title and outcome below are
+         read by PhoneMockup. Without this the words appear twice. */
+      terminal: "phone",
       start: { time: "odmah", title: "Automatski odgovor" },
       end: {
         time: "09:44",
@@ -101,9 +105,12 @@ export const outcomeFork = {
   ],
 };
 
-/** The message thread shown in the phone mockup under the success track. */
+/**
+ * The thread shown in the phone, which is where the success branch ends. Its
+ * heading and closing line come from that branch (label and outcome), so the
+ * strings live in `outcomeFork` and are not repeated here.
+ */
 export const recoveryThread = {
-  caption: "Ovo klijent dobije",
   missed: { label: "Propušten poziv", time: "09:41" },
   messages: [
     {
@@ -111,7 +118,7 @@ export const recoveryThread = {
       time: "09:41",
       text: "Zdravo! Videli smo vaš poziv — kako možemo da pomognemo?",
     },
-    { from: "client", time: "09:43", text: "Treba mi termin, može danas u 17:20?" },
+    { from: "client", time: "09:44", text: "Treba mi termin, može danas u 17:20?" },
     { from: "us", time: "09:44", text: "Naravno, zakazano za 17:20. Vidimo se!" },
   ],
   confirmation: "Termin zakazan · upisano u kalendar",
