@@ -6,17 +6,12 @@ const FORK_X = 130; // px from the left edge — clears the origin label
 const RADIUS = 16; // corner radius of the elbows
 const SPREAD = 72; // px from the centre line to each branch
 
-/* Anchor a label by where it sits on the axis so nothing overflows the
-   container: flush left near 0%, flush right near the end, centred between. */
-function anchor(pct) {
-  if (pct <= 10) return "";
-  if (pct >= 70) return "md:-translate-x-full";
-  return "md:-translate-x-1/2";
-}
+/* Both branches end at the same moment, so there is no time scale to place them
+   on — one shared stopping point is the whole layout model. */
+const END_PCT = 62;
 
-function Endpoint({ branch, spanMin }) {
+function Endpoint({ branch }) {
   const good = branch.tone === "good";
-  const pct = (branch.end.atMin / spanMin) * 100;
   // Losing path on top, ours below, so the section ends on the good outcome.
   const dy = good ? SPREAD : -SPREAD;
 
@@ -34,7 +29,7 @@ function Endpoint({ branch, spanMin }) {
         style={{
           left: `${FORK_X + RADIUS}px`,
           top: `calc(50% + ${dy}px)`,
-          width: `calc(${pct}% - ${FORK_X + RADIUS}px)`,
+          width: `calc(${END_PCT}% - ${FORK_X + RADIUS}px)`,
         }}
         className={`hidden md:block md:absolute md:h-px ${
           good
@@ -43,27 +38,21 @@ function Endpoint({ branch, spanMin }) {
         }`}
       />
 
-      {/* Inward: branch name, then either its opening node or the path text. */}
+      {/* Inward: what happens along the way. One short line, so the area around
+          the split stays quiet — the branch name now lives at the far end. */}
       <span
         style={{ left: `${FORK_X + RADIUS + 18}px`, top: `calc(50% + ${dy}px)` }}
         className={`hidden md:block md:absolute md:w-max ${inward}`}
       >
-        <span
-          className={`block text-xs font-bold tracking-[0.14em] uppercase ${
-            good ? "text-brand-b" : "text-muted"
-          }`}
-        >
-          {branch.label}
-        </span>
         {branch.start ? (
-          <span className="mt-1 block">
+          <>
             <span className="text-[12.5px] font-semibold text-brand-b">
               {branch.start.time}
             </span>
             <span className="ml-2 text-[13.5px] text-ink-2">{branch.start.title}</span>
-          </span>
+          </>
         ) : (
-          <span className="mt-1 block text-[12.5px] text-muted">{branch.path}</span>
+          <span className="text-[12.5px] text-muted">{branch.path}</span>
         )}
       </span>
 
@@ -76,22 +65,34 @@ function Endpoint({ branch, spanMin }) {
         />
       )}
 
-      {/* Outward: the ending. */}
+      {/* Outward: the ending, headed by the branch name so everything about a
+          path is grouped in one place. */}
       <span
         aria-hidden="true"
-        style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
+        style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
         className={`hidden md:block md:absolute md:size-3.5 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:ring-4 md:ring-paper ${
           good ? "md:bg-live" : "md:bg-c-none"
         }`}
       />
+      {/* Centred on the endpoint and offset outward, which leaves the line
+          itself clear for the connector running on to the phone. */}
       <span
-        style={{ left: `${pct}%`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max ${anchor(pct)} ${outward}`}
+        style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden md:block md:absolute md:w-max md:-translate-x-1/2 ${outward}`}
       >
-        <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
-          {branch.end.time}
+        <span
+          className={`block text-xs font-bold tracking-[0.14em] uppercase ${
+            good ? "text-brand-b" : "text-muted"
+          }`}
+        >
+          {branch.label}
         </span>
-        <span className="block text-[15px] text-ink">{branch.end.title}</span>
+        <span className="mt-1.5 block">
+          <span className="text-[12.5px] font-semibold text-muted tabular-nums">
+            {branch.end.time}
+          </span>
+          <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+        </span>
         <span
           className={`mt-0.5 block text-[13px] font-semibold ${
             good ? "text-live" : "text-c-none"
@@ -165,11 +166,26 @@ function ForkList() {
 }
 
 function Fork() {
-  const { spanMin, origin, branches } = outcomeFork;
+  const { origin, branches } = outcomeFork;
 
   return (
     <div className="relative md:h-80">
       <ForkList />
+
+      {/* The success branch carries on into the phone rather than stopping at a
+          divider — but only where the two actually sit side by side. When the
+          phone stacks underneath it is tied to the branch by a left rule
+          instead; a line pointing down at a phone that is over to the left
+          would connect nothing. */}
+      <span
+        aria-hidden="true"
+        style={{
+          left: `${END_PCT}%`,
+          top: `calc(50% + ${SPREAD}px)`,
+          width: `calc(${100 - END_PCT}% + 2.5rem)`,
+        }}
+        className="hidden xl:block xl:absolute xl:h-px xl:bg-rule"
+      />
 
       {/* Shared stem out to the fork point. */}
       <span
@@ -224,7 +240,7 @@ function Fork() {
       </span>
 
       {branches.map((branch) => (
-        <Endpoint key={branch.key} branch={branch} spanMin={spanMin} />
+        <Endpoint key={branch.key} branch={branch} />
       ))}
     </div>
   );
@@ -305,19 +321,24 @@ export default function Flow() {
           <p className="eyebrow" aria-hidden="true">
             Rezultat
           </p>
-          <p className="rail-note">Isti propušten poziv, samo sa drugačijim krajem.</p>
+          <p className="rail-note">Sve se odlučuje u prva tri minuta.</p>
         </div>
         <div>
           <h2 id="rezultat-title" className="h2">
-            Tri minuta umesto izgubljenog klijenta.
+            Dva kraja istog poziva.
           </h2>
+          <p className="lead-note">
+            Razliku pravi jedna automatska poruka, poslata odmah.
+          </p>
 
-          <div className="mt-10 md:mt-14">
+          {/* The phone belongs to the success branch, so it sits beside it where
+              there is room and directly beneath it where there isn't — joined by
+              the connector either way, never split off behind a divider. */}
+          <div className="mt-10 md:mt-14 xl:grid xl:grid-cols-[1fr_300px] xl:items-center xl:gap-10">
             <Fork />
-          </div>
-
-          <div className="mt-12 border-t border-rule pt-10 md:mt-14">
-            <PhoneMockup />
+            <div className="mt-10 border-l-2 border-live/40 pl-5 xl:mt-0 xl:border-l-0 xl:pl-0">
+              <PhoneMockup />
+            </div>
           </div>
         </div>
       </div>

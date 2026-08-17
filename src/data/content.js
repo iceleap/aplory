@@ -62,11 +62,19 @@ export const upcoming = {
  * figure: roughly the time it takes to hang up, reopen the search results, pick
  * the next listing and dial it. The cited research lives in research.js.
  */
+/**
+ * One missed call at 09:41, two endings three minutes later.
+ *
+ * Both branches finish at 09:44 on purpose: the point is not that one path is
+ * faster but that the same moment produces opposite outcomes. Because the two
+ * endings coincide, horizontal position carries no information and the diagram
+ * lays itself out from a single constant in Flow.jsx — there is no time scale
+ * left to model here.
+ */
 export const outcomeFork = {
-  spanMin: 8,
   origin: { time: "09:41", title: "Propušten poziv" },
   /* Order is render order: the losing path runs along the top, ours along the
-     bottom, so the page ends on the good outcome. */
+     bottom, so the section ends on the good outcome. */
   branches: [
     {
       key: "without",
@@ -74,8 +82,7 @@ export const outcomeFork = {
       tone: "bad",
       path: "Niko ne uzvrati",
       end: {
-        atMin: 6,
-        time: "09:47",
+        time: "09:44",
         title: "Zove sledećeg na spisku",
         outcome: "Klijent izgubljen",
       },
@@ -84,12 +91,8 @@ export const outcomeFork = {
       key: "withUs",
       label: "Sa APLORY",
       tone: "good",
-      /* Pinned to the start of the branch rather than a point on the axis —
-         "odmah" is the claim, and 30 seconds is too narrow to place honestly
-         on an eight-minute scale. */
       start: { time: "odmah", title: "Automatski odgovor" },
       end: {
-        atMin: 3,
         time: "09:44",
         title: "Termin zakazan",
         outcome: "Klijent zadržan",
