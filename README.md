@@ -22,7 +22,9 @@ npm run build && python3 bundle-artifact.py   # -> dist-single/index.html
 ## Layout
 
 ```
-index.html          document shell: meta tags + JSON-LD structured data
+index.html          landing page shell: meta tags + JSON-LD structured data
+politika-privatnosti.html   legal page - static HTML, no React
+uslovi-koriscenja.html      legal page - static HTML, no React
 src/
   main.jsx          entry point
   App.jsx           section order: Problem -> Rešenje -> Rezultat
@@ -33,8 +35,14 @@ src/
   data/
     content.js      all page copy — edit text here, not in the JSX
     research.js     every statistic, each with its primary source
+  legal/
+    legal.js        the legal pages' only script: imports base.css
 public/             served at the site root — one logo, one font
 ```
+
+The two legal pages are Vite entry points, not client-side routes: real URLs that
+stay crawlable and need no SPA fallback on the host. They ship no framework — the
+entry exists purely to pull in the stylesheet, so they inherit the theme.
 
 Only two components keep a separate `.css` file — `Problem.css` and
 `CallWaffle.css`. That section is deliberately frozen, and hand-converting a

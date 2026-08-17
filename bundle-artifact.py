@@ -56,10 +56,17 @@ def inline_css_assets(css: str) -> str:
     return css
 
 
-# Inline the built stylesheet, with its asset URLs swapped for data URIs.
-css_href = re.search(r'<link rel="stylesheet"[^>]*href="/assets/([^"]+\.css)"[^>]*>', html)
-css = inline_css_assets((DIST / "assets" / css_href.group(1)).read_text(encoding="utf-8"))
-html = html.replace(css_href.group(0), "<style>\n%s\n</style>" % css)
+# Inline every built stylesheet, with asset URLs swapped for data URIs.
+# Plural on purpose: once the build gained a second entry point, Vite split the
+# CSS into a shared chunk plus a per-page one, and inlining only the first
+# silently dropped half the styles.
+links = list(re.finditer(r'<link rel="stylesheet"[^>]*href="/assets/([^"]+\.css)"[^>]*>', html))
+if not links:
+    raise SystemExit("bundle-artifact: no stylesheet link found in dist/index.html")
+for i, link in enumerate(links):
+    css = inline_css_assets((DIST / "assets" / link.group(1)).read_text(encoding="utf-8"))
+    html = html.replace(link.group(0), "<style>\n%s\n</style>" % css)
+print("  inlined %d stylesheet(s)" % len(links))
 
 # Inline the built module bundle.
 js_src = re.search(r'<script type="module"[^>]*src="/assets/([^"]+\.js)"[^>]*></script>', html)

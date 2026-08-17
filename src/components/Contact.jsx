@@ -112,10 +112,16 @@ export default function Contact() {
         </ul>
 
         {/* Footer lives inside the dark section for now, on the same ground. */}
-        <div className="mt-16 flex flex-wrap items-center gap-6 border-t border-rule pt-8">
+        <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">
           <span className="logo h-6 w-28" role="img" aria-label="APLORY" />
-          <p className="text-[13.5px] text-muted">Automatizacija odgovora na upite</p>
-          <p className="ml-auto text-[13.5px] text-faint">Pravni podaci se dopunjuju</p>
+          <span>© 2026 APLORY</span>
+          <span className="text-faint">Automatizacija odgovora na upite</span>
+          <a className="ml-auto transition-colors hover:text-ink" href="/politika-privatnosti.html">
+            Politika privatnosti
+          </a>
+          <a className="transition-colors hover:text-ink" href="/uslovi-koriscenja.html">
+            Uslovi korišćenja
+          </a>
         </div>
       </div>
     </section>

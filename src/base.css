@@ -345,3 +345,101 @@
   transform: none;
   will-change: auto;
 }
+
+/* --------------------------------------------------------------------------
+   Legal pages (politika-privatnosti.html, uslovi-koriscenja.html)
+
+   The landing page has no long-form text anywhere — every block there is
+   bespoke — so these are the only prose styles in the project. They reuse the
+   existing tokens rather than introducing colours of their own.
+   -------------------------------------------------------------------------- */
+
+@layer components {
+  .legal {
+    max-width: 72ch;
+  }
+
+  /* Flex, not an inline span: a wrapped heading should align under its own
+     text rather than falling back under the number. */
+  .legal h2 {
+    display: flex;
+    gap: 10px;
+    margin-top: 52px;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+
+  .legal h2 span {
+    flex: none;
+    color: var(--color-brand-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .legal p,
+  .legal li {
+    margin-top: 14px;
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--color-ink-2);
+  }
+
+  .legal ul {
+    margin: 6px 0 0;
+    padding-left: 22px;
+    list-style: disc;
+  }
+
+  .legal li::marker {
+    color: var(--color-muted);
+  }
+
+  .legal a {
+    color: var(--color-brand-soft);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .legal a:hover {
+    border-bottom-color: var(--color-brand-soft);
+  }
+
+  .legal strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* The sub-processor table in the privacy policy. */
+  .legal table {
+    margin-top: 18px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .legal th,
+  .legal td {
+    border: 1px solid var(--color-rule);
+    padding: 11px 14px;
+    text-align: left;
+    vertical-align: top;
+    color: var(--color-ink-2);
+  }
+
+  .legal th {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* Wide content must scroll inside its own box, never the page. */
+  .legal .table-scroll {
+    margin-top: 18px;
+    overflow-x: auto;
+  }
+
+  .legal .table-scroll table {
+    margin-top: 0;
+    min-width: 460px;
+  }
+}
