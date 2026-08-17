@@ -1,4 +1,4 @@
-import { services } from "../data/content";
+import { useCopy } from "../i18n";
 
 /* Line icons, one per service, kept visually distinct at 18px. */
 const ICONS = {
@@ -53,19 +53,24 @@ function Icon({ name }) {
   );
 }
 
+/* Icon order matches the service order in the language files. */
+const ICON_ORDER = ["message", "nodes", "bell", "star", "window", "layout"];
+
 export default function Services() {
+  const copy = useCopy();
+
   return (
     <section className="sec bg-surface" id="resenje" aria-labelledby="resenje-title">
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">
-            Rešenje
+            {copy.services.eyebrow}
           </p>
-          <p className="rail-note">Počnite od jedne stvari. Ostalo se dodaje kad zatreba.</p>
+          <p className="rail-note">{copy.services.railNote}</p>
         </div>
         <div>
           <h2 id="resenje-title" className="h2" data-reveal>
-            Hvatamo svaki upit i odgovaramo umesto vas.
+            {copy.services.title}
           </h2>
 
           {/* A hairline matrix rather than separate cards: the 1px gaps let the
@@ -75,12 +80,12 @@ export default function Services() {
             className="mt-10 grid list-none grid-cols-1 gap-px overflow-hidden rounded-xl border border-rule bg-rule p-0 sm:grid-cols-2 lg:grid-cols-3"
             data-reveal
           >
-            {services.map((service) => (
+            {copy.services.items.map((service, i) => (
               <li
                 key={service.name}
                 className="flex flex-col gap-3 bg-paper p-5 transition-colors hover:bg-surface"
               >
-                <Icon name={service.icon} />
+                <Icon name={ICON_ORDER[i]} />
                 <h3 className="text-[15.5px] leading-snug font-semibold tracking-[-0.01em]">
                   {service.name}
                 </h3>

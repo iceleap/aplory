@@ -1,3 +1,4 @@
+import LanguageProvider from "./i18n";
 import SmoothScroll from "./lib/SmoothScroll";
 import useReveal from "./lib/useReveal";
 import Header from "./components/Header";
@@ -13,7 +14,8 @@ export default function App() {
   useReveal();
 
   return (
-    <SmoothScroll>
+    <LanguageProvider>
+      <SmoothScroll>
       <div className="min-h-screen bg-paper text-ink">
       <Header />
       <main>
@@ -27,6 +29,7 @@ export default function App() {
         <Contact />
       </main>
       </div>
-    </SmoothScroll>
+      </SmoothScroll>
+    </LanguageProvider>
   );
 }

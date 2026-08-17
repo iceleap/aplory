@@ -1,3 +1,4 @@
+import { useCopy } from "../i18n";
 /**
  * Five inbound channels converging into a single answered state — the page's
  * one-sentence thesis, drawn.
@@ -7,21 +8,17 @@
  * plain CSS. The travelling pulses stop under prefers-reduced-motion.
  */
 
-const CHANNELS = [
+const ICONS = [
   {
-    label: "Propušten poziv",
     icon: <path d="M5.2 2.8h2.4l1.2 3.2-1.6 1.2a9.6 9.6 0 0 0 4.8 4.8l1.2-1.6 3.2 1.2v2.4a1.6 1.6 0 0 1-1.8 1.6A13.6 13.6 0 0 1 3.6 4.6 1.6 1.6 0 0 1 5.2 2.8Z" />,
   },
   {
-    label: "WhatsApp",
     icon: <path d="M16 9.2a6 6 0 0 1-8.7 5.4L3.6 15.6l1.1-3.6A6 6 0 1 1 16 9.2Z" />,
   },
   {
-    label: "Viber",
     icon: <path d="M10 2.6c4 0 6.6 2.4 6.6 6 0 3.7-2.6 6.1-6.6 6.1-.7 0-1.3 0-1.9-.2l-3 2.2.5-3A5.8 5.8 0 0 1 3.4 8.6c0-3.6 2.6-6 6.6-6Z" />,
   },
   {
-    label: "Instagram",
     icon: (
       <>
         <rect x="3.2" y="3.2" width="13.6" height="13.6" rx="4" />
@@ -31,7 +28,6 @@ const CHANNELS = [
     ),
   },
   {
-    label: "Poruka sa sajta",
     icon: (
       <>
         <rect x="2.8" y="3.6" width="14.4" height="11" rx="2" />
@@ -46,12 +42,13 @@ const HUB_X = 392;
 const HUB_Y = 168;
 
 export default function ChannelFlow() {
+  const copy = useCopy();
   return (
     <svg
       viewBox="0 0 520 348"
       className="h-auto w-full max-w-[520px]"
       role="img"
-      aria-label="Propušten poziv, WhatsApp, Viber, Instagram i poruke sa sajta — svi kanali vode do jednog odgovorenog upita."
+      aria-label={copy.hero.diagramAlt}
     >
       <defs>
         <linearGradient id="cf-grad" x1="0" y1="0" x2="1" y2="0">
@@ -82,8 +79,8 @@ export default function ChannelFlow() {
       </g>
 
       {/* Channel rows */}
-      {CHANNELS.map((channel, i) => (
-        <g key={channel.label}>
+      {ICONS.map((channel, i) => (
+        <g key={copy.hero.channels[i]}>
           <rect
             x="1"
             y={ROW_Y[i] - 19}
@@ -110,7 +107,7 @@ export default function ChannelFlow() {
             fontSize="13"
             fontWeight="500"
           >
-            {channel.label}
+            {copy.hero.channels[i]}
           </text>
         </g>
       ))}
@@ -140,7 +137,7 @@ export default function ChannelFlow() {
         fontSize="15"
         fontWeight="600"
       >
-        Odgovoreno
+        {copy.hero.hub.title}
       </text>
       <text
         x={HUB_X}
@@ -149,7 +146,7 @@ export default function ChannelFlow() {
         fill="var(--color-muted)"
         fontSize="12.5"
       >
-        za nekoliko sekundi
+        {copy.hero.hub.note}
       </text>
     </svg>
   );

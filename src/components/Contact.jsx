@@ -1,3 +1,4 @@
+import { useCopy } from "../i18n";
 const ICONS = {
   mail: (
     <>
@@ -14,29 +15,29 @@ const ICONS = {
   ),
 };
 
+/* Values are language-neutral; only the labels translate. */
 const CHANNELS = [
-  {
-    icon: "mail",
-    label: "Email",
-    value: "stefanvujic869@gmail.com",
-    href: "mailto:stefanvujic869@gmail.com",
-  },
-  { icon: "phone", label: "Telefon", value: "069 844 0 885", href: "tel:+381698440885" },
-  { icon: "chat", label: "Dostupni i na", value: "WhatsApp · Viber · SMS" },
+  { icon: "mail", key: "email", value: "stefanvujic869@gmail.com", href: "mailto:stefanvujic869@gmail.com" },
+  { icon: "phone", key: "phone", value: "069 844 0 885", href: "tel:+381698440885" },
+  { icon: "chat", key: "other" },
 ];
 
 /* Links that leave the page open in a new tab; screen readers are told so,
    since an unannounced new window is disorienting. */
 function Outbound({ href, className, children }) {
+  const copy = useCopy();
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
-      <span className="visually-hidden"> (otvara se u novom prozoru)</span>
+      <span className="visually-hidden">{copy.contact.newWindow}</span>
     </a>
   );
 }
 
 function Tile({ channel, index }) {
+  const copy = useCopy();
+  const value = channel.value ?? copy.contact.otherValue;
+
   const body = (
     <>
       <span
@@ -51,10 +52,10 @@ function Tile({ channel, index }) {
         </svg>
       </span>
       <span className="mt-4 block text-eyebrow font-bold tracking-[0.14em] text-muted uppercase">
-        {channel.label}
+        {copy.contact.channels[channel.key]}
       </span>
       <span className="mt-1 block text-[17px] font-light tracking-[-0.01em] wrap-break-word">
-        {channel.value}
+        {value}
       </span>
     </>
   );
@@ -76,6 +77,8 @@ function Tile({ channel, index }) {
 }
 
 export default function Contact() {
+  const copy = useCopy();
+
   return (
     <section className="border-t border-rule bg-surface pt-24 pb-12" id="kontakt" aria-labelledby="kontakt-title">
       <div className="wrap">
@@ -84,14 +87,13 @@ export default function Contact() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div data-reveal>
             <p className="eyebrow" aria-hidden="true">
-              Kontakt
+              {copy.contact.eyebrow}
             </p>
             <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch]">
-              Recite nam kuda vam stižu upiti.
+              {copy.contact.title}
             </h2>
             <p className="mt-5 max-w-[52ch] text-[15px] text-muted">
-              Javite nam koliko poziva i poruka dnevno primate. Vraćamo se sa konkretnim
-              predlogom — bez obaveze i bez dugog prodajnog razgovora.
+              {copy.contact.lede}
             </p>
           </div>
 
@@ -100,26 +102,32 @@ export default function Contact() {
               className="btn btn-primary shrink-0"
               href="mailto:stefanvujic869@gmail.com?subject=Upit%20sa%20sajta"
             >
-              Pišite nam
+              {copy.contact.cta}
             </Outbound>
           </div>
         </div>
 
         <ul className="mt-12 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
           {CHANNELS.map((channel, i) => (
-            <Tile key={channel.label} channel={channel} index={i} />
+            <Tile key={copy.contact.channels[channel.key]} channel={channel} index={i} />
           ))}
         </ul>
 
         {/* Footer lives inside the dark section for now, on the same ground. */}
         <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">
           <span className="logo h-6 w-28" role="img" aria-label="APLORY" />
-          <span>© 2026 APLORY</span>
+          <span>{copy.contact.footer.rights}</span>
           <a className="ml-auto transition-colors hover:text-ink" href="/politika-privatnosti.html">
-            Politika privatnosti
+            {copy.contact.footer.privacy}
+            {copy.contact.footer.legalNote && (
+              <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+            )}
           </a>
           <a className="transition-colors hover:text-ink" href="/uslovi-koriscenja.html">
-            Uslovi korišćenja
+            {copy.contact.footer.terms}
+            {copy.contact.footer.legalNote && (
+              <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+            )}
           </a>
         </div>
       </div>

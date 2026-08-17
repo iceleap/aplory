@@ -32,9 +32,12 @@ src/
   lib/
     SmoothScroll.jsx  Lenis provider and the useScrollTo hook
   components/       one .jsx per section (Tailwind utilities inline)
+  i18n/
+    sr.js           Serbian copy (default language)
+    en.js           English copy — same shape as sr.js
+    index.jsx       LanguageProvider, useCopy(), useLanguage()
   data/
-    content.js      all page copy — edit text here, not in the JSX
-    research.js     every statistic, each with its primary source
+    research.js     figures, colours and source URLs — no translatable text
   legal/
     legal.js        the legal pages' only script: imports base.css
 public/             served at the site root — one logo, one font
@@ -73,6 +76,21 @@ renaming an asset can't silently ship a dead link.
   — not flipped from a light theme. If the ground ever changes, re-run the
   validator rather than eyeballing: the amber and red are close enough in hue that
   small shifts break their separation. Don't reuse these three as brand accents.
+
+## Languages
+
+Serbian is the default; an SR / EN switch sits in the header and the choice is
+remembered in `localStorage`. Every user-facing string lives in `src/i18n/sr.js`
+or `en.js` — **the two files must keep the same shape**, since a key missing from
+one renders as nothing. Language-neutral data (figures, colours, source URLs)
+stays in `src/data/research.js`; labels are matched to it by key and array order.
+
+Switching also updates `<html lang>`, the document title and the meta
+description, not just the visible text.
+
+The legal pages and the 404 are Serbian only. A translated Privacy Policy or
+Terms is a legal document in its own right and has to come from whoever drafted
+the originals — the English footer labels those links "(in Serbian)".
 
 ## What we claim
 

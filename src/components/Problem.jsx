@@ -1,46 +1,35 @@
 import CallWaffle from "./CallWaffle";
+import { useCopy } from "../i18n";
 import "./Problem.css";
 
 export default function Problem() {
+  const copy = useCopy();
+
   return (
     <section className="sec" id="problem" aria-labelledby="problem-title">
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">
-            Problem
+            {copy.problem.eyebrow}
           </p>
         </div>
         <div>
           <h2 id="problem-title" className="h2" data-reveal>
-            Poziv na koji se niko ne javi je klijent koji zove sledećeg.
+            {copy.problem.title}
           </h2>
           <p className="lead-note" data-reveal>
-            Telefon zvoni dok radite, posle radnog vremena i vikendom.
-            Istraživanja pokazuju koliko tih poziva nikada ne stigne do žive
-            osobe.
+            {copy.problem.lead}
           </p>
 
           <CallWaffle />
 
           <ul className="prob-list" data-reveal>
-            <li>
-              <h3>Zvoni dok radite</h3>
-              <p>
-                Ruke su vam pune, a telefon zvoni bez odgovora. Taj poziv se
-                retko ponovi.
-              </p>
-            </li>
-            <li>
-              <h3>Zvoni posle radnog vremena</h3>
-              <p>
-                Večeri, vikendi, praznici. Ljudi traže uslugu kad im zatreba, ne
-                kad vama odgovara.
-              </p>
-            </li>
-            <li>
-              <h3>Zvoni brže kod konkurencije</h3>
-              <p>Ko se prvi javi, taj zakazuje. Ostali dobiju govornu poštu.</p>
-            </li>
+            {copy.problem.cards.map((card) => (
+              <li key={card.title}>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

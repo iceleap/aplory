@@ -1,4 +1,4 @@
-import { outcomeFork, recoveryThread } from "../data/content";
+import { useCopy } from "../i18n";
 
 /* Where the branches split away from the shared stem, and how far apart they
    sit vertically. Fixed pixels: only the horizontal extents are fluid. */
@@ -15,6 +15,18 @@ const END_PCT = 62;
    the ending, under the line. */
 const PHONE_X = FORK_X + RADIUS; // the opening node's x
 const SUCCESS_Y = 160 + SPREAD; // success line, measured from the fork's own top
+
+/* Structure stays in the component; the words come from the language files.
+   `bad` renders on top and `good` below, so the section ends on the good outcome. */
+const BRANCH_ORDER = [
+  { key: "without", tone: "bad" },
+  { key: "withUs", tone: "good", mockup: true },
+];
+
+function useBranches() {
+  const copy = useCopy();
+  return BRANCH_ORDER.map((b) => ({ ...b, ...copy.fork.branches[b.key] }));
+}
 
 function Endpoint({ branch }) {
   const good = branch.tone === "good";
@@ -116,20 +128,23 @@ function Endpoint({ branch }) {
 
 /** Stacked, connector-free rendering used below md. */
 function ForkList() {
+  const copy = useCopy();
+  const branches = useBranches();
+
   return (
     <div className="md:hidden">
       <p className="flex items-baseline gap-3">
         <span className="size-3 shrink-0 translate-y-0.5 rounded-full bg-muted" aria-hidden="true" />
         <span>
           <span className="text-[12.5px] font-semibold text-muted tabular-nums">
-            {outcomeFork.origin.time}
+            {copy.fork.origin.time}
           </span>
-          <span className="ml-2 text-[15px]">{outcomeFork.origin.title}</span>
+          <span className="ml-2 text-[15px]">{copy.fork.origin.title}</span>
         </span>
       </p>
 
       <div className="mt-5 flex flex-col gap-5">
-        {outcomeFork.branches.map((branch) => {
+        {branches.map((branch) => {
           const good = branch.tone === "good";
           return (
             <div
@@ -175,7 +190,9 @@ function ForkList() {
 }
 
 function Fork() {
-  const { origin, branches } = outcomeFork;
+  const copy = useCopy();
+  const branches = useBranches();
+  const origin = copy.fork.origin;
 
   return (
     <div className="relative md:h-80">
@@ -247,7 +264,7 @@ function Fork() {
  * once, on the branch's endpoint.
  */
 function PhoneMockup() {
-  const { missed, messages, confirmation } = recoveryThread;
+  const { missed, messages, confirmation } = useCopy().fork.thread;
 
   return (
     <figure className="m-0 w-full max-w-82.5">
@@ -312,6 +329,8 @@ function PhoneMockup() {
 }
 
 export default function Flow() {
+  const copy = useCopy();
+
   return (
     <section className="sec" id="rezultat" aria-labelledby="rezultat-title">
       <div className="wrap grid2">
@@ -323,10 +342,10 @@ export default function Flow() {
         </div>
         <div>
           <h2 id="rezultat-title" className="h2" data-reveal>
-            Dva kraja istog poziva.
+            {copy.fork.title}
           </h2>
           <p className="lead-note" data-reveal>
-            Razliku pravi jedna automatska poruka, poslata odmah.
+            {copy.fork.lead}
           </p>
 
           {/* On wide screens the phone hangs directly off the success endpoint,

@@ -1,7 +1,9 @@
 import ChannelFlow from "./ChannelFlow";
 import { useScrollTo } from "../lib/SmoothScroll";
+import { useCopy } from "../i18n";
 
 export default function Hero() {
+  const copy = useCopy();
   const scrollTo = useScrollTo();
 
   const go = (event, id) => {
@@ -18,18 +20,15 @@ export default function Hero() {
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_520px] lg:gap-16">
         <div>
           <h1 id="hero-title" className="h1 max-w-[13ch]">
-            Nijedan upit ne ostaje bez odgovora.
+            {copy.hero.title}
           </h1>
-          <p className="mt-7 max-w-[46ch] text-[19px] text-ink-2">
-            Propušten poziv, poruka na WhatsAppu, Viberu ili Instagramu — svaki upit
-            dobija odgovor automatski, u roku od nekoliko sekundi.
-          </p>
+          <p className="mt-7 max-w-[46ch] text-[19px] text-ink-2">{copy.hero.lede}</p>
           <div className="mt-10 flex flex-wrap gap-3.5">
             <a className="btn btn-primary" href="#kontakt" onClick={(e) => go(e, "kontakt")}>
-              Zakažite razgovor
+              {copy.hero.ctaPrimary}
             </a>
             <a className="btn btn-ghost" href="#resenje" onClick={(e) => go(e, "resenje")}>
-              Šta radimo
+              {copy.hero.ctaSecondary}
             </a>
           </div>
         </div>

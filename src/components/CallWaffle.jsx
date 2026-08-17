@@ -1,4 +1,5 @@
 import { callOutcomes } from "../data/research";
+import { useCopy } from "../i18n";
 import "./CallWaffle.css";
 
 /**
@@ -6,35 +7,26 @@ import "./CallWaffle.css";
  * than a pie or stacked bar because the unit is countable and the audience is
  * non-technical: "38 of every 100" reads without decoding an axis.
  *
- * Palette is the validated status set (--c-live / --c-vm / --c-none). The amber
- * sits below 3:1 against white, so every segment carries a visible label and a
- * table view exists below — that is the required relief, not an oversight.
+ * Palette is the validated status set (--color-c-live / --c-vm / --c-none),
+ * re-validated against the dark surface. Every segment carries a visible label
+ * and percentage, which is the relief the contrast check requires.
  */
 export default function CallWaffle() {
-  const { segments, headline, headlineLabel, source } = callOutcomes;
+  const copy = useCopy();
+  const { segments, headline, sourceUrl } = callOutcomes;
 
   const cells = segments.flatMap((seg) =>
-    Array.from({ length: seg.cells }, (_, i) => ({
-      key: `${seg.key}-${i}`,
-      color: seg.color,
-      label: seg.label,
-    })),
+    Array.from({ length: seg.cells }, (_, i) => ({ key: `${seg.key}-${i}`, color: seg.color })),
   );
 
   return (
     <figure className="waffle-fig">
-      <figcaption className="waffle-cap">
-        Od svakih 100 poziva ka maloj firmi
-      </figcaption>
+      <figcaption className="waffle-cap">{copy.chart.caption}</figcaption>
 
       <div className="waffle-body">
         <div className="waffle-grid" role="img" aria-labelledby="waffle-desc">
           {cells.map((cell) => (
-            <span
-              key={cell.key}
-              className="waffle-cell"
-              style={{ background: cell.color }}
-            />
+            <span key={cell.key} className="waffle-cell" style={{ background: cell.color }} />
           ))}
         </div>
 
@@ -43,14 +35,14 @@ export default function CallWaffle() {
             <strong>{headline}</strong>
             <span>%</span>
           </p>
-          <p className="waffle-big-label">{headlineLabel}</p>
+          <p className="waffle-big-label">{copy.chart.headlineLabel}</p>
 
           <ul className="waffle-legend">
             {segments.map((seg) => (
               <li key={seg.key}>
                 <span className="swatch" style={{ background: seg.color }} />
-                <span className="legend-label">{seg.label}</span>
-                <span className="legend-val">{seg.pct}%</span>
+                <span className="legend-label">{copy.chart.segments[seg.key]}</span>
+                <span className="legend-val">{copy.chart.pct[seg.key]}%</span>
               </li>
             ))}
           </ul>
@@ -58,14 +50,13 @@ export default function CallWaffle() {
       </div>
 
       <p id="waffle-desc" className="visually-hidden">
-        Od 100 poziva upućenih maloj firmi, na 37,8 odsto se neko javi, 37,8 odsto
-        završi na govornoj pošti, a na 24,3 odsto niko se ne javi i nema odgovora.
+        {copy.chart.description}
       </p>
 
       <p className="waffle-source">
-        Izvor:{" "}
-        <a href={source.url} target="_blank" rel="noopener noreferrer">
-          {source.label}
+        {copy.chart.sourcePrefix}{" "}
+        <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+          {copy.chart.sourceLabel}
         </a>
       </p>
     </figure>
