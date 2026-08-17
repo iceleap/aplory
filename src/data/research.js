@@ -18,12 +18,12 @@ export const callOutcomes = {
   // the waffle rounds them to whole calls out of 100. Written with a comma
   // decimal separator, as Serbian uses.
   segments: [
-    { key: "live", label: "Javi se osoba", pct: "37,8", cells: 38, color: "var(--color-c-live)" },
+    { key: "live", label: "Neko se javi", pct: "37,8", cells: 38, color: "var(--color-c-live)" },
     { key: "voicemail", label: "Govorna pošta", pct: "37,8", cells: 38, color: "var(--color-c-vm)" },
     { key: "none", label: "Bez ikakvog odgovora", pct: "24,3", cells: 24, color: "var(--color-c-none)" },
   ],
   headline: 62,
-  headlineLabel: "poziva ne dobije živu osobu",
+  headlineLabel: "poziva na koje se niko ne javi",
 };
 
 /** Benchmarks shown in the "Rezultati istraživanja" section. */

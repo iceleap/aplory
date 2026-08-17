@@ -58,8 +58,8 @@ export default function CallWaffle() {
       </div>
 
       <p id="waffle-desc" className="visually-hidden">
-        Od 100 poziva upućenih maloj firmi, na 37,8 odsto se javi osoba, 37,8 odsto
-        završi na govornoj pošti, a 24,3 odsto ne dobije nikakav odgovor.
+        Od 100 poziva upućenih maloj firmi, na 37,8 odsto se neko javi, 37,8 odsto
+        završi na govornoj pošti, a na 24,3 odsto niko se ne javi i nema odgovora.
       </p>
 
       <p className="waffle-source">

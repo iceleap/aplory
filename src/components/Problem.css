@@ -10,9 +10,15 @@
   border-top: 1px solid var(--color-rule);
 }
 
+/* Gutters on both sides so text never sits flush against a divider. The outer
+   edges stay flush, keeping the block aligned with the rest of the section. */
 .prob-list li {
-  padding: 30px 30px 0 0;
+  padding: 30px 28px 0;
   border-right: 1px solid var(--color-rule);
+}
+
+.prob-list li:first-child {
+  padding-left: 0;
 }
 
 .prob-list li:last-child {
@@ -42,6 +48,10 @@
     border-right: 0;
     border-bottom: 1px solid var(--color-rule);
     padding: 22px 0;
+  }
+
+  .prob-list li:first-child {
+    padding-left: 0;
   }
 
   .prob-list li:last-child {

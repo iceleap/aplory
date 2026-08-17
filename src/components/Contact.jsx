@@ -115,7 +115,6 @@ export default function Contact() {
         <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">
           <span className="logo h-6 w-28" role="img" aria-label="APLORY" />
           <span>© 2026 APLORY</span>
-          <span className="text-faint">Automatizacija odgovora na upite</span>
           <a className="ml-auto transition-colors hover:text-ink" href="/politika-privatnosti.html">
             Politika privatnosti
           </a>
