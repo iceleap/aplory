@@ -45,24 +45,6 @@ export const upcoming = {
 };
 
 /**
- * The Rezultat section: one missed inquiry, two endings.
- *
- * Both columns open on the same 09:41 event on purpose — the input is identical
- * and only the ending differs. One short line per step; the contrast does the
- * explaining, so nothing here needs a paragraph.
- */
-/**
- * One missed call forking into two futures.
- *
- * Three nodes only — the shared origin and the two endings. What happens along
- * each path is written on the branch rather than given its own node, which keeps
- * the diagram readable.
- *
- * The 09:47 on the failure branch is an illustrative scenario, not a measured
- * figure: roughly the time it takes to hang up, reopen the search results, pick
- * the next listing and dial it. The cited research lives in research.js.
- */
-/**
  * One missed call at 09:41, two endings three minutes later.
  *
  * Both branches finish at 09:44 on purpose: the point is not that one path is
@@ -91,10 +73,9 @@ export const outcomeFork = {
       key: "withUs",
       label: "Sa APLORY",
       tone: "good",
-      /* This branch ends in the phone mockup rather than a text block, so the
-         fork renders only its time marker — the title and outcome below are
-         read by PhoneMockup. Without this the words appear twice. */
-      terminal: "phone",
+      /* The conversation starts at this branch's opening node, so the mockup
+         hangs there rather than at the ending. */
+      mockup: true,
       start: { time: "odmah", title: "Automatski odgovor" },
       end: {
         time: "09:44",
@@ -106,9 +87,9 @@ export const outcomeFork = {
 };
 
 /**
- * The thread shown in the phone, which is where the success branch ends. Its
- * heading and closing line come from that branch (label and outcome), so the
- * strings live in `outcomeFork` and are not repeated here.
+ * The thread shown in the phone, which hangs off the success branch's opening
+ * node — that is the moment the conversation starts. The booking itself is
+ * stated once, on the branch's endpoint, so the footer here does not repeat it.
  */
 export const recoveryThread = {
   missed: { label: "Propušten poziv", time: "09:41" },
@@ -121,7 +102,7 @@ export const recoveryThread = {
     { from: "client", time: "09:44", text: "Treba mi termin, može danas u 17:20?" },
     { from: "us", time: "09:44", text: "Naravno, zakazano za 17:20. Vidimo se!" },
   ],
-  confirmation: "Termin zakazan · upisano u kalendar",
+  confirmation: "Upisano u kalendar",
 };
 
 export const faq = [

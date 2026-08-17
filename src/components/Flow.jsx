@@ -10,8 +10,10 @@ const SPREAD = 72; // px from the centre line to each branch
    on — one shared stopping point is the whole layout model. */
 const END_PCT = 62;
 
-/* Where the phone hangs off the success endpoint on wide screens. */
-const PHONE_GAP = 18; // px between the endpoint dot and the phone's edge
+/* The phone hangs from the success branch's opening node — where the
+   conversation actually starts — so it occupies the run between that node and
+   the ending, under the line. */
+const PHONE_X = FORK_X + RADIUS; // the opening node's x
 const SUCCESS_Y = 160 + SPREAD; // success line, measured from the fork's own top
 
 function Endpoint({ branch }) {
@@ -78,44 +80,35 @@ function Endpoint({ branch }) {
           good ? "md:bg-live" : "md:bg-c-none"
         }`}
       />
-      {/* Centred on the endpoint and offset outward, which leaves the line
-          itself clear for the connector running on to the phone.
-
-          A branch the phone terminates shows only its time here — its name,
-          title and outcome are printed on the phone, and rendering them twice
-          is what made the section read as repetitive. */}
+      {/* Both endings are written the same way and sit to the right of their
+          own dot — same clock time, opposite outcome, one above the line and
+          one below. Extending rightward rather than back over the branch also
+          keeps this clear of the phone, which occupies the run between the
+          opening and closing nodes. */}
       <span
-        style={{ left: `${END_PCT}%`, top: `calc(50% + ${dy}px)` }}
-        className={`hidden md:block md:absolute md:w-max md:-translate-x-1/2 xl:-translate-x-full ${outward}`}
+        style={{ left: `calc(${END_PCT}% + 22px)`, top: `calc(50% + ${dy}px)` }}
+        className={`hidden md:block md:absolute md:w-max ${outward}`}
       >
-        {branch.terminal ? (
-          <span className="block text-[12.5px] font-semibold text-muted tabular-nums">
+        <span
+          className={`block text-xs font-bold tracking-[0.14em] uppercase ${
+            good ? "text-brand-b" : "text-muted"
+          }`}
+        >
+          {branch.label}
+        </span>
+        <span className="mt-1.5 block">
+          <span className="text-[12.5px] font-semibold text-muted tabular-nums">
             {branch.end.time}
           </span>
-        ) : (
-          <>
-            <span
-              className={`block text-xs font-bold tracking-[0.14em] uppercase ${
-                good ? "text-brand-b" : "text-muted"
-              }`}
-            >
-              {branch.label}
-            </span>
-            <span className="mt-1.5 block">
-              <span className="text-[12.5px] font-semibold text-muted tabular-nums">
-                {branch.end.time}
-              </span>
-              <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
-            </span>
-            <span
-              className={`mt-0.5 block text-[13px] font-semibold ${
-                good ? "text-live" : "text-c-none"
-              }`}
-            >
-              {branch.end.outcome}
-            </span>
-          </>
-        )}
+          <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
+        </span>
+        <span
+          className={`mt-0.5 block text-[13px] font-semibold ${
+            good ? "text-live" : "text-c-none"
+          }`}
+        >
+          {branch.end.outcome}
+        </span>
       </span>
     </>
   );
@@ -164,21 +157,15 @@ function ForkList() {
                 <span className="text-[12.5px] font-semibold text-muted tabular-nums">
                   {branch.end.time}
                 </span>
-                {!branch.terminal && (
-                  <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
-                )}
+                <span className="ml-2 text-[15px] text-ink">{branch.end.title}</span>
               </p>
-              {/* A branch the phone terminates stops here: the phone sits
-                  directly below and carries the title and outcome. */}
-              {!branch.terminal && (
-                <p
-                  className={`mt-1 text-[13px] font-semibold ${
-                    good ? "text-live" : "text-c-none"
-                  }`}
-                >
-                  {branch.end.outcome}
-                </p>
-              )}
+              <p
+                className={`mt-1 text-[13px] font-semibold ${
+                  good ? "text-live" : "text-c-none"
+                }`}
+              >
+                {branch.end.outcome}
+              </p>
             </div>
           );
         })}
@@ -193,20 +180,6 @@ function Fork() {
   return (
     <div className="relative md:h-80">
       <ForkList />
-
-      {/* Just enough line to bridge the endpoint dot and the phone's edge. It
-          deliberately does not run further: both branches stop at END_PCT, and
-          a success line drawn longer than the failure one would read as the
-          slower path rather than the better one. */}
-      <span
-        aria-hidden="true"
-        style={{
-          left: `${END_PCT}%`,
-          top: `calc(50% + ${SPREAD}px)`,
-          width: `${PHONE_GAP}px`,
-        }}
-        className="hidden xl:block xl:absolute xl:h-px xl:bg-rule"
-      />
 
       {/* Shared stem out to the fork point. */}
       <span
@@ -268,19 +241,16 @@ function Fork() {
 }
 
 /**
- * The success branch's ending. It carries that branch's name and outcome, which
- * is why neither is printed on the fork itself.
+ * What the automatic reply turns into. It hangs from the success branch's
+ * opening node, so the "odmah · Automatski odgovor" label on the line above is
+ * its heading — it carries no caption of its own, and the booking is stated
+ * once, on the branch's endpoint.
  */
-function PhoneMockup({ branch }) {
+function PhoneMockup() {
   const { missed, messages, confirmation } = recoveryThread;
 
   return (
     <figure className="m-0 w-full max-w-82.5">
-      {/* Below md the stacked list already names the branch, so this heading
-          would be the second one on screen. */}
-      <figcaption className="mb-3 hidden text-xs font-bold tracking-[0.14em] text-brand-b uppercase md:block">
-        {branch.label}
-      </figcaption>
 
       <div className="overflow-hidden rounded-[22px] border border-rule bg-paper shadow-[0_20px_50px_-30px_rgba(11,18,32,0.5)]">
         <div className="flex items-center gap-2.5 border-b border-rule-soft bg-surface px-4 py-3">
@@ -337,8 +307,6 @@ function PhoneMockup({ branch }) {
         </p>
       </div>
 
-      {/* The branch's outcome, mirroring the red one under the losing path. */}
-      <p className="mt-3 text-[13px] font-semibold text-live">{branch.end.outcome}</p>
     </figure>
   );
 }
@@ -368,10 +336,10 @@ export default function Flow() {
           <div className="relative mt-10 md:mt-14 xl:h-165">
             <Fork />
             <div
-              style={{ left: `calc(${END_PCT}% + ${PHONE_GAP}px)`, top: `${SUCCESS_Y}px` }}
-              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:-translate-y-7 xl:border-l-0 xl:pl-0"
+              style={{ left: `${PHONE_X}px`, top: `${SUCCESS_Y}px` }}
+              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:translate-y-4 xl:border-l-0 xl:pl-0"
             >
-              <PhoneMockup branch={outcomeFork.branches.find((b) => b.terminal)} />
+              <PhoneMockup />
             </div>
           </div>
         </div>
