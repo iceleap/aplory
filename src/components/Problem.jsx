@@ -11,10 +11,10 @@ export default function Problem() {
           </p>
         </div>
         <div>
-          <h2 id="problem-title" className="h2">
+          <h2 id="problem-title" className="h2" data-reveal>
             Poziv na koji se niko ne javi je klijent koji zove sledećeg.
           </h2>
-          <p className="lead-note">
+          <p className="lead-note" data-reveal>
             Telefon zvoni dok radite, posle radnog vremena i vikendom.
             Istraživanja pokazuju koliko tih poziva nikada ne stigne do žive
             osobe.
@@ -22,7 +22,7 @@ export default function Problem() {
 
           <CallWaffle />
 
-          <ul className="prob-list">
+          <ul className="prob-list" data-reveal>
             <li>
               <h3>Zvoni dok radite</h3>
               <p>

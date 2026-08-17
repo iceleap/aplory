@@ -10,11 +10,11 @@ export default function Results() {
           </p>
         </div>
         <div>
-          <h2 id="istrazivanja-title" className="h2">
+          <h2 id="istrazivanja-title" className="h2" data-reveal>
             Zašto brzina odgovora odlučuje.
           </h2>
 
-          <ul className="mt-11 grid list-none gap-x-12 gap-y-8 p-0 sm:grid-cols-3">
+          <ul className="mt-11 grid list-none gap-x-12 gap-y-8 p-0 sm:grid-cols-3" data-reveal>
             {benchmarks.map((item) => (
               <li key={item.value}>
                 <h3 className="text-[46px] leading-none font-[250] tracking-[-0.04em] tabular-nums">

@@ -322,10 +322,10 @@ export default function Flow() {
           <p className="rail-note">Sve se odlučuje u prva tri minuta.</p>
         </div>
         <div>
-          <h2 id="rezultat-title" className="h2">
+          <h2 id="rezultat-title" className="h2" data-reveal>
             Dva kraja istog poziva.
           </h2>
-          <p className="lead-note">
+          <p className="lead-note" data-reveal>
             Razliku pravi jedna automatska poruka, poslata odmah.
           </p>
 

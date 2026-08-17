@@ -307,3 +307,26 @@
     opacity: 0.45;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Scroll reveal — see src/lib/useReveal.js
+
+   Scoped to .reveal-ready, which the hook adds only once it has an observer.
+   Without that guard, a failed observer would leave content hidden for good.
+   -------------------------------------------------------------------------- */
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
