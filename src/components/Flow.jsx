@@ -365,11 +365,11 @@ export default function Flow() {
               centred on that branch's line, so the branch ends in it. Narrower
               than xl there is no room beside the fork, so it stacks and is tied
               to the branch by a left rule in the same colour instead. */}
-          <div className="relative mt-10 md:mt-14 xl:h-117.5">
+          <div className="relative mt-10 md:mt-14 xl:h-165">
             <Fork />
             <div
               style={{ left: `calc(${END_PCT}% + ${PHONE_GAP}px)`, top: `${SUCCESS_Y}px` }}
-              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:-translate-y-1/2 xl:border-l-0 xl:pl-0"
+              className="mt-10 border-l-2 border-live/40 pl-5 xl:absolute xl:mt-0 xl:w-75 xl:-translate-y-7 xl:border-l-0 xl:pl-0"
             >
               <PhoneMockup branch={outcomeFork.branches.find((b) => b.terminal)} />
             </div>
