@@ -10,7 +10,7 @@ export default {
   meta: {
     title: "APLORY — nijedan upit ne ostaje bez odgovora",
     description:
-      "Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta — APLORY automatski odgovara na svaki upit u roku od nekoliko sekundi.",
+      "Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit u roku od nekoliko sekundi.",
   },
 
   nav: {
@@ -31,11 +31,11 @@ export default {
 
   hero: {
     title: "Nijedan upit ne ostaje bez odgovora.",
-    lede: "Propušten poziv, poruka na WhatsAppu, Viberu ili Instagramu — svaki upit dobija odgovor automatski, u roku od nekoliko sekundi.",
+    lede: "Propušten poziv, poruka na WhatsAppu, Viberu ili Instagramu. Svaki upit dobija odgovor automatski, u roku od nekoliko sekundi.",
     ctaPrimary: "Zakažite razgovor",
     ctaSecondary: "Šta radimo",
     diagramAlt:
-      "Propušten poziv, WhatsApp, Viber, Instagram i poruke sa sajta — svi kanali vode do jednog odgovorenog upita.",
+      "Propušten poziv, WhatsApp, Viber, Instagram i poruke sa sajta. Svi kanali vode do jednog odgovorenog upita.",
     channels: ["Propušten poziv", "WhatsApp", "Viber", "Instagram", "Poruka sa sajta"],
     hub: { title: "Odgovoreno", note: "za nekoliko sekundi" },
   },
@@ -43,7 +43,7 @@ export default {
   problem: {
     eyebrow: "Problem",
     title: "Poziv na koji se niko ne javi je klijent koji zove sledećeg.",
-    lead: "Telefon zvoni dok radite, posle radnog vremena i vikendom. Istraživanja pokazuju na koliko tih poziva se niko ne javi.",
+    lead: "Telefon zvoni dok radite, posle radnog vremena i vikendom. 411 Locals je izbrojao na koliko tih poziva se niko ne javi.",
     cards: [
       {
         title: "Zvoni dok radite",
@@ -101,7 +101,7 @@ export default {
         line: "Zahtev za recenziju kad je klijent najzadovoljniji.",
       },
       { name: "Chat na sajtu", line: "Posetilac ostavlja upit, vi dobijate kontakt." },
-      { name: "Izrada sajta", line: "Sajt napravljen da pretvara posetioce u mušterije." },
+      { name: "Izrada sajta", line: "Sajt čiji je prvi zadatak da prikupi upit." },
     ],
   },
 
@@ -125,7 +125,7 @@ export default {
     thread: {
       missed: { label: "Propušten poziv", time: "09:41" },
       messages: [
-        { from: "us", time: "09:41", text: "Zdravo! Videli smo vaš poziv — kako možemo da pomognemo?" },
+        { from: "us", time: "09:41", text: "Zdravo! Videli smo vaš poziv, kako možemo da pomognemo?" },
         { from: "client", time: "09:44", text: "Treba mi termin, može danas u 17:20?" },
         { from: "us", time: "09:44", text: "Naravno, zakazano za 17:20. Vidimo se!" },
       ],
@@ -141,7 +141,7 @@ export default {
       "prosečno vreme odgovora na upit sa sajta",
       "manje šanse da kvalifikujete kontakt ako zovete posle 30 minuta umesto posle 5",
     ],
-    caveatBefore: "Tuđa istraživanja, ne naši rezultati — navodimo ih kao pokazatelj problema. Izvori:",
+    caveatBefore: "Tuđa istraživanja, ne naši rezultati. Navodimo ih kao pokazatelj problema. Izvori:",
     caveatBetween: "i",
     caveatAfter: ". Američko tržište, 2007–2016.",
   },
@@ -152,11 +152,11 @@ export default {
     items: [
       {
         q: "Šta konkretno dobijam?",
-        a: "Svaki upit koji vam stigne — propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta — dobija automatski odgovor za nekoliko sekundi, pa se razgovor nastavlja umesto da se ugasi.",
+        a: "Svaki upit koji vam stigne dobija automatski odgovor za nekoliko sekundi: propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog.",
       },
       {
         q: "Da li radite glasovnog agenta koji se javlja na telefon?",
-        a: "Još ne. Radimo na tome, ali ga ne prodajemo dok ne budemo sigurni da radi kako treba. Sve ostalo sa ove strane je spremno i radi danas.",
+        a: "Još ne. Radimo na tome, ali ga ne prodajemo dok ne budemo sigurni da radi kako treba. Sve ostalo sa ove strane je spremno danas.",
       },
       {
         q: "Da li moram da menjam broj telefona ili način rada?",
@@ -178,7 +178,7 @@ export default {
   contact: {
     eyebrow: "Kontakt",
     title: "Recite nam kuda vam stižu upiti.",
-    lede: "Javite nam koliko poziva i poruka dnevno primate. Vraćamo se sa konkretnim predlogom — bez obaveze i bez dugog prodajnog razgovora.",
+    lede: "Javite nam otprilike koliko poziva i poruka dnevno primate. Dobićete konkretan predlog, bez obaveze i bez dugog prodajnog razgovora.",
     cta: "Pišite nam",
     newWindow: " (otvara se u novom prozoru)",
     channels: { email: "Email", phone: "Telefon" },

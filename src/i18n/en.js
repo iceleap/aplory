@@ -11,7 +11,7 @@ export default {
   meta: {
     title: "APLORY — no enquiry goes unanswered",
     description:
-      "A missed call, WhatsApp, Viber, Instagram or a message from your site — APLORY answers every enquiry automatically, within seconds.",
+      "A missed call, WhatsApp, Viber, Instagram or a message from your site. APLORY answers every enquiry automatically, within seconds.",
   },
 
   nav: {
@@ -32,11 +32,11 @@ export default {
 
   hero: {
     title: "No enquiry goes unanswered.",
-    lede: "A missed call, a message on WhatsApp, Viber or Instagram — every enquiry gets an answer automatically, within seconds.",
+    lede: "A missed call, a message on WhatsApp, Viber or Instagram. Every enquiry gets an answer automatically, within seconds.",
     ctaPrimary: "Book a call",
     ctaSecondary: "What we do",
     diagramAlt:
-      "Missed calls, WhatsApp, Viber, Instagram and messages from your site — every channel leads to one answered enquiry.",
+      "Missed calls, WhatsApp, Viber, Instagram and messages from your site. Every channel leads to one answered enquiry.",
     channels: ["Missed call", "WhatsApp", "Viber", "Instagram", "Message from site"],
     hub: { title: "Answered", note: "within seconds" },
   },
@@ -44,7 +44,7 @@ export default {
   problem: {
     eyebrow: "Problem",
     title: "A call nobody answers is a customer calling the next number.",
-    lead: "The phone rings while you work, after hours and at weekends. Research shows how many of those calls nobody picks up.",
+    lead: "The phone rings while you work, after hours and at weekends. 411 Locals counted how many of those calls nobody picks up.",
     cards: [
       {
         title: "It rings while you work",
@@ -102,7 +102,7 @@ export default {
         line: "A review request at the moment the customer is happiest.",
       },
       { name: "Website chat", line: "A visitor leaves an enquiry, you get the contact." },
-      { name: "Website build", line: "A site built to turn visitors into customers." },
+      { name: "Website build", line: "A site whose first job is collecting the enquiry." },
     ],
   },
 
@@ -126,7 +126,7 @@ export default {
     thread: {
       missed: { label: "Missed call", time: "09:41" },
       messages: [
-        { from: "us", time: "09:41", text: "Hi! We saw your call — how can we help?" },
+        { from: "us", time: "09:41", text: "Hi! We saw your call, how can we help?" },
         { from: "client", time: "09:44", text: "I need an appointment, is 17:20 today possible?" },
         { from: "us", time: "09:44", text: "Of course, booked for 17:20. See you then!" },
       ],
@@ -143,7 +143,7 @@ export default {
       "lower odds of qualifying a lead if you call after 30 minutes instead of 5",
     ],
     caveatBefore:
-      "Third-party research, not our own results — cited as evidence of the problem. Sources:",
+      "Third-party research, not our own results. We cite it as evidence of the problem. Sources:",
     caveatBetween: "and",
     caveatAfter: ". US market, 2007–2016.",
   },
@@ -154,11 +154,11 @@ export default {
     items: [
       {
         q: "What exactly do I get?",
-        a: "Every enquiry that reaches you — a missed call, a message on WhatsApp, Viber, Instagram or from your site — gets an automatic reply within seconds, so the conversation continues instead of dying out.",
+        a: "Every enquiry that reaches you gets an automatic reply within seconds: a missed call, a message on WhatsApp, Viber, Instagram or from your site. You're in a conversation before they try anyone else.",
       },
       {
         q: "Do you build a voice agent that answers the phone?",
-        a: "Not yet. We're working on it, but we don't sell it until we're sure it works properly. Everything else on this page is ready and works today.",
+        a: "Not yet. We're working on it, but we don't sell it until we're sure it works properly. Everything else on this page is ready today.",
       },
       {
         q: "Do I have to change my phone number or how I work?",
@@ -179,7 +179,7 @@ export default {
   contact: {
     eyebrow: "Contact",
     title: "Tell us where your enquiries arrive.",
-    lede: "Let us know how many calls and messages you get each day. We'll come back with a concrete proposal — no obligation and no long sales call.",
+    lede: "Let us know roughly how many calls and messages you get in a day. You'll get a concrete proposal back, with no obligation and no long sales call.",
     cta: "Write to us",
     newWindow: " (opens in a new window)",
     channels: { email: "Email", phone: "Phone" },
