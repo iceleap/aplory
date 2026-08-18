@@ -5,7 +5,8 @@ import { useCopy } from "../i18n";
  *
  * Inline SVG rather than canvas: this is a structural diagram, so it stays sharp
  * at any pixel density, carries real text for screen readers, and animates with
- * plain CSS. The travelling pulses stop under prefers-reduced-motion.
+ * plain CSS. The travelling pulses and the check's draw-on both stop under
+ * prefers-reduced-motion.
  */
 
 const ICONS = [
@@ -122,6 +123,8 @@ export default function ChannelFlow() {
       />
       <circle cx={HUB_X} cy={HUB_Y} r="46" fill="url(#cf-grad)" />
       <path
+        className="cf-check"
+        pathLength="1"
         d={`M${HUB_X - 15},${HUB_Y + 1} l10,10 l20,-21`}
         fill="none"
         stroke="#fff"

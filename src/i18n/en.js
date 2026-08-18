@@ -146,7 +146,7 @@ export default {
 
   faq: {
     eyebrow: "Questions",
-    title: "Four questions, four answers.",
+    title: "The questions we get most often.",
     items: [
       {
         q: "What exactly do I get?",
@@ -165,6 +165,11 @@ export default {
         a: "Replying to an enquiry the customer sent themselves is the cleanest case legally. Campaigns to an existing database require explicit marketing consent (Serbian Advertising Act, art. 63; Personal Data Protection Act, art. 17).",
       },
     ],
+    more: {
+      prompt: "Have another question?",
+      // Not "Write to us" — that is the Contact CTA just below. See sr.js.
+      cta: "Get in touch",
+    },
   },
 
   contact: {

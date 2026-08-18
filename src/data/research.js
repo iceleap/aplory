@@ -18,10 +18,12 @@ export const callOutcomes = {
   // Percentages are of all incoming calls and sum to 99.9 in the original study;
   // the waffle rounds them to whole calls out of 100. The printed percentages
   // live in the language files, since the decimal separator differs.
+  // `missed` marks the two segments that add up to the 62% headline, so the
+  // chart can outline exactly the cells that figure counts.
   segments: [
     { key: "live", cells: 38, color: "var(--color-c-live)" },
-    { key: "voicemail", cells: 38, color: "var(--color-c-vm)" },
-    { key: "none", cells: 24, color: "var(--color-c-none)" },
+    { key: "voicemail", cells: 38, color: "var(--color-c-vm)", missed: true },
+    { key: "none", cells: 24, color: "var(--color-c-none)", missed: true },
   ],
   headline: 62,
 };

@@ -21,6 +21,7 @@
 }
 
 .waffle-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(10, 22px);
   /* 2px surface gap between fills keeps adjacent cells legible. */
@@ -31,6 +32,43 @@
   width: 22px;
   height: 22px;
   border-radius: 3px;
+}
+
+/* The answered calls sit back a step. They are the part of the figure nobody is
+   being asked to worry about, and holding them at full strength let the blue
+   compete with the block the section is actually about. Opacity rather than a
+   second blue: one value, and it stays true if --color-c-live is ever restepped.
+   The legend swatch follows, or the key stops matching what it keys. */
+.waffle-cell.is-answered,
+.waffle-legend li.is-answered .swatch {
+  opacity: 0.7;
+}
+
+/* A quiet panel under the whole unanswered block — voicemail plus no-answer,
+   the 62 cells the headline counts — so the group reads as one region set apart
+   from the answered blue. Filled rather than outlined: the block starts partway
+   along a row, and a stroke around that step draws the eye straight to the jog.
+   A soft field groups the cells without asking anyone to look at its edge.
+
+   z-index is load-bearing. The panel is positioned, so it would otherwise paint
+   over the static cells whatever the source order says; -1 drops it behind them
+   while staying above the grid's own background.
+
+   The path is drawn in grid units (see CallWaffle.jsx) and scaled to fit. The
+   grid is always square — 10 cells and 9 gaps on both axes — so the scale stays
+   uniform and the step never skews. Cell size changes per breakpoint while the
+   gap does not, which shifts the corner by under a pixel against a 4px gutter,
+   and a soft fill absorbs that without anyone being able to see it. */
+.waffle-plate {
+  position: absolute;
+  inset: -11px;
+  z-index: -1;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+  fill: var(--color-surface-2);
+  stroke: none;
 }
 
 .waffle-side {
@@ -53,17 +91,22 @@
 }
 
 /* Matches the research figures, where the suffix is set at the figure's own
-   size — "62%" should read as one number, not a number with a footnote. */
+   size — "62%" should read as one number, not a number with a footnote. Held
+   one step under the numeral rather than at --color-muted, so the figure the
+   panelled cells count out doesn't trail off at its last glyph. */
 .waffle-big span {
   font-size: 46px;
   font-weight: 300;
-  color: var(--color-muted);
+  color: var(--color-ink-2);
 }
 
+/* This label is the claim the section makes, so it reads at full ink instead of
+   sitting back with the supporting copy. */
 .waffle-big-label {
   margin-top: 8px;
   font-size: 15px;
-  color: var(--color-ink-2);
+  font-weight: 500;
+  color: var(--color-ink);
   max-width: 22ch;
   line-height: 1.45;
 }
@@ -100,6 +143,18 @@
   margin-left: auto;
   color: var(--color-muted);
   font-variant-numeric: tabular-nums;
+}
+
+/* The two unanswered rows step up to full ink. The swatches stay bare: the
+   grouping in the grid is a field the cells sit on, and there is no way to say
+   that around an 11px square without it reading as a border. */
+.waffle-legend li.is-missed .legend-label {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.waffle-legend li.is-missed .legend-val {
+  color: var(--color-ink-2);
 }
 
 .waffle-source {

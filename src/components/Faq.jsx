@@ -1,7 +1,14 @@
+import { useScrollTo } from "../lib/SmoothScroll";
 import { useCopy } from "../i18n";
 
 export default function Faq() {
   const copy = useCopy();
+  const scrollTo = useScrollTo();
+
+  const go = (event, id) => {
+    event.preventDefault();
+    scrollTo(id);
+  };
 
   return (
     <section className="sec" id="pitanja" aria-labelledby="pitanja-title">
@@ -28,6 +35,25 @@ export default function Faq() {
               </div>
             ))}
           </dl>
+
+          {/* Outside the <dl>: only dt/dd (or a div wrapping them) belong in a
+              definition list, and this is a prompt, not another answer. */}
+          <div
+            className="mt-10 flex flex-col gap-5 border-t border-rule pt-6 sm:flex-row sm:items-center sm:justify-between"
+            data-reveal
+            style={{ "--reveal-delay": "100ms" }}
+          >
+            <p className="text-[19px] leading-snug font-semibold tracking-[-0.015em] text-ink">
+              {copy.faq.more.prompt}
+            </p>
+            <a
+              className="btn btn-primary self-start"
+              href="#kontakt"
+              onClick={(e) => go(e, "kontakt")}
+            >
+              {copy.faq.more.cta}
+            </a>
+          </div>
         </div>
       </div>
     </section>

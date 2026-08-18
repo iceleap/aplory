@@ -82,6 +82,38 @@
   }
 }
 
+/* The hero's checkmark: drawn on, held, retracted the way it came, then a beat
+   of empty hub before it starts over.
+
+   Retracting to 1 rather than running on to -1 is what keeps the seam quiet.
+   Both hide the stroke, but they leave it in different places: run the dash past
+   the path and the last thing on screen is a round cap at the tip of the long
+   leg, while the next cycle opens with one at the start of the short leg, so the
+   mark jumps the width of the check on every loop. Coming back to 1 means the
+   cycle ends on the value it begins with, and the mark vanishes exactly where it
+   will reappear. The easings are deliberately opposite — quick out of the draw,
+   quick into the retract — so neither of those single-dot frames is drawn out
+   long enough to register. */
+@keyframes cf-check-draw {
+  0% {
+    stroke-dashoffset: 1;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  13% {
+    stroke-dashoffset: 0;
+  }
+  75% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+  }
+  90% {
+    stroke-dashoffset: 1;
+  }
+  100% {
+    stroke-dashoffset: 1;
+  }
+}
+
 :root {
   /* Sticky header height; the hero subtracts it to stay one viewport tall.
      The mobile menu opens as an overlay, so this stays a single row. */
@@ -345,10 +377,24 @@
   animation: flow-dash 2.6s linear infinite;
 }
 
+/* One 5s cycle: 0.65s drawing, 3.1s held, 0.75s retracting, 0.5s empty. The
+   keyframes carry their own easing, hence `linear` here. pathLength="1" on the
+   path normalises the dash values, so this survives the hub moving. */
+.cf-check {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: cf-check-draw 5s linear 0.4s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cf-pulse {
     animation: none;
     opacity: 0.45;
+  }
+  /* Without the offset reset the check would stay hidden for good. */
+  .cf-check {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }
 

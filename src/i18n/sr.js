@@ -144,7 +144,7 @@ export default {
 
   faq: {
     eyebrow: "Pitanja",
-    title: "Četiri pitanja, četiri odgovora.",
+    title: "Pitanja koja najčešće dobijamo.",
     items: [
       {
         q: "Šta konkretno dobijam?",
@@ -163,6 +163,12 @@ export default {
         a: "Odgovor na upit koji je klijent sam poslao je pravno najčistiji slučaj. Za kampanje prema staroj bazi traži se izričit pristanak za marketing (Zakon o oglašavanju, čl. 63; Zakon o zaštiti podataka o ličnosti, čl. 17).",
       },
     ],
+    more: {
+      prompt: "Imate drugo pitanje?",
+      // Deliberately not "Pišite nam" — the Contact CTA just below already uses
+      // that label, and two identical buttons a screen apart read as a stutter.
+      cta: "Kontaktirajte nas",
+    },
   },
 
   contact: {
