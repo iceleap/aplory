@@ -80,14 +80,18 @@ export default {
   services: {
     eyebrow: "Solution",
     title: "We catch every enquiry and answer on your behalf.",
+    // The first item is rendered as the section's lead, the rest as a ledger
+    // beneath it — see Services.jsx. These two label those two groups.
+    leadTag: "Main service",
+    moreTag: "Alongside it",
     items: [
       {
         name: "Text back after a missed call",
-        line: "Whoever can't reach you gets a message within seconds.",
+        line: "Whoever can't reach you gets a message within seconds. The conversation starts right away, instead of the customer hanging up and dialling the next listing.",
       },
       {
-        name: "Routing to WhatsApp, Viber and Instagram",
-        line: "The conversation continues wherever it's easiest for the customer.",
+        name: "Routing to the channels your customers use",
+        line: "The conversation continues wherever it's easiest for the customer, on the channels you already use.",
       },
       {
         name: "Appointment reminders",

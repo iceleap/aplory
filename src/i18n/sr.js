@@ -79,14 +79,18 @@ export default {
   services: {
     eyebrow: "Rešenje",
     title: "Hvatamo svaki upit i odgovaramo umesto vas.",
+    // The first item is rendered as the section's lead, the rest as a ledger
+    // beneath it — see Services.jsx. These two label those two groups.
+    leadTag: "Glavna usluga",
+    moreTag: "Uz to",
     items: [
       {
         name: "Poruka posle propuštenog poziva",
-        line: "Ko ne dobije vas, dobije poruku za nekoliko sekundi.",
+        line: "Ko ne dobije vas, dobije poruku za nekoliko sekundi. Razgovor počinje odmah, umesto da klijent zatvori i pozove sledeći broj sa liste.",
       },
       {
-        name: "Preusmeravanje na WhatsApp, Viber i Instagram",
-        line: "Razgovor se nastavlja tamo gde je klijentu najlakše.",
+        name: "Preusmeravanje na kanale koje klijenti koriste",
+        line: "Razgovor se nastavlja tamo gde je klijentu najlakše, na kanalima koje vi već koristite.",
       },
       {
         name: "Podsetnici za termine",
