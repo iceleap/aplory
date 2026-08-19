@@ -47,7 +47,7 @@
         "@type": "ProfessionalService",
         "name": "APLORY",
         "description": "Automatski odgovor na propušten poziv, preusmeravanje na kanale koje klijenti koriste, podsetnici za termine, Google recenzije, chat na sajtu i izrada sajta.",
-        "email": "stefanvujic869@gmail.com",
+        "email": "office.aplory@gmail.com",
         "telephone": "+381698440885",
         "url": "https://aplory.dev/",
         "availableLanguage": "sr",
@@ -75,6 +75,27 @@
     </script>
   </head>
   <body>
+    <!--
+      Netlify registers a form by parsing the HTML it deploys. The real form is
+      rendered by React and so is invisible to that parser; this static twin is
+      what the build sees, and it exists only to declare the form's name and its
+      fields. Nobody ever submits it. Keep the field names identical to the ones
+      in src/components/ContactForm.jsx — a name that appears only there is
+      silently dropped from the stored submission.
+    -->
+    <form name="kontakt" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="kontakt" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="ime" />
+      <input type="email" name="email" />
+      <input type="tel" name="telefon" />
+      <select name="delatnost"></select>
+      <input type="text" name="delatnost-drugo" />
+      <input type="checkbox" name="usluge" />
+      <input type="text" name="usluge-drugo" />
+      <textarea name="poruka"></textarea>
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

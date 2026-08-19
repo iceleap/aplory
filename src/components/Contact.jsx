@@ -1,4 +1,5 @@
 import { useCopy } from "../i18n";
+import ContactForm from "./ContactForm";
 const ICONS = {
   mail: (
     <>
@@ -12,7 +13,7 @@ const ICONS = {
 /* Values are language-neutral; only the labels translate. One number covers the
    call and every messenger running on it, so they share a cell. */
 const CHANNELS = [
-  { icon: "mail", key: "email", value: "stefanvujic869@gmail.com", href: "mailto:stefanvujic869@gmail.com" },
+  { icon: "mail", key: "email", value: "office.aplory@gmail.com", href: "mailto:office.aplory@gmail.com" },
   { icon: "phone", key: "phone", value: "069 844 0 885", href: "tel:+381698440885", note: true },
 ];
 
@@ -76,39 +77,35 @@ export default function Contact() {
   return (
     <section className="border-t border-rule bg-surface pt-24 pb-12" id="kontakt" aria-labelledby="kontakt-title">
       <div className="wrap">
-        {/* Heading and CTA share a row so the ask sits level with the invitation
-            rather than trailing a paragraph. */}
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div data-reveal>
-            <p className="eyebrow" aria-hidden="true">
-              {copy.contact.eyebrow}
-            </p>
-            <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch]">
-              {copy.contact.title}
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-[15px] text-muted">
-              {copy.contact.lede}
-            </p>
-          </div>
-
-          <div data-reveal style={{ "--reveal-delay": "100ms" }}>
-            <Outbound
-              className="btn btn-primary shrink-0"
-              href="mailto:stefanvujic869@gmail.com?subject=Upit%20sa%20sajta"
-            >
-              {copy.contact.cta}
-            </Outbound>
-          </div>
+        {/* Heading only. The invitation and the mailto button that used to sit
+            here both said what the form below now asks outright. */}
+        <div data-reveal>
+          <p className="eyebrow" aria-hidden="true">
+            {copy.contact.eyebrow}
+          </p>
+          <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch]">
+            {copy.contact.title}
+          </h2>
         </div>
 
-        <ul className="mt-12 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
-          {/* Keyed by the channel, never by its label: a label-keyed element is
-              torn down and rebuilt on a language switch, and the rebuilt node is
-              one the reveal observer has never seen — it would stay invisible. */}
-          {CHANNELS.map((channel, i) => (
-            <Tile key={channel.key} channel={channel} index={i} />
-          ))}
-        </ul>
+        {/* The form leads and the channels sit beside it: writing here is the
+            path we want, and the address and number are for people who would
+            rather use their own client. Below lg the pair stacks and the two
+            channel cells go back to sharing a row. */}
+        <div className="mt-12 grid items-start gap-3 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div data-reveal>
+            <ContactForm />
+          </div>
+
+          <ul className="grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-1">
+            {/* Keyed by the channel, never by its label: a label-keyed element is
+                torn down and rebuilt on a language switch, and the rebuilt node is
+                one the reveal observer has never seen — it would stay invisible. */}
+            {CHANNELS.map((channel, i) => (
+              <Tile key={channel.key} channel={channel} index={i} />
+            ))}
+          </ul>
+        </div>
 
         {/* Footer lives inside the dark section for now, on the same ground. */}
         <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">

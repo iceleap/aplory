@@ -178,11 +178,71 @@ export default {
   contact: {
     eyebrow: "Kontakt",
     title: "Recite nam kuda vam stižu upiti.",
-    lede: "Javite nam otprilike koliko poziva i poruka dnevno primate. Dobićete konkretan predlog, bez obaveze i bez dugog prodajnog razgovora.",
-    cta: "Pišite nam",
     newWindow: " (otvara se u novom prozoru)",
     channels: { email: "Email", phone: "Telefon" },
     otherValue: "WhatsApp · Viber · SMS",
+    form: {
+      legend: "Pošaljite upit",
+      // Never read by a person: it labels the honeypot for the bots that parse
+      // the markup looking for a field to fill in.
+      honeypot: "Ne popunjavajte ovo polje",
+      fields: {
+        name: { label: "Ime", placeholder: "Vaše ime" },
+        email: { label: "Email", placeholder: "vas@email.com" },
+        phone: { label: "Telefon", optional: "opciono", placeholder: "069 123 4567" },
+        // Options are keyed by the slug that gets submitted, never by position:
+        // the order in ContactForm.jsx can change without rewriting what a
+        // stored answer means.
+        industry: {
+          label: "Delatnost",
+          optional: "opciono",
+          placeholder: "Izaberite delatnost",
+          otherLabel: "Čime se bavite?",
+          otherPlaceholder: "Upišite svoju delatnost",
+          options: {
+            stomatolog: "Stomatološka ordinacija",
+            veterinar: "Veterinarska ambulanta",
+            advokat: "Advokatska kancelarija",
+            majstor: "Majstor i zanatske usluge",
+            nekretnine: "Nekretnine i izdavanje",
+            autoservis: "Auto servis",
+            salon: "Frizerski i kozmetički salon",
+            ordinacija: "Privatna ordinacija i klinika",
+            gradnja: "Građevina i renoviranje",
+            autoskola: "Autoškola",
+            knjigovodstvo: "Knjigovodstvena agencija",
+            selidbe: "Selidbe i transport",
+            drugo: "Drugo",
+          },
+        },
+        services: {
+          label: "Šta vas najviše zanima?",
+          optional: "opciono",
+          hint: "Možete izabrati više opcija.",
+          options: {
+            "promasen-poziv": "Poruka posle propuštenog poziva",
+            chat: "Chat na sajtu",
+            sajt: "Izrada sajta",
+            ostalo: "Ostalo",
+          },
+          otherLabel: "Šta vas još zanima?",
+          otherPlaceholder: "Upišite šta vam treba",
+        },
+        message: {
+          label: "Poruka",
+          placeholder: "Kuda vam stižu upiti i koliko ih otprilike bude dnevno?",
+        },
+      },
+      submit: "Pošaljite upit",
+      sending: "Šaljemo…",
+      sent: "Hvala, poruka je stigla. Javljamo se u najkraćem roku.",
+      // Names the fallback outright: a visitor who sees this has already tried
+      // once, and a second failed attempt is worse than an address to write to.
+      error: "Slanje nije uspelo. Pišite nam direktno na office.aplory@gmail.com.",
+      privacyBefore: "Slanjem prihvatate ",
+      privacyLink: "politiku privatnosti",
+      privacyAfter: ".",
+    },
     footer: {
       rights: "© 2026 APLORY",
       privacy: "Politika privatnosti",

@@ -42,6 +42,12 @@
      #16a47a, which goes muddy against a dark ground. */
   --color-live: #2fd39a;
 
+  /* The other semantic pair to --color-live: form validation and the send
+     failure. Kept out of the chart block below, which forbids reusing its three
+     as accents. Clears AA on both grounds it lands on — 6.12:1 on paper,
+     4.94:1 inside a field. */
+  --color-danger: #ef6a80;
+
   /* Chart status colors — re-validated against the dark surface rather than
      carried over. Both warm steps had to be re-stepped: the old amber sat above
      the dark lightness band, and the old orange-red collided with it once
@@ -187,6 +193,19 @@
     outline: 2px solid var(--color-brand-a);
     outline-offset: 3px;
     border-radius: 2px;
+  }
+
+  /* Form controls are the one place the OS draws on our behalf. `color-scheme`
+     is the only thing that reaches a select's dropdown popup — no CSS on the
+     select itself does — and without it the popup opens white against the dark
+     page. Scoped to the controls rather than the root so the page's scrollbars
+     stay as they are. */
+  input,
+  select,
+  textarea {
+    color-scheme: dark;
+    accent-color: var(--color-brand-a);
+    font: inherit;
   }
 }
 
