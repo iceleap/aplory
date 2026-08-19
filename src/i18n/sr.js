@@ -177,15 +177,37 @@ export default {
 
   contact: {
     eyebrow: "Kontakt",
-    title: "Recite nam kuda vam stižu upiti.",
     newWindow: " (otvara se u novom prozoru)",
     channels: { email: "Email", phone: "Telefon" },
     otherValue: "WhatsApp · Viber · SMS",
     form: {
       legend: "Pošaljite upit",
+      // Shown under every required field once it has been flagged.
+      requiredError: "Ovo polje je obavezno.",
       // Never read by a person: it labels the honeypot for the bots that parse
       // the markup looking for a field to fill in.
       honeypot: "Ne popunjavajte ovo polje",
+      // The wizard's chrome. `counter` is filled in with the step numbers.
+      steps: {
+        counter: "Korak {n} od {total}",
+        next: "Dalje",
+        // Replaces "Dalje" while the step has no answer, so a step nobody wants
+        // to fill in says so on the button rather than pretending to be blocked.
+        skip: "Preskočite",
+        back: "Nazad",
+        services: {
+          title: "Šta vam treba?",
+          lede: "Izaberite ono što vas najviše zanima.",
+        },
+        industry: {
+          title: "Čime se bavite?",
+          lede: "Da bismo znali kako vaši klijenti obično zovu.",
+        },
+        details: {
+          title: "Vaši podaci",
+          lede: "Javljamo se u najkraćem roku, bez obaveze.",
+        },
+      },
       fields: {
         name: { label: "Ime", placeholder: "Vaše ime" },
         email: { label: "Email", placeholder: "vas@email.com" },
@@ -194,31 +216,19 @@ export default {
         // the order in ContactForm.jsx can change without rewriting what a
         // stored answer means.
         industry: {
-          label: "Delatnost",
-          optional: "opciono",
-          placeholder: "Izaberite delatnost",
           otherLabel: "Čime se bavite?",
           otherPlaceholder: "Upišite svoju delatnost",
           options: {
-            stomatolog: "Stomatološka ordinacija",
-            veterinar: "Veterinarska ambulanta",
-            advokat: "Advokatska kancelarija",
-            majstor: "Majstor i zanatske usluge",
-            nekretnine: "Nekretnine i izdavanje",
-            autoservis: "Auto servis",
-            salon: "Frizerski i kozmetički salon",
-            ordinacija: "Privatna ordinacija i klinika",
-            gradnja: "Građevina i renoviranje",
-            autoskola: "Autoškola",
-            knjigovodstvo: "Knjigovodstvena agencija",
-            selidbe: "Selidbe i transport",
+            "stomatoloske-ordinacije": "Stomatološke ordinacije",
+            "veterinarske-klinike": "Veterinarske klinike",
+            "advokatske-kancelarije": "Advokatske kancelarije",
+            "servisi-i-radionice": "Servisi i radionice",
+            "medical-spa-saloni": "Medical spa saloni",
+            ecommerce: "E-commerce",
             drugo: "Drugo",
           },
         },
         services: {
-          label: "Šta vas najviše zanima?",
-          optional: "opciono",
-          hint: "Možete izabrati više opcija.",
           options: {
             "promasen-poziv": "Poruka posle propuštenog poziva",
             chat: "Chat na sajtu",
@@ -228,14 +238,11 @@ export default {
           otherLabel: "Šta vas još zanima?",
           otherPlaceholder: "Upišite šta vam treba",
         },
-        message: {
-          label: "Poruka",
-          placeholder: "Kuda vam stižu upiti i koliko ih otprilike bude dnevno?",
-        },
       },
       submit: "Pošaljite upit",
       sending: "Šaljemo…",
-      sent: "Hvala, poruka je stigla. Javljamo se u najkraćem roku.",
+      sentTitle: "Hvala!",
+      sent: "Poruka je stigla. Javljamo se u najkraćem roku.",
       // Names the fallback outright: a visitor who sees this has already tried
       // once, and a second failed attempt is worse than an address to write to.
       error: "Slanje nije uspelo. Pišite nam direktno na office.aplory@gmail.com.",

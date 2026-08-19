@@ -100,6 +100,31 @@
    will reappear. The easings are deliberately opposite — quick out of the draw,
    quick into the retract — so neither of those single-dot frames is drawn out
    long enough to register. */
+/* One-shot draw for an option card's checkmark. Same technique as
+   cf-check-draw below — pathLength="1" normalises the dash so the values are
+   independent of the path's real length — but it runs once and stays drawn. */
+@keyframes card-check-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The step body arriving. Same easing as the scroll reveal, so a step change
+   and a section reveal feel like the same system. */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes cf-check-draw {
   0% {
     stroke-dashoffset: 1;
@@ -300,6 +325,15 @@
     box-shadow: 0 8px 22px rgba(46, 143, 241, 0.45);
   }
 
+  /* The wizard's nav buttons. Bigger than .btn because they are the only thing
+     to press on a step, and a 15px control under a full-width card reads as an
+     afterthought. 52px tall clears the 44px touch-target floor with room. */
+  .btn-lg {
+    font-size: 16px;
+    padding: 15px 30px;
+    border-radius: 10px;
+  }
+
   .btn-ghost {
     border-color: var(--color-rule);
     color: var(--color-ink);
@@ -405,6 +439,20 @@
   animation: cf-check-draw 5s linear 0.4s infinite;
 }
 
+/* Hidden by the dash offset until its card is picked — no opacity needed. */
+.card-check {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.option:has(:checked) .card-check {
+  animation: card-check-draw 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.step-in {
+  animation: step-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cf-pulse {
     animation: none;
@@ -414,6 +462,15 @@
   .cf-check {
     animation: none;
     stroke-dashoffset: 0;
+  }
+  /* Same trap: the checkmark has to be shown already drawn, not left at the
+     offset it starts from. */
+  .option:has(:checked) .card-check {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .step-in {
+    animation: none;
   }
 }
 

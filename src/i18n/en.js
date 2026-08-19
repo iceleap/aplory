@@ -178,13 +178,31 @@ export default {
 
   contact: {
     eyebrow: "Contact",
-    title: "Tell us where your enquiries arrive.",
     newWindow: " (opens in a new window)",
     channels: { email: "Email", phone: "Phone" },
     otherValue: "WhatsApp · Viber · SMS",
     form: {
       legend: "Send an enquiry",
+      requiredError: "This field is required.",
       honeypot: "Do not fill in this field",
+      steps: {
+        counter: "Step {n} of {total}",
+        next: "Next",
+        skip: "Skip",
+        back: "Back",
+        services: {
+          title: "What do you need?",
+          lede: "Pick the one you're most interested in.",
+        },
+        industry: {
+          title: "What do you do?",
+          lede: "So we know how your customers usually get in touch.",
+        },
+        details: {
+          title: "Your details",
+          lede: "We'll get back to you shortly, with no obligation.",
+        },
+      },
       fields: {
         name: { label: "Name", placeholder: "Your name" },
         email: { label: "Email", placeholder: "you@email.com" },
@@ -193,31 +211,19 @@ export default {
         // the order in ContactForm.jsx can change without rewriting what a
         // stored answer means.
         industry: {
-          label: "Line of work",
-          optional: "optional",
-          placeholder: "Select your line of work",
           otherLabel: "What do you do?",
           otherPlaceholder: "Tell us your line of work",
           options: {
-            stomatolog: "Dental practice",
-            veterinar: "Veterinary clinic",
-            advokat: "Law firm",
-            majstor: "Tradesperson / handyman",
-            nekretnine: "Property & lettings",
-            autoservis: "Auto repair shop",
-            salon: "Hair & beauty salon",
-            ordinacija: "Private practice / clinic",
-            gradnja: "Construction & renovation",
-            autoskola: "Driving school",
-            knjigovodstvo: "Accounting firm",
-            selidbe: "Removals & haulage",
+            "stomatoloske-ordinacije": "Dental practices",
+            "veterinarske-klinike": "Veterinary clinics",
+            "advokatske-kancelarije": "Law firms",
+            "servisi-i-radionice": "Repair shops & workshops",
+            "medical-spa-saloni": "Medical spas & salons",
+            ecommerce: "E-commerce",
             drugo: "Other",
           },
         },
         services: {
-          label: "What are you most interested in?",
-          optional: "optional",
-          hint: "You can pick more than one.",
           options: {
             "promasen-poziv": "Missed-call text back",
             chat: "Website chat",
@@ -227,14 +233,11 @@ export default {
           otherLabel: "What else are you after?",
           otherPlaceholder: "Tell us what you need",
         },
-        message: {
-          label: "Message",
-          placeholder: "Where do your enquiries arrive, and roughly how many a day?",
-        },
       },
       submit: "Send enquiry",
       sending: "Sending…",
-      sent: "Thank you, your message arrived. We'll get back to you shortly.",
+      sentTitle: "Thank you!",
+      sent: "Your message arrived. We'll get back to you shortly.",
       error: "Sending failed. Write to us directly at office.aplory@gmail.com.",
       privacyBefore: "By sending this you accept our ",
       privacyLink: "privacy policy",

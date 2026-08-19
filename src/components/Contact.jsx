@@ -74,38 +74,39 @@ function Tile({ channel, index }) {
 export default function Contact() {
   const copy = useCopy();
 
+  /* aria-label, not aria-labelledby: the h2 it used to point at is gone, and a
+     dangling reference leaves the section unnamed in the landmark list. The
+     eyebrow is aria-hidden decoration, so the name is set here instead. */
   return (
-    <section className="border-t border-rule bg-surface pt-24 pb-12" id="kontakt" aria-labelledby="kontakt-title">
+    <section
+      className="border-t border-rule bg-surface pt-24 pb-12"
+      id="kontakt"
+      aria-label={copy.contact.eyebrow}
+    >
       <div className="wrap">
-        {/* Heading only. The invitation and the mailto button that used to sit
-            here both said what the form below now asks outright. */}
         <div data-reveal>
           <p className="eyebrow" aria-hidden="true">
             {copy.contact.eyebrow}
           </p>
-          <h2 id="kontakt-title" className="h2 mt-4 max-w-[18ch]">
-            {copy.contact.title}
-          </h2>
         </div>
 
-        {/* The form leads and the channels sit beside it: writing here is the
-            path we want, and the address and number are for people who would
-            rather use their own client. Below lg the pair stacks and the two
-            channel cells go back to sharing a row. */}
-        <div className="mt-12 grid items-start gap-3 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-          <div data-reveal>
-            <ContactForm />
-          </div>
-
-          <ul className="grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-1">
-            {/* Keyed by the channel, never by its label: a label-keyed element is
-                torn down and rebuilt on a language switch, and the rebuilt node is
-                one the reveal observer has never seen — it would stay invisible. */}
-            {CHANNELS.map((channel, i) => (
-              <Tile key={channel.key} channel={channel} index={i} />
-            ))}
-          </ul>
+        {/* The form takes the full width and the channels sit under it: the
+            option cards want the room, and squeezing them into half a row put
+            two words on three lines. Writing here is the path we want; the
+            address and number are for people who would rather use their own
+            client, which is a footnote to the form, not its equal. */}
+        <div className="mt-12" data-reveal>
+          <ContactForm />
         </div>
+
+        <ul className="mt-3 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+          {/* Keyed by the channel, never by its label: a label-keyed element is
+              torn down and rebuilt on a language switch, and the rebuilt node is
+              one the reveal observer has never seen — it would stay invisible. */}
+          {CHANNELS.map((channel, i) => (
+            <Tile key={channel.key} channel={channel} index={i} />
+          ))}
+        </ul>
 
         {/* Footer lives inside the dark section for now, on the same ground. */}
         <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-8 text-[13.5px] text-muted">
