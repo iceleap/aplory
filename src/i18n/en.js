@@ -247,6 +247,8 @@ export default {
       rights: "© 2026 APLORY",
       privacy: "Privacy Policy",
       terms: "Terms of Use",
+      cookies: "Cookie Policy",
+      accessibility: "Accessibility Statement",
       legalNote: "in Serbian",
     },
   },

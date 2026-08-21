@@ -254,7 +254,9 @@ export default {
       rights: "© 2026 APLORY",
       privacy: "Politika privatnosti",
       terms: "Uslovi korišćenja",
-      // Both documents exist only in Serbian.
+      cookies: "Politika kolačića",
+      accessibility: "Izjava o pristupačnosti",
+      // All four documents exist only in Serbian.
       legalNote: null,
     },
   },

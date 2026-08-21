@@ -20,6 +20,8 @@ export default defineConfig({
         index: resolve(__dirname, "index.html"),
         privacy: resolve(__dirname, "politika-privatnosti.html"),
         terms: resolve(__dirname, "uslovi-koriscenja.html"),
+        cookies: resolve(__dirname, "politika-kolacica.html"),
+        accessibility: resolve(__dirname, "izjava-o-pristupacnosti.html"),
         // Netlify serves a root 404.html for unknown paths automatically.
         notFound: resolve(__dirname, "404.html"),
       },

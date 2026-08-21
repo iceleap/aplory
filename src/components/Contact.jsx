@@ -128,6 +128,18 @@ export default function Contact() {
                 <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
               )}
             </a>
+            <a className="transition-colors hover:text-ink" href="/politika-kolacica.html">
+              {copy.contact.footer.cookies}
+              {copy.contact.footer.legalNote && (
+                <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+              )}
+            </a>
+            <a className="transition-colors hover:text-ink" href="/izjava-o-pristupacnosti.html">
+              {copy.contact.footer.accessibility}
+              {copy.contact.footer.legalNote && (
+                <span className="ml-1 text-faint">({copy.contact.footer.legalNote})</span>
+              )}
+            </a>
           </div>
         </div>
       </div>

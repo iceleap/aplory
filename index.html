@@ -14,7 +14,10 @@
     <link rel="canonical" href="https://aplory.dev/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="APLORY — nijedan upit ne ostaje bez odgovora" />
+    <meta
+      property="og:title"
+      content="APLORY — nijedan upit ne ostaje bez odgovora"
+    />
     <meta
       property="og:description"
       content="Svaki upit dobija odgovor automatski, u roku od nekoliko sekundi: poziv, WhatsApp, Viber, Instagram ili sajt."
@@ -34,7 +37,13 @@
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="apple-touch-icon" href="/icon.png" />
-    <link rel="preload" as="font" type="font/woff2" href="/AdwaitaSans.woff2" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/AdwaitaSans.woff2"
+      crossorigin
+    />
 
     <!--
       Structured data replaces the old visible "hero-meta" column. Search engines
@@ -54,7 +63,13 @@
         "openingHoursSpecification": {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": [
-            "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
           ],
           "opens": "00:00",
           "closes": "23:59"
@@ -63,12 +78,39 @@
           "@type": "OfferCatalog",
           "name": "Usluge",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Poruka posle propuštenog poziva" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Preusmeravanje na kanale koje klijenti koriste" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Podsetnici za termine" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Google recenzije" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Chat na sajtu" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Izrada sajta" } }
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Poruka posle propuštenog poziva"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Preusmeravanje na kanale koje klijenti koriste"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Podsetnici za termine"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "Google recenzije" }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "Chat na sajtu" }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "Izrada sajta" }
+            }
           ]
         }
       }
@@ -83,7 +125,12 @@
       in src/components/ContactForm.jsx — a name that appears only there is
       silently dropped from the stored submission.
     -->
-    <form name="kontakt" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <form
+      name="kontakt"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
       <input type="hidden" name="form-name" value="kontakt" />
       <input type="text" name="bot-field" />
       <input type="text" name="ime" />
@@ -97,5 +144,6 @@
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script src="https://buildmyagent.io/widget/6a884362d9256b81bc3200f1/widget-professional.js?widgetId=6a884362d9256b81bc3200f1"></script>
   </body>
 </html>
