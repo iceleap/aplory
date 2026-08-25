@@ -4,8 +4,8 @@ import useReveal from "./lib/useReveal";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Problem from "./components/Problem";
+import HowItWorks from "./components/HowItWorks";
 import Services from "./components/Services";
-import Flow from "./components/Flow";
 import Faq from "./components/Faq";
 import Contact from "./components/Contact";
 
@@ -18,11 +18,11 @@ export default function App() {
       <div className="min-h-screen bg-paper text-ink">
       <Header />
       <main>
-        {/* Problem -> Rešenje -> Rezultat: what's broken, what we do, what changes. */}
+        {/* Problem -> Kako radi -> Šta radimo: what's broken, what happens, what we do. */}
         <Hero />
         <Problem />
+        <HowItWorks />
         <Services />
-        <Flow />
         <Faq />
         <Contact />
       </main>

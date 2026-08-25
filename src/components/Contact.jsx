@@ -36,7 +36,7 @@ function Tile({ channel, index }) {
     <>
       <span
         aria-hidden="true"
-        className="grid size-9 place-items-center rounded-lg bg-surface-2 text-brand-soft transition-colors group-hover:bg-paper"
+        className="grid size-9 place-items-center rounded-lg bg-paper text-brand-b transition-colors"
       >
         <svg
           viewBox="0 0 24 24"
@@ -60,7 +60,7 @@ function Tile({ channel, index }) {
   /* `h-full` so both cells match the tallest one — the phone cell carries an
      extra line, and a short email card beside it looks unfinished. */
   const shell =
-    "group block h-full rounded-xl border border-rule bg-paper p-5 transition-colors hover:border-brand-a";
+    "group block h-full rounded-2xl border border-rule bg-surface-2 p-5 transition-colors hover:border-ink";
 
   return (
     <li data-reveal style={{ "--reveal-delay": `${index * 70}ms` }}>
@@ -79,7 +79,7 @@ export default function Contact() {
      eyebrow is aria-hidden decoration, so the name is set here instead. */
   return (
     <section
-      className="border-t border-rule bg-surface pt-24 pb-12"
+      className="border-t border-rule bg-paper pt-24 pb-12"
       id="kontakt"
       aria-label={copy.contact.eyebrow}
     >
@@ -88,6 +88,8 @@ export default function Contact() {
           <p className="eyebrow" aria-hidden="true">
             {copy.contact.eyebrow}
           </p>
+          <h2 className="h2 mt-4">{copy.contact.title}</h2>
+          <p className="lead-note">{copy.contact.lede}</p>
         </div>
 
         {/* The form takes the full width and the channels sit under it: the

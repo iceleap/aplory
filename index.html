@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>APLORY — nijedan upit ne ostaje bez odgovora</title>
+    <title>APLORY — kad vas neko traži, odgovara za vas</title>
     <meta
       name="description"
       content="Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit u roku od nekoliko sekundi. Podsetnici za termine, Google recenzije i izrada sajta."
     />
-    <!-- Matches the page ground so mobile browser chrome goes dark too. -->
-    <meta name="theme-color" content="#14122b" />
+    <!-- Matches the page ground so mobile browser chrome stays light too. -->
+    <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="https://aplory.dev/" />
 
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="APLORY — nijedan upit ne ostaje bez odgovora"
+      content="APLORY — kad vas neko traži, odgovara za vas"
     />
     <meta
       property="og:description"
@@ -29,7 +29,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="APLORY — Nijedan upit ne ostaje bez odgovora."
+      content="APLORY — kad vas neko traži, odgovara za vas."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://aplory.dev/og.png" />
@@ -37,12 +37,14 @@
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="apple-touch-icon" href="/icon.png" />
+
+    <!-- Fraunces (serif display) + Inter (body/UI) — see src/base.css for the
+         direction rationale. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="/AdwaitaSans.woff2"
-      crossorigin
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
     />
 
     <!--
@@ -132,18 +134,18 @@
       hidden
     >
       <input type="hidden" name="form-name" value="kontakt" />
-      <input type="text" name="bot-field" />
-      <input type="text" name="ime" />
-      <input type="email" name="email" />
-      <input type="tel" name="telefon" />
-      <select name="delatnost"></select>
-      <input type="text" name="delatnost-drugo" />
-      <input type="checkbox" name="usluge" />
-      <input type="text" name="usluge-drugo" />
+      <input type="text" name="bot-field" aria-label="Bot field" />
+      <input type="text" name="ime" aria-label="Ime" />
+      <input type="email" name="email" aria-label="Email" />
+      <input type="tel" name="telefon" aria-label="Telefon" />
+      <select name="delatnost" aria-label="Delatnost"></select>
+      <input type="text" name="delatnost-drugo" aria-label="Delatnost — drugo" />
+      <input type="checkbox" name="usluge" aria-label="Usluge" />
+      <input type="text" name="usluge-drugo" aria-label="Usluge — drugo" />
     </form>
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://buildmyagent.io/widget/6a884362d9256b81bc3200f1/widget-professional.js?widgetId=6a884362d9256b81bc3200f1"></script>
+    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
   </body>
 </html>

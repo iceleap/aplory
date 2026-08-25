@@ -2,68 +2,69 @@
 
 /* ==========================================================================
    APLORY — theme and base styles
-   Direction: clinical Swiss ledger. Hairline rules over a cool, blue-biased
-   white; the brand gradient appears only on the logo, the primary CTA and the
-   hero diagram. One variable family used at extreme weight contrast, echoing
-   the thin strokes of the APLORY wordmark.
+
+   direction: editorial, light, restrained-plus-one-accent — see PRODUCT.md and
+   the finish-time DESIGN.md for the full rationale. Signifier-style serif
+   (Fraunces, weight 400 only) for display type; a Söhne-style grotesque
+   (Inter) for everything read at length. Near-monochrome ink-on-paper, one
+   warm accent used sparingly. Filled-pill buttons in ink black, paired with a
+   ghost outline. The APLORY wordmark keeps its own blue-indigo gradient — it
+   is the one place colour is inherited rather than chosen.
    ========================================================================== */
 
-@font-face {
-  font-family: "Adwaita Sans";
-  src: url("/AdwaitaSans.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 @theme {
-  --font-sans: "Adwaita Sans", "FreeSans", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", serif;
 
-  /* Brand — sampled from the leftmost and rightmost strokes of the logo */
+  /* Brand — sampled from the logo's own gradient. Used only on the mark
+     itself and as a rare accent (focus rings, small icons, the hero hub) —
+     never on buttons, which stay ink black per the direction. */
   --color-brand-a: #2e8ff1;
   --color-brand-b: #465ec2;
-  /* A lifted tint of the accent, for accent-coloured text on the dark ground
-     where #465ec2 sits too close to the surface to read. */
-  --color-brand-soft: #8fbefa;
+  --color-brand-soft: #3f6fd6;
 
-  /* Deep indigo-violet: sits under the logo's indigo end, so it reads purple
-     without fighting the blue half of the gradient. */
-  --color-paper: #14122b;
-  --color-surface: #1b1838;
-  --color-surface-2: #262250;
-  --color-rule: #2e2a57;
-  --color-rule-soft: #241f45;
-  --color-ink: #edebfa;
-  --color-ink-2: #b9b4d8;
-  --color-muted: #8b85b0;
-  --color-faint: #6a6490;
+  /* Warm accent — one peach, used on at most one surface per section. */
+  --color-accent: #fbe1d1;
+  --color-accent-ink: #5d2a1a;
 
-  /* Semantic, kept separate from the accent. Lifted from the light theme's
-     #16a47a, which goes muddy against a dark ground. */
-  --color-live: #2fd39a;
+  /* Glow palette — the ambient light blobs only (see .light-blob in the
+     depth-effects block below). Kept separate from the brand/accent tokens
+     above: those are used sparingly as UI accents, these exist purely to
+     give the background some colour and never touch text, borders, or
+     controls. */
+  --color-glow-teal: #2fc6c6;
+  --color-glow-violet: #8b6ff0;
+  --color-glow-rose: #f0729a;
+  --color-glow-amber: #f5b350;
 
-  /* The other semantic pair to --color-live: form validation and the send
-     failure. Kept out of the chart block below, which forbids reusing its three
-     as accents. Clears AA on both grounds it lands on — 6.12:1 on paper,
-     4.94:1 inside a field. */
-  --color-danger: #ef6a80;
+  /* Ink-on-paper neutrals. */
+  --color-paper: #ffffff;
+  --color-surface: #fafafb;
+  --color-surface-2: #f2f2f3;
+  --color-rule: #e6e6e9;
+  --color-rule-soft: #edeef0;
+  --color-ink: #17191c;
+  --color-ink-2: #4b4e57;
+  --color-muted: #777b86;
+  --color-faint: #a3a6af;
 
-  /* Chart status colors — re-validated against the dark surface rather than
-     carried over. Both warm steps had to be re-stepped: the old amber sat above
-     the dark lightness band, and the old orange-red collided with it once
-     darkened. The red now leans magenta, which is what buys the colourblind
-     separation. Do not reuse these three as brand accents. */
+  --color-live: #16a47a;
+  --color-danger: #c23b4f;
+
+  /* Chart status colors, kept distinct from the accent per the original
+     validation note — unused now that the call-outcome chart is cut, left in
+     case a data view returns. */
   --color-c-live: #2e8ff1;
   --color-c-vm: #b98b1b;
   --color-c-none: #ce4f62;
 
-  /* Type scale */
-  --text-display: 68px;
-  --text-display--line-height: 1.06;
-  --text-display--letter-spacing: -0.035em;
+  /* Type scale — serif display, weight 400 only, tighter tracking at scale. */
+  --text-display: 64px;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
   --text-h2: 40px;
-  --text-h2--line-height: 1.16;
-  --text-h2--letter-spacing: -0.026em;
+  --text-h2--line-height: 1.14;
+  --text-h2--letter-spacing: -0.014em;
   --text-eyebrow: 11.5px;
 
   --animate-pulse-live: pulse-live 2s ease-out infinite;
@@ -71,7 +72,7 @@
 
 @keyframes pulse-live {
   0% {
-    box-shadow: 0 0 0 0 rgba(22, 164, 122, 0.5);
+    box-shadow: 0 0 0 0 rgba(22, 164, 122, 0.4);
   }
   70% {
     box-shadow: 0 0 0 7px rgba(22, 164, 122, 0);
@@ -228,8 +229,8 @@
   input,
   select,
   textarea {
-    color-scheme: dark;
-    accent-color: var(--color-brand-a);
+    color-scheme: light;
+    accent-color: var(--color-ink);
     font: inherit;
   }
 }
@@ -239,6 +240,20 @@
   .wrap {
     width: min(1180px, calc(100% - 80px));
     margin-inline: auto;
+  }
+
+  /* Paper + a faint fixed square grid — kept to the hero only (repeating it
+     down every section read as busy), so it's baked straight into Hero's own
+     background rather than a separate layer an opaque section would paint
+     over. `background-attachment: fixed` keeps the grid pinned to the
+     viewport rather than scrolling with the hero. */
+  .grid-webbing {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-ink) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 6%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-attachment: fixed;
   }
 
   .sec {
@@ -266,63 +281,63 @@
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-brand-soft);
+    color: var(--color-muted);
     line-height: 1.4;
   }
 
   .h1 {
+    font-family: var(--font-display);
     font-size: var(--text-display);
-    font-weight: 250;
-    line-height: 1.06;
-    letter-spacing: -0.035em;
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
   }
 
   .h2 {
+    font-family: var(--font-display);
     font-size: var(--text-h2);
-    font-weight: 300;
-    line-height: 1.16;
-    letter-spacing: -0.026em;
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: -0.014em;
     max-width: 19ch;
   }
 
   /* One step below .h2, for a movement inside a section rather than a section of
-     its own — the research block under Problem. */
+     its own. */
   .h3 {
+    font-family: var(--font-display);
     font-size: 28px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     font-size: 15px;
     font-weight: 600;
-    padding: 12px 22px;
-    border-radius: 8px;
+    padding: 12px 24px;
+    border-radius: 999px;
     border: 1px solid transparent;
     cursor: pointer;
     transition:
       transform 0.18s,
-      box-shadow 0.18s,
-      border-color 0.18s;
+      background-color 0.18s,
+      border-color 0.18s,
+      color 0.18s;
   }
 
   .btn-primary {
-    background: linear-gradient(
-      100deg,
-      var(--color-brand-a),
-      var(--color-brand-b)
-    );
-    color: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    background: var(--color-ink);
+    color: var(--color-paper);
   }
 
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(46, 143, 241, 0.45);
+    background: #000;
   }
 
   /* The wizard's nav buttons. Bigger than .btn because they are the only thing
@@ -330,18 +345,17 @@
      afterthought. 52px tall clears the 44px touch-target floor with room. */
   .btn-lg {
     font-size: 16px;
-    padding: 15px 30px;
-    border-radius: 10px;
+    padding: 15px 32px;
   }
 
   .btn-ghost {
-    border-color: var(--color-rule);
+    border-color: var(--color-ink);
     color: var(--color-ink);
-    background: var(--color-paper);
+    background: transparent;
   }
 
   .btn-ghost:hover {
-    border-color: var(--color-ink);
+    background: var(--color-surface-2);
   }
 
   /* Left label column of the two-column section grid. */
@@ -352,20 +366,310 @@
   /* Intro paragraph sitting directly under a section heading. */
   .lead-note {
     margin-top: 20px;
-    color: var(--color-muted);
+    color: var(--color-ink-2);
     max-width: 64ch;
+    font-size: 18px;
   }
 
-  /* The site logo, used at two sizes. */
+  /* The site logo, used at two sizes. The wordmark is drawn in its own
+     blue-indigo gradient, which reads cleanly on the paper ground as-is —
+     no filter needed here now that the ground is light. */
   .logo {
     display: block;
-    /* The source wordmark is dark; one filter lights it everywhere it appears. */
-    filter: brightness(0) invert(1);
-    opacity: 0.92;
     background-image: url("/logo-mark.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: left center;
+  }
+
+  /* A card on the mist-gray surface: 24px radius, no shadow, hairline border
+     only where it sits against paper. */
+  .card {
+    border-radius: 24px;
+    background: var(--color-surface-2);
+    padding: 28px;
+  }
+
+  /* The one warm surface a section may use — peach ground, sienna text. */
+  .card-accent {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  /* "Kako radi" — missed call, then a message mockup, standing in for the
+     three-step wall of text. Mockup + a slim numbered caption list. */
+  .how-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .how-mock {
+    border-radius: 24px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-rule);
+    padding: 18px;
+  }
+
+  .how-mock__call {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 16px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+    padding: 12px 14px;
+  }
+
+  .how-mock__call svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+  }
+
+  .how-mock__ring {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    animation: how-ring 2.2s ease-out infinite;
+  }
+
+  .how-mock__call b {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .how-mock__call i {
+    display: block;
+    margin-top: 1px;
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--color-muted);
+  }
+
+  .how-mock__thread {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .how-bubble {
+    max-width: 88%;
+    border-radius: 16px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .how-bubble--in {
+    justify-self: start;
+    background: linear-gradient(120deg, var(--color-brand-a), var(--color-brand-b));
+    color: #fff;
+    border-bottom-left-radius: 4px;
+  }
+
+  .how-bubble--out {
+    justify-self: end;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-bottom-right-radius: 4px;
+  }
+
+  .how-dots {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .how-dots i {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #fff;
+    opacity: 0.6;
+    animation: how-bounce 1s ease-in-out infinite;
+  }
+
+  .how-dots i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .how-dots i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .how-bubble__text {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .how-steps {
+    display: grid;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .how-steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .how-steps__n {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--color-faint);
+  }
+
+  .how-steps__title {
+    font-size: 16.5px;
+    font-weight: 600;
+    letter-spacing: -0.008em;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 720px) {
+    .how-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@keyframes how-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-danger) 35%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 9px color-mix(in srgb, var(--color-danger) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-danger) 0%, transparent);
+  }
+}
+
+@keyframes how-bounce {
+  0%,
+  60%,
+  100% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes how-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The reveal system (see useReveal.js) fades .how-mock in as a whole via
+   [data-reveal]; these child animations only start once .is-visible lands,
+   so the call → typing → reply sequence plays once, on first view. */
+.reveal-ready [data-reveal].is-visible .how-mock__ring {
+  animation: how-ring 2.2s ease-out 0.5s infinite;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--in-1 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--out-1 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 1.3s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-dots-2 {
+  animation: how-in 0.2s ease 2.1s both, how-fade-out 0.3s ease 3.2s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-text-2 {
+  animation: how-text-in 0.35s ease 3.35s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--in-2 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 2.1s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--out-2 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 3.95s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-dots-3 {
+  animation: how-in 0.2s ease 4.75s both, how-fade-out 0.3s ease 5.85s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-text-3 {
+  animation: how-text-in 0.35s ease 6s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--in-3 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 4.75s both;
+}
+
+.reveal-ready [data-reveal].is-visible .how-bubble--out-3 {
+  animation: how-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 6.6s both;
+}
+
+@keyframes how-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes how-text-in {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 80px;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-mock__ring {
+    animation: none;
+    box-shadow: none;
+  }
+  .how-bubble {
+    opacity: 1;
+    transform: none;
+  }
+  .how-dots {
+    display: none;
+  }
+  .how-bubble__text {
+    max-height: none;
+    opacity: 1;
+  }
+  .reveal-ready [data-reveal].is-visible .how-mock__ring,
+  .reveal-ready [data-reveal].is-visible .how-bubble--in,
+  .reveal-ready [data-reveal].is-visible .how-dots,
+  .reveal-ready [data-reveal].is-visible .how-bubble__text,
+  .reveal-ready [data-reveal].is-visible .how-bubble--out {
+    animation: none;
   }
 }
 
@@ -495,6 +799,228 @@
   opacity: 1;
   transform: none;
   will-change: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Light blobs — see src/components/LightBlobs.jsx
+
+   Five pale, heavily blurred colour fields — spanning the brand blue through
+   violet, rose, amber and teal, plus one soft multi-hue field for a
+   prismatic touch — that drift on their own slow loop and shrink away from
+   the cursor when it gets close, giving the page ambient depth and colour
+   without tying light directly to the pointer. Each hue is still passed
+   through a low color-mix() percentage and a heavy blur, which is what
+   keeps five colours reading as one soft, coherent wash instead of a
+   rainbow logo. Base positions are spread toward the four corners plus a
+   fifth in the centre so the fields read as separate pools of colour rather
+   than one cluster. Two nested layers per blob: the outer
+   `.light-blob-drift` node gets its transform set by JS (the flee-from-
+   cursor motion, eased toward the target every frame); the inner
+   `.light-blob` runs the CSS `float` keyframe. Splitting them across two
+   elements means the JS-driven transform and the CSS-animated transform
+   never fight over the same `transform` property.
+   -------------------------------------------------------------------------- */
+
+.light-blobs {
+  position: absolute;
+  inset: 0;
+  /* Confined to the hero (its nearest positioned ancestor) rather than the
+     viewport, so the wash never bleeds into sections below it. Low opacity
+     per blob plus a heavy blur is what keeps it a wash instead of a shape
+     drawn over the page. */
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.light-blob-drift {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.light-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.light-blob--a {
+  top: -260px;
+  left: -200px;
+  width: 640px;
+  height: 640px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-brand-a) 14%, transparent),
+    transparent 70%
+  );
+  animation-name: blob-float-a;
+  animation-duration: 46s;
+}
+
+.light-blob--b {
+  top: 6vh;
+  right: -280px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-glow-violet) 13%, transparent),
+    transparent 70%
+  );
+  animation-name: blob-float-b;
+  animation-duration: 40s;
+  animation-delay: -6s;
+}
+
+.light-blob--c {
+  bottom: -280px;
+  right: -220px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-glow-rose) 12%, transparent),
+    transparent 72%
+  );
+  animation-name: blob-float-c;
+  animation-duration: 52s;
+  animation-delay: -12s;
+}
+
+.light-blob--d {
+  top: 68vh;
+  left: -240px;
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-glow-teal) 12%, transparent),
+    transparent 70%
+  );
+  animation-name: blob-float-d;
+  animation-duration: 44s;
+  animation-delay: -3s;
+}
+
+/* The prismatic one: a conic sweep through the whole set rather than a
+   single hue, softened to a sheen by the shared blur and a lower alpha than
+   its solid-colour siblings. Reads as "colourful" without ever drawing a
+   literal rainbow ring. */
+.light-blob--e {
+  top: 40vh;
+  left: 44vw;
+  width: 520px;
+  height: 520px;
+  background: conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--color-brand-a) 10%, transparent),
+    color-mix(in srgb, var(--color-glow-violet) 10%, transparent),
+    color-mix(in srgb, var(--color-glow-rose) 10%, transparent),
+    color-mix(in srgb, var(--color-glow-amber) 10%, transparent),
+    color-mix(in srgb, var(--color-glow-teal) 10%, transparent),
+    color-mix(in srgb, var(--color-brand-a) 10%, transparent)
+  );
+  mask-image: radial-gradient(circle, black, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle, black, transparent 72%);
+  animation-name: blob-float-e;
+  animation-duration: 58s;
+  animation-delay: -18s;
+}
+
+@keyframes blob-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(38vw, 12vh) scale(1.08);
+  }
+  50% {
+    transform: translate(22vw, 46vh) scale(0.94);
+  }
+  75% {
+    transform: translate(-4vw, 22vh) scale(1.04);
+  }
+}
+
+@keyframes blob-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-34vw, 20vh) scale(0.95);
+  }
+  50% {
+    transform: translate(-18vw, 50vh) scale(1.07);
+  }
+  75% {
+    transform: translate(6vw, 28vh) scale(0.98);
+  }
+}
+
+@keyframes blob-float-c {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-30vw, -22vh) scale(1.05);
+  }
+  50% {
+    transform: translate(-46vw, -6vh) scale(0.93);
+  }
+  75% {
+    transform: translate(-14vw, -30vh) scale(1.06);
+  }
+}
+
+@keyframes blob-float-d {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(28vw, -18vh) scale(1.04);
+  }
+  50% {
+    transform: translate(44vw, -38vh) scale(0.95);
+  }
+  75% {
+    transform: translate(10vw, -12vh) scale(1.05);
+  }
+}
+
+@keyframes blob-float-e {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-20vw, 18vh) scale(1.1);
+  }
+  50% {
+    transform: translate(-38vw, -14vh) scale(0.9);
+  }
+  75% {
+    transform: translate(-6vw, -32vh) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-blob {
+    animation: none;
+  }
+
+  .light-blob-drift {
+    transition: none;
+  }
 }
 
 /* --------------------------------------------------------------------------

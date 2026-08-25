@@ -1,45 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useLenis, useScrollTo } from "../lib/SmoothScroll";
-import { useCopy, useLanguage } from "../i18n";
+import { useCopy } from "../i18n";
 
 /* No "Kontakt" tab here on purpose: the CTA button already points at #kontakt,
    and two adjacent links to the same target is a redundant link. */
-const TAB_IDS = ["problem", "resenje", "rezultat", "pitanja"];
+const TAB_IDS = ["problem", "resenje", "pitanja"];
 
 /* How far a finger has to travel before it counts as scrolling rather than
    tapping, and so dismisses the open menu. */
 const DRAG_PX = 12;
-
-/**
- * One button, not two: the whole pill is the target and a press flips the
- * language, so there is no half of the control that does nothing when tapped.
- * The codes are decoration — the accessible name says what pressing it does.
- */
-function LanguageSwitch() {
-  const copy = useCopy();
-  const { lang, setLang } = useLanguage();
-
-  return (
-    <button
-      type="button"
-      onClick={() => setLang(lang === "sr" ? "en" : "sr")}
-      aria-label={copy.nav.languageToggle}
-      className="flex shrink-0 cursor-pointer overflow-hidden rounded-full border border-rule transition-colors hover:border-ink"
-    >
-      {["sr", "en"].map((code) => (
-        <span
-          key={code}
-          aria-hidden="true"
-          className={`px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] uppercase transition-colors ${
-            lang === code ? "bg-ink text-paper" : "text-muted"
-          }`}
-        >
-          {code}
-        </span>
-      ))}
-    </button>
-  );
-}
 
 export default function Header() {
   const copy = useCopy();
@@ -176,7 +145,7 @@ export default function Header() {
         <nav
           id="site-nav"
           aria-label={copy.nav.sections}
-          className={`absolute inset-x-0 top-full border-b border-rule bg-paper p-5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.75)] md:static md:ml-auto md:border-0 md:bg-transparent md:p-0 md:shadow-none ${
+          className={`absolute inset-x-0 top-full border-b border-rule bg-paper p-5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.18)] md:static md:ml-auto md:border-0 md:bg-transparent md:p-0 md:shadow-none ${
             open ? "block" : "hidden md:block"
           }`}
         >
@@ -207,10 +176,9 @@ export default function Header() {
 
           {/* Sits at the bottom of the open menu; the header-row copy below is
               hidden while the menu is open, so only one is ever visible. */}
-          <div className="mt-4 flex items-center gap-3 md:hidden">
-            <LanguageSwitch />
+          <div className="mt-4 md:hidden">
             <a
-              className="btn btn-primary flex-1 justify-center"
+              className="btn btn-primary w-full justify-center"
               href="#kontakt"
               onClick={(e) => go(e, "kontakt")}
             >
@@ -218,10 +186,6 @@ export default function Header() {
             </a>
           </div>
         </nav>
-
-        <div className="ml-auto hidden shrink-0 md:block">
-          <LanguageSwitch />
-        </div>
 
         <a
           className={`btn btn-primary shrink-0 px-3 py-2.5 text-sm sm:px-4 md:inline-flex md:px-5 ${

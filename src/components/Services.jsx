@@ -60,7 +60,7 @@ export default function Services() {
   const [lead, ...rest] = copy.services.items;
 
   return (
-    <section className="sec bg-surface" id="resenje" aria-labelledby="resenje-title">
+    <section className="sec" id="resenje" aria-labelledby="resenje-title">
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">
@@ -79,17 +79,17 @@ export default function Services() {
               from the ground rather than the old grid's cells, which were painted
               darker than the section containing them. */}
           <div
-            className="mt-10 grid gap-x-12 gap-y-4 rounded-xl border border-rule bg-surface-2 p-6 min-[840px]:p-9 min-[1080px]:grid-cols-2 min-[1080px]:items-end"
+            className="card card-accent mt-10 grid gap-x-12 gap-y-4 min-[1080px]:grid-cols-2 min-[1080px]:items-end min-[840px]:p-10"
             data-reveal
           >
             <div>
-              <p className="eyebrow flex items-center gap-2.5">
+              <p className="flex items-center gap-2.5 text-eyebrow font-bold tracking-[0.16em] text-accent-ink/70 uppercase">
                 <Icon name={ICON_ORDER[0]} className="size-3.5 shrink-0" />
                 {copy.services.leadTag}
               </p>
               {/* Display weight, not the ledger's semibold: this is the one name
                   in the section that carries at heading size. */}
-              <h3 className="mt-4 max-w-[16ch] text-[26px] leading-[1.16] font-[300] tracking-[-0.022em] min-[1080px]:text-[32px]">
+              <h3 className="font-display mt-4 max-w-[16ch] text-[26px] leading-[1.14] font-normal tracking-[-0.012em] min-[1080px]:text-[32px]">
                 {lead.name}
               </h3>
             </div>

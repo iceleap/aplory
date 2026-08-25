@@ -1,5 +1,3 @@
-import CallWaffle from "./CallWaffle";
-import Research from "./Research";
 import { useCopy } from "../i18n";
 import "./Problem.css";
 
@@ -22,8 +20,6 @@ export default function Problem() {
             {copy.problem.lead}
           </p>
 
-          <CallWaffle />
-
           <ul className="prob-list" data-reveal>
             {copy.problem.cards.map((card, i) => (
               <li key={i}>
@@ -33,20 +29,19 @@ export default function Problem() {
             ))}
           </ul>
 
-        </div>
-      </div>
-
-      {/* The outside figures close the argument the cards make, but they are a
-          movement of their own — so they get the same rail-and-content structure
-          a section would, rather than trailing the cards. */}
-      <div className="wrap grid2 mt-16 border-t border-rule pt-12 lg:mt-20 lg:pt-16">
-        <div className="rail">
-          <p className="eyebrow" aria-hidden="true">
-            {copy.research.eyebrow}
+          {/* One plain-language stat, kept from the industry research this
+              section used to cite in full — see PRODUCT.md. */}
+          <p
+            className="mt-14 max-w-[58ch] border-t border-rule pt-8 text-[15px] leading-relaxed text-muted"
+            data-reveal
+            style={{ "--reveal-delay": "80ms" }}
+          >
+            <span className="font-display text-[28px] leading-none text-ink">
+              {copy.problem.stat.value}
+            </span>{" "}
+            {copy.problem.stat.body}{" "}
+            <span className="text-faint">{copy.problem.stat.source}</span>
           </p>
-        </div>
-        <div>
-          <Research />
         </div>
       </div>
     </section>

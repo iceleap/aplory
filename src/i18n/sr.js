@@ -1,16 +1,16 @@
 /**
- * Serbian copy — the site's primary language and the default.
+ * Serbian copy — the site's only language for this rebuild (see PRODUCT.md).
  *
- * Every user-facing string lives here or in en.js; components read them through
- * useCopy(). Numbers, colours, source URLs and other language-neutral data stay
- * in src/data/research.js.
+ * Every user-facing string lives here; components read it through useCopy().
+ * Numbers, colours, source URLs and other language-neutral data stay in
+ * src/data/research.js.
  */
 export default {
   htmlLang: "sr",
   meta: {
-    title: "APLORY — nijedan upit ne ostaje bez odgovora",
+    title: "APLORY — kad vas neko traži, odgovara za vas",
     description:
-      "Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit u roku od nekoliko sekundi.",
+      "Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
   },
 
   nav: {
@@ -19,31 +19,29 @@ export default {
     cta: "Zakažite razgovor",
     openMenu: "Otvori meni",
     closeMenu: "Zatvori meni",
-    // Names the action, not the control: the button switches to the other one.
-    languageToggle: "Prebaci na engleski",
     tabs: {
       problem: "Problem",
-      resenje: "Rešenje",
-      rezultat: "Rezultat",
+      resenje: "Šta radimo",
       pitanja: "Pitanja",
     },
   },
 
   hero: {
-    title: "Nijedan upit ne ostaje bez odgovora.",
-    lede: "Propušten poziv, poruka na WhatsAppu, Viberu ili Instagramu. Svaki upit dobija odgovor automatski, u roku od nekoliko sekundi.",
+    kicker: "Za firme koje ne stignu da se jave na svaki poziv",
+    title: "Kad vas neko traži, APLORY odgovara. Automatski.",
+    lede: "Propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta — APLORY odmah odgovori umesto vas, na broju i nalozima koje već koristite.",
     ctaPrimary: "Zakažite razgovor",
-    ctaSecondary: "Šta radimo",
+    ctaSecondary: "Kako to radi",
     diagramAlt:
       "Propušten poziv, WhatsApp, Viber, Instagram i poruke sa sajta. Svi kanali vode do jednog odgovorenog upita.",
     channels: ["Propušten poziv", "WhatsApp", "Viber", "Instagram", "Poruka sa sajta"],
-    hub: { title: "Odgovoreno", note: "za nekoliko sekundi" },
+    hub: { title: "Odgovoreno", note: "za par sekundi" },
   },
 
   problem: {
     eyebrow: "Problem",
-    title: "Poziv na koji se niko ne javi je klijent koji zove sledećeg.",
-    lead: "Telefon zvoni dok radite, posle radnog vremena i vikendom. 411 Locals je izbrojao na koliko tih poziva se niko ne javi.",
+    title: "Poziv na koji niko ne odgovori je klijent koji zove sledećeg na spisku.",
+    lead: "Telefon zvoni dok radite, posle radnog vremena i vikendom. Svaki taj propušten poziv je izgubljen posao.",
     cards: [
       {
         title: "Zvoni dok radite",
@@ -51,46 +49,55 @@ export default {
       },
       {
         title: "Zvoni posle radnog vremena",
-        body: "Večeri, vikendi, praznici. Ljudi traže uslugu kad im zatreba, ne kad vama odgovara.",
+        body: "Večeri, vikendi, praznici. Ljudi traže uslugu kad njima odgovara, ne kad je neko tu da se javi.",
       },
       {
         title: "Zvoni brže kod konkurencije",
-        body: "Ko se prvi javi, taj zakazuje. Ostali dobiju govornu poštu.",
+        body: "Ko prvi odgovori, taj dobija klijenta. Ostali dobiju govornu poštu.",
+      },
+    ],
+    stat: {
+      value: "62%",
+      body: "poziva ka malim firmama ne dobije živu osobu na liniji — završi na govornoj pošti ili ostane bez ikakvog odgovora.",
+      source: "411 Locals, 2016 — 85 firmi, 58 delatnosti, 30 dana.",
+    },
+  },
+
+  how: {
+    eyebrow: "Kako radi",
+    title: "Bez podešavanja na vašoj strani.",
+    steps: [
+      {
+        n: "01",
+        title: "Klijent vas kontaktira",
+        body: "Pozivom, WhatsAppom, Viberom, Instagramom ili porukom sa sajta — kanal koji već koristite.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što klijent proba sledeći broj.",
+      },
+      {
+        n: "03",
+        title: "Termin zakazan",
+        body: "Nastavljate kad stignete, sa kontekstom već tu. Broj i nalozi ostaju isti — ništa se ne menja na vašoj strani.",
       },
     ],
   },
 
-  chart: {
-    caption: "Od svakih 100 poziva ka maloj firmi",
-    headlineLabel: "poziva na koje se niko ne javi",
-    sourcePrefix: "Izvor:",
-    sourceLabel: "411 Locals, 2016 — 85 firmi, 58 delatnosti, 30 dana",
-    // Serbian uses a comma as the decimal separator.
-    pct: { live: "37,8", voicemail: "37,8", none: "24,3" },
-    segments: {
-      live: "Neko se javi",
-      voicemail: "Govorna pošta",
-      none: "Bez ikakvog odgovora",
-    },
-    description:
-      "Od 100 poziva upućenih maloj firmi, na 37,8 odsto se neko javi, 37,8 odsto završi na govornoj pošti, a na 24,3 odsto niko se ne javi i nema odgovora.",
-  },
-
   services: {
-    eyebrow: "Rešenje",
+    eyebrow: "Šta radimo",
     title: "Hvatamo svaki upit i odgovaramo umesto vas.",
-    // The first item is rendered as the section's lead, the rest as a ledger
-    // beneath it — see Services.jsx. These two label those two groups.
     leadTag: "Glavna usluga",
     moreTag: "Uz to",
     items: [
       {
         name: "Poruka posle propuštenog poziva",
-        line: "Ko ne dobije vas, dobije poruku za nekoliko sekundi. Razgovor počinje odmah, umesto da klijent zatvori i pozove sledeći broj sa liste.",
+        line: "Ko ne dobije vas, dobije poruku za par sekundi. Razgovor počinje odmah, umesto da klijent zatvori i pozove sledeći broj sa liste.",
       },
       {
-        name: "Preusmeravanje na kanale koje klijenti koriste",
-        line: "Razgovor se nastavlja tamo gde je klijentu najlakše, na kanalima koje vi već koristite.",
+        name: "Odgovor na kanalu koji klijent koristi",
+        line: "WhatsApp, Viber ili Instagram — razgovor se nastavlja tamo gde je klijentu najlakše.",
       },
       {
         name: "Podsetnici za termine",
@@ -98,52 +105,11 @@ export default {
       },
       {
         name: "Google recenzije",
-        line: "Zahtev za recenziju kad je klijent najzadovoljniji.",
+        line: "Zahtev za recenziju stiže kad je klijent najzadovoljniji.",
       },
       { name: "Chat na sajtu", line: "Posetilac ostavlja upit, vi dobijate kontakt." },
-      { name: "Izrada sajta", line: "Sajt čiji je prvi zadatak da prikupi upit." },
+      { name: "Izrada sajta", line: "Sajt čiji je prvi zadatak da prikupi upit, ne da samo lepo izgleda." },
     ],
-  },
-
-  fork: {
-    eyebrow: "Rezultat",
-    title: "Dva kraja istog poziva.",
-    lead: "Razliku pravi jedna automatska poruka, poslata odmah.",
-    origin: { time: "09:41", title: "Propušten poziv" },
-    branches: {
-      without: {
-        label: "Bez APLORY",
-        path: "Niko ne uzvrati",
-        end: { time: "09:44", title: "Zove sledećeg na spisku", outcome: "Klijent izgubljen" },
-      },
-      withUs: {
-        label: "Sa APLORY",
-        start: { time: "odmah", title: "Automatski odgovor" },
-        end: { time: "09:44", title: "Termin zakazan", outcome: "Klijent zadržan" },
-      },
-    },
-    thread: {
-      missed: { label: "Propušten poziv", time: "09:41" },
-      messages: [
-        { from: "us", time: "09:41", text: "Zdravo! Videli smo vaš poziv, kako možemo da pomognemo?" },
-        { from: "client", time: "09:44", text: "Treba mi termin, može danas u 17:20?" },
-        { from: "us", time: "09:44", text: "Naravno, zakazano za 17:20. Vidimo se!" },
-      ],
-      confirmation: "Upisano u kalendar",
-    },
-  },
-
-  research: {
-    eyebrow: "Istraživanja",
-    title: "Zašto brzina odgovora odlučuje.",
-    labels: [
-      "firmi nikada ne odgovori na upit poslat preko sajta",
-      "prosečno vreme odgovora na upit sa sajta",
-      "manje šanse da kvalifikujete kontakt ako zovete posle 30 minuta umesto posle 5",
-    ],
-    caveatBefore: "Tuđa istraživanja, ne naši rezultati. Navodimo ih kao pokazatelj problema. Izvori:",
-    caveatBetween: "i",
-    caveatAfter: ". Američko tržište, 2007–2016.",
   },
 
   faq: {
@@ -152,7 +118,7 @@ export default {
     items: [
       {
         q: "Šta konkretno dobijam?",
-        a: "Svaki upit koji vam stigne dobija automatski odgovor za nekoliko sekundi: propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog.",
+        a: "Svaki upit koji vam stigne dobija automatski odgovor za par sekundi: propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog.",
       },
       {
         q: "Da li radite glasovnog agenta koji se javlja na telefon?",
@@ -169,30 +135,24 @@ export default {
     ],
     more: {
       prompt: "Imate drugo pitanje?",
-      // Deliberately not "Pišite nam" — the Contact CTA just below already uses
-      // that label, and two identical buttons a screen apart read as a stutter.
       cta: "Kontaktirajte nas",
     },
   },
 
   contact: {
     eyebrow: "Kontakt",
+    title: "Javite se, javljamo se.",
+    lede: "Kratak razgovor, bez obaveze. Recite nam čime se bavite, mi ćemo vam reći tačno šta APLORY menja.",
     newWindow: " (otvara se u novom prozoru)",
     channels: { email: "Email", phone: "Telefon" },
     otherValue: "WhatsApp · Viber · SMS",
     form: {
       legend: "Pošaljite upit",
-      // Shown under every required field once it has been flagged.
       requiredError: "Ovo polje je obavezno.",
-      // Never read by a person: it labels the honeypot for the bots that parse
-      // the markup looking for a field to fill in.
       honeypot: "Ne popunjavajte ovo polje",
-      // The wizard's chrome. `counter` is filled in with the step numbers.
       steps: {
         counter: "Korak {n} od {total}",
         next: "Dalje",
-        // Replaces "Dalje" while the step has no answer, so a step nobody wants
-        // to fill in says so on the button rather than pretending to be blocked.
         skip: "Preskočite",
         back: "Nazad",
         services: {
@@ -212,25 +172,22 @@ export default {
         name: { label: "Ime", placeholder: "Vaše ime" },
         email: { label: "Email", placeholder: "vas@email.com" },
         phone: { label: "Telefon", optional: "opciono", placeholder: "069 123 4567" },
-        // Options are keyed by the slug that gets submitted, never by position:
-        // the order in ContactForm.jsx can change without rewriting what a
-        // stored answer means.
         industry: {
           otherLabel: "Čime se bavite?",
           otherPlaceholder: "Upišite svoju delatnost",
           options: {
-            "stomatoloske-ordinacije": "Stomatološke ordinacije",
-            "veterinarske-klinike": "Veterinarske klinike",
-            "advokatske-kancelarije": "Advokatske kancelarije",
-            "servisi-i-radionice": "Servisi i radionice",
-            "medical-spa-saloni": "Medical spa saloni",
+            "stomatoloske-ordinacije": "Stomatološka ordinacija",
+            "veterinarske-klinike": "Veterinarska klinika",
+            "advokatske-kancelarije": "Advokatska kancelarija",
+            "servisi-i-radionice": "Servis ili radionica",
+            "medical-spa-saloni": "Medical spa / salon",
             ecommerce: "E-commerce",
             drugo: "Drugo",
           },
         },
         services: {
           options: {
-            "promasen-poziv": "Poruka posle propuštenog poziva",
+            "promasen-poziv": "Odgovor na propušten poziv",
             chat: "Chat na sajtu",
             sajt: "Izrada sajta",
             ostalo: "Ostalo",
@@ -243,8 +200,6 @@ export default {
       sending: "Šaljemo…",
       sentTitle: "Hvala!",
       sent: "Poruka je stigla. Javljamo se u najkraćem roku.",
-      // Names the fallback outright: a visitor who sees this has already tried
-      // once, and a second failed attempt is worse than an address to write to.
       error: "Slanje nije uspelo. Pišite nam direktno na office.aplory@gmail.com.",
       privacyBefore: "Slanjem prihvatate ",
       privacyLink: "politiku privatnosti",
@@ -256,8 +211,6 @@ export default {
       terms: "Uslovi korišćenja",
       cookies: "Politika kolačića",
       accessibility: "Izjava o pristupačnosti",
-      // All four documents exist only in Serbian.
-      legalNote: null,
     },
   },
 };

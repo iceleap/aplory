@@ -1,4 +1,5 @@
 import ChannelFlow from "./ChannelFlow";
+import LightBlobs from "./LightBlobs";
 import { useScrollTo } from "../lib/SmoothScroll";
 import { useCopy } from "../i18n";
 
@@ -15,11 +16,15 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="flex min-h-[calc(100svh-var(--header-h))] items-center border-b border-rule bg-paper py-16 md:py-20"
+      className="grid-webbing relative flex min-h-[calc(100svh-var(--header-h))] items-center overflow-hidden border-b border-rule py-16 md:py-20"
     >
-      <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_520px] lg:gap-16">
+      <LightBlobs />
+      <div className="wrap relative z-10 grid items-center gap-12 lg:grid-cols-[1fr_520px] lg:gap-16">
         <div>
-          <h1 id="hero-title" className="h1 max-w-[13ch]">
+          <p className="eyebrow" aria-hidden="true">
+            {copy.hero.kicker}
+          </p>
+          <h1 id="hero-title" className="h1 mt-4 max-w-[14ch]">
             {copy.hero.title}
           </h1>
           <p className="mt-7 max-w-[46ch] text-[19px] text-ink-2">{copy.hero.lede}</p>
@@ -27,7 +32,7 @@ export default function Hero() {
             <a className="btn btn-primary" href="#kontakt" onClick={(e) => go(e, "kontakt")}>
               {copy.hero.ctaPrimary}
             </a>
-            <a className="btn btn-ghost" href="#resenje" onClick={(e) => go(e, "resenje")}>
+            <a className="btn btn-ghost" href="#kako" onClick={(e) => go(e, "kako")}>
               {copy.hero.ctaSecondary}
             </a>
           </div>

@@ -91,7 +91,7 @@ const FIELD_BASE =
   "text-[15px] font-light text-ink transition-colors placeholder:text-faint";
 
 const FIELD_OK =
-  "border-rule bg-surface-2 hover:border-brand-a/60 focus:border-brand-a";
+  "border-rule bg-paper hover:border-ink/40 focus:border-ink";
 
 const FIELD_BAD = "border-danger bg-danger/5 focus:border-danger";
 
@@ -163,12 +163,12 @@ function Field({
    the input, and everything styled here is nested inside the card. Hanging the
    group off the label lets the indicator and the text react to :checked too. */
 const CARD =
-  "flex h-full items-center gap-3.5 rounded-xl border border-rule bg-surface-2 " +
-  "p-4 text-[15px] font-light text-ink-2 " +
+  "flex h-full items-center gap-3.5 rounded-2xl border border-rule bg-paper " +
+  "p-4 text-[15px] font-normal text-ink-2 " +
   "transition-[color,background-color,border-color,transform] duration-150 " +
-  "group-hover:border-brand-a/60 group-hover:text-ink " +
+  "group-hover:border-ink/50 group-hover:text-ink " +
   "motion-safe:group-hover:-translate-y-px motion-safe:group-active:scale-[0.99] " +
-  "group-has-[:checked]:border-brand-a group-has-[:checked]:bg-brand-a/10 " +
+  "group-has-[:checked]:border-ink group-has-[:checked]:bg-surface-2 " +
   "group-has-[:checked]:text-ink " +
   /* The input is sr-only, so its own focus ring is invisible — the card has to
      wear it or keyboard users lose their place entirely. */
@@ -177,7 +177,7 @@ const CARD =
 
 const INDICATOR =
   "grid size-6 shrink-0 place-items-center border border-rule bg-paper " +
-  "transition-colors group-has-[:checked]:border-brand-a group-has-[:checked]:bg-brand-a";
+  "transition-colors group-has-[:checked]:border-ink group-has-[:checked]:bg-ink";
 
 /* Radios throughout: every step takes exactly one answer now that a pick
    advances on its own, and a checkbox would promise a second choice the form
@@ -242,7 +242,7 @@ function Progress({ step }) {
         <span
           key={name}
           className={`h-1 w-7 rounded-full transition-colors duration-300 ${
-            i <= step ? "bg-brand-a" : "bg-rule"
+            i <= step ? "bg-ink" : "bg-rule"
           }`}
         />
       ))}
@@ -265,13 +265,18 @@ export default function ContactForm() {
   const headingRef = useRef(null);
   const advanceTimer = useRef(null);
   /* Skips the very first run: focusing the heading on mount would yank the page
-     down to the form before anybody has asked to be here. */
+     down to the form before anybody has asked to be here. The cleanup undoes
+     the flag so StrictMode's dev-only double-invoke of this effect (mount,
+     cleanup, mount again) doesn't see a stale "already mounted" from the first
+     pass and focus the heading before the page has even settled. */
   const mounted = useRef(false);
 
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-      return;
+      return () => {
+        mounted.current = false;
+      };
     }
     headingRef.current?.focus();
   }, [step, status]);
@@ -359,7 +364,7 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="rounded-xl border border-rule bg-paper p-8 text-center sm:p-12">
+      <div className="rounded-[28px] border border-rule bg-surface-2 p-8 text-center sm:p-12">
         <span
           aria-hidden="true"
           className="mx-auto grid size-14 place-items-center rounded-full bg-live/15"
@@ -374,7 +379,7 @@ export default function ContactForm() {
         <h3
           ref={headingRef}
           tabIndex={-1}
-          className="mt-5 text-[24px] font-light tracking-[-0.02em] outline-none"
+          className="font-display mt-5 text-[24px] font-normal tracking-[-0.01em] outline-none"
         >
           {t.sentTitle}
         </h3>
@@ -397,7 +402,7 @@ export default function ContactForm() {
          red on blur, and its bubbles arrive in the browser's language rather
          than the page's. handleSubmit checks explicitly instead. */
       noValidate
-      className="rounded-xl border border-rule bg-paper p-5 sm:p-8"
+      className="rounded-[28px] border border-rule bg-surface-2 p-5 sm:p-8"
     >
       {/* Both travel in the POST body: the first tells Netlify which form this
           is, the second is the honeypot. A human never sees the honeypot, so
@@ -427,7 +432,7 @@ export default function ContactForm() {
       <h3
         ref={headingRef}
         tabIndex={-1}
-        className="mt-5 text-[26px] font-light tracking-[-0.02em] outline-none"
+        className="font-display mt-5 text-[26px] font-normal tracking-[-0.01em] outline-none"
       >
         {stepCopy.title}
       </h3>
@@ -443,13 +448,19 @@ export default function ContactForm() {
       <div key={step} className="step-in mt-7 sm:min-h-[11rem]">
         {step === 0 && (
           <>
-            <OptionGrid
-              name="usluge"
-              options={SERVICES}
-              labels={t.fields.services.options}
-              selected={answers.usluge}
-              onPick={pick}
-            />
+            {/* The legend repeats the heading above rather than pointing at it via
+                aria-labelledby: the heading is shared with steps that hold no
+                radio group at all, so it can't double as this fieldset's name. */}
+            <fieldset className="m-0 border-0 p-0">
+              <legend className="visually-hidden">{stepCopy.title}</legend>
+              <OptionGrid
+                name="usluge"
+                options={SERVICES}
+                labels={t.fields.services.options}
+                selected={answers.usluge}
+                onPick={pick}
+              />
+            </fieldset>
             {answers.usluge === OTHER_SERVICE && (
               <div className="mt-4">
                 <Field
@@ -469,13 +480,16 @@ export default function ContactForm() {
 
         {step === 1 && (
           <>
-            <OptionGrid
-              name="delatnost"
-              options={INDUSTRIES}
-              labels={t.fields.industry.options}
-              selected={answers.delatnost}
-              onPick={pick}
-            />
+            <fieldset className="m-0 border-0 p-0">
+              <legend className="visually-hidden">{stepCopy.title}</legend>
+              <OptionGrid
+                name="delatnost"
+                options={INDUSTRIES}
+                labels={t.fields.industry.options}
+                selected={answers.delatnost}
+                onPick={pick}
+              />
+            </fieldset>
             {answers.delatnost === OTHER_INDUSTRY && (
               <div className="mt-4">
                 <Field

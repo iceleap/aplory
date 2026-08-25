@@ -11,7 +11,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="sec" id="pitanja" aria-labelledby="pitanja-title">
+    <section className="sec bg-surface" id="pitanja" aria-labelledby="pitanja-title">
       <div className="wrap grid2">
         <div className="rail">
           <p className="eyebrow" aria-hidden="true">
