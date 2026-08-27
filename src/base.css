@@ -423,6 +423,14 @@
     padding: 12px 14px;
   }
 
+  .how-mock__icon {
+    position: relative;
+    flex: none;
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
   .how-mock__call svg {
     flex: none;
     width: 20px;
@@ -432,10 +440,7 @@
 
   .how-mock__ring {
     position: absolute;
-    top: 12px;
-    left: 14px;
-    width: 20px;
-    height: 20px;
+    inset: 0;
     border-radius: 999px;
     animation: how-ring 2.2s ease-out infinite;
   }
@@ -455,10 +460,50 @@
     color: var(--color-muted);
   }
 
+  .how-mock__connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--color-muted);
+  }
+
+  .how-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+
+  .how-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .how-legend__swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  .how-legend__swatch--in {
+    background: linear-gradient(120deg, var(--color-brand-a), var(--color-brand-b));
+  }
+
+  .how-legend__swatch--out {
+    background: var(--color-ink);
+  }
+
   .how-mock__thread {
     display: grid;
     gap: 10px;
-    margin-top: 14px;
+    margin-top: 10px;
   }
 
   .how-bubble {
@@ -516,22 +561,24 @@
 
   .how-steps {
     display: grid;
-    gap: 22px;
+    gap: 18px;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
   .how-steps li {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+    row-gap: 4px;
   }
 
   .how-steps__n {
     font-family: var(--font-display);
     font-size: 15px;
     color: var(--color-faint);
+    align-self: baseline;
   }
 
   .how-steps__title {
@@ -539,6 +586,14 @@
     font-weight: 600;
     letter-spacing: -0.008em;
     color: var(--color-ink);
+    align-self: baseline;
+  }
+
+  .how-steps__body {
+    grid-column: 2;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--color-muted);
   }
 
   @media (max-width: 720px) {

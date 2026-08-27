@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Problem from "./components/Problem";
 import HowItWorks from "./components/HowItWorks";
-import Services from "./components/Services";
+import Niches from "./components/Niches";
 import Faq from "./components/Faq";
 import Contact from "./components/Contact";
 
@@ -18,11 +18,12 @@ export default function App() {
       <div className="min-h-screen bg-paper text-ink">
       <Header />
       <main>
-        {/* Problem -> Kako radi -> Šta radimo: what's broken, what happens, what we do. */}
+        {/* Problem -> Kako radi -> Za koga: what's broken, what happens, who
+            it's for. "Šta radimo" moved to its own page (sta-radimo.html). */}
         <Hero />
         <Problem />
         <HowItWorks />
-        <Services />
+        <Niches />
         <Faq />
         <Contact />
       </main>

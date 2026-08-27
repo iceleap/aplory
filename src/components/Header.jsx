@@ -4,7 +4,19 @@ import { useCopy } from "../i18n";
 
 /* No "Kontakt" tab here on purpose: the CTA button already points at #kontakt,
    and two adjacent links to the same target is a redundant link. */
-const TAB_IDS = ["problem", "resenje", "pitanja"];
+const TAB_IDS = ["problem", "kako", "za-koga", "pitanja"];
+
+/* Nav order, mixing in-page scroll targets with real links. "Šta radimo" now
+   lives on its own page (sta-radimo.html) rather than as a homepage section,
+   so it renders as a plain link instead of being tracked by the scroll-spy
+   below, and sits last — right next to the CTA button. */
+const NAV_ITEMS = [
+  { id: "problem" },
+  { id: "kako" },
+  { id: "za-koga" },
+  { id: "pitanja" },
+  { id: "resenje", href: "/sta-radimo.html" },
+];
 
 /* How far a finger has to travel before it counts as scrolling rather than
    tapping, and so dismisses the open menu. */
@@ -152,11 +164,11 @@ export default function Header() {
           {/* No gap below md: each tab's own bottom rule is the divider between
               rows, so the items have to sit flush. */}
           <ul className="flex flex-col md:flex-row md:items-center md:gap-7">
-            {TAB_IDS.map((id) => (
+            {NAV_ITEMS.map(({ id, href }) => (
               <li key={id}>
                 <a
-                  href={`#${id}`}
-                  onClick={(e) => go(e, id)}
+                  href={href ?? `#${id}`}
+                  onClick={href ? () => setOpen(false) : (e) => go(e, id)}
                   aria-current={active === id ? "true" : undefined}
                   /* That bottom rule does double duty: a divider between the
                      stacked tabs on mobile, and the active underline in both

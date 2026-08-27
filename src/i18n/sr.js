@@ -10,7 +10,7 @@ export default {
   meta: {
     title: "APLORY — kad vas neko traži, odgovara za vas",
     description:
-      "Propušten poziv, WhatsApp, Viber, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
+      "Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
   },
 
   nav: {
@@ -21,7 +21,9 @@ export default {
     closeMenu: "Zatvori meni",
     tabs: {
       problem: "Problem",
-      resenje: "Šta radimo",
+      kako: "Kako radi",
+      resenje: "Sve usluge",
+      "za-koga": "Za koga",
       pitanja: "Pitanja",
     },
   },
@@ -29,48 +31,54 @@ export default {
   hero: {
     kicker: "Za firme koje ne stignu da se jave na svaki poziv",
     title: "Kad vas neko traži, APLORY odgovara. Automatski.",
-    lede: "Propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta — APLORY odmah odgovori umesto vas, na broju i nalozima koje već koristite.",
+    lede: "Propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta — APLORY odmah odgovori umesto vas, na broju i nalozima koje već koristite.",
     ctaPrimary: "Zakažite razgovor",
-    ctaSecondary: "Kako to radi",
+    ctaSecondary: "Kako radi",
     diagramAlt:
-      "Propušten poziv, WhatsApp, Viber, Instagram i poruke sa sajta. Svi kanali vode do jednog odgovorenog upita.",
-    channels: ["Propušten poziv", "WhatsApp", "Viber", "Instagram", "Poruka sa sajta"],
+      "Propušten poziv, WhatsApp, Instagram i poruke sa sajta. Svi kanali vode do jednog odgovorenog upita.",
+    channels: ["Propušten poziv", "WhatsApp", "Instagram", "Poruka sa sajta"],
     hub: { title: "Odgovoreno", note: "za par sekundi" },
   },
 
   problem: {
     eyebrow: "Problem",
     title: "Poziv na koji niko ne odgovori je klijent koji zove sledećeg na spisku.",
-    lead: "Telefon zvoni dok radite, posle radnog vremena i vikendom. Svaki taj propušten poziv je izgubljen posao.",
     cards: [
       {
-        title: "Zvoni dok radite",
+        title: "Dok radite",
         body: "Ruke su vam pune, a telefon zvoni bez odgovora. Taj poziv se retko ponovi.",
       },
       {
-        title: "Zvoni posle radnog vremena",
+        title: "Posle radnog vremena",
         body: "Večeri, vikendi, praznici. Ljudi traže uslugu kad njima odgovara, ne kad je neko tu da se javi.",
       },
       {
-        title: "Zvoni brže kod konkurencije",
+        title: "Kod konkurencije",
         body: "Ko prvi odgovori, taj dobija klijenta. Ostali dobiju govornu poštu.",
       },
     ],
     stat: {
       value: "62%",
-      body: "poziva ka malim firmama ne dobije živu osobu na liniji — završi na govornoj pošti ili ostane bez ikakvog odgovora.",
-      source: "411 Locals, 2016 — 85 firmi, 58 delatnosti, 30 dana.",
+      body: "poziva ka malim firmama ne dobije odgovor.",
+      source: "411 Locals, 2016 · 85 firmi, 58 delatnosti.",
     },
   },
 
   how: {
     eyebrow: "Kako radi",
-    title: "Bez podešavanja na vašoj strani.",
+    title: "Klijent zove. Ne stignete da se javite. APLORY se javlja umesto vas.",
+    nicheTitle: "Kako bi to izgledalo u vašoj branši.",
+    mock: {
+      caption: "Ovako izgleda na telefonu klijenta:",
+      connector: "APLORY se javlja za par sekundi",
+      legendIn: "APLORY",
+      legendOut: "Klijent",
+    },
     steps: [
       {
         n: "01",
         title: "Klijent vas kontaktira",
-        body: "Pozivom, WhatsAppom, Viberom, Instagramom ili porukom sa sajta — kanal koji već koristite.",
+        body: "Pozivom, WhatsAppom, Instagramom ili porukom sa sajta — kanal koji već koristite.",
       },
       {
         n: "02",
@@ -97,7 +105,7 @@ export default {
       },
       {
         name: "Odgovor na kanalu koji klijent koristi",
-        line: "WhatsApp, Viber ili Instagram — razgovor se nastavlja tamo gde je klijentu najlakše.",
+        line: "WhatsApp ili Instagram — razgovor se nastavlja tamo gde je klijentu najlakše.",
       },
       {
         name: "Podsetnici za termine",
@@ -118,7 +126,7 @@ export default {
     items: [
       {
         q: "Šta konkretno dobijam?",
-        a: "Svaki upit koji vam stigne dobija automatski odgovor za par sekundi: propušten poziv, poruka na WhatsAppu, Viberu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog.",
+        a: "Svaki upit koji vam stigne dobija automatski odgovor za par sekundi: propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog.",
       },
       {
         q: "Da li radite glasovnog agenta koji se javlja na telefon?",
@@ -145,7 +153,7 @@ export default {
     lede: "Kratak razgovor, bez obaveze. Recite nam čime se bavite, mi ćemo vam reći tačno šta APLORY menja.",
     newWindow: " (otvara se u novom prozoru)",
     channels: { email: "Email", phone: "Telefon" },
-    otherValue: "WhatsApp · Viber · SMS",
+    otherValue: "WhatsApp · SMS",
     form: {
       legend: "Pošaljite upit",
       requiredError: "Ovo polje je obavezno.",
@@ -182,6 +190,9 @@ export default {
             "servisi-i-radionice": "Servis ili radionica",
             "medical-spa-saloni": "Medical spa / salon",
             ecommerce: "E-commerce",
+            "klima-i-grejanje": "Klima i grejanje",
+            "pvc-stolarija": "PVC stolarija",
+            majstori: "Majstori i kućni servisi",
             drugo: "Drugo",
           },
         },

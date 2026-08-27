@@ -17,6 +17,9 @@ const INDUSTRIES = [
   "servisi-i-radionice",
   "medical-spa-saloni",
   "ecommerce",
+  "klima-i-grejanje",
+  "pvc-stolarija",
+  "majstori",
   OTHER_INDUSTRY,
 ];
 
@@ -250,13 +253,17 @@ function Progress({ step }) {
   );
 }
 
-export default function ContactForm() {
+/* Arriving from a niche landing page (e.g. /stomatolozi.html), the visitor has
+   already told us their line of work — asking again on step 2 would be a
+   second question with an answer they just gave. `initialIndustry` seeds that
+   answer so the step opens pre-selected; the visitor can still change it. */
+export default function ContactForm({ initialIndustry = "" }) {
   const copy = useCopy();
   const t = copy.contact.form;
   /* "idle" | "sending" | "sent" | "error" */
   const [status, setStatus] = useState("idle");
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState(EMPTY);
+  const [answers, setAnswers] = useState(() => ({ ...EMPTY, delatnost: initialIndustry }));
   /* Nothing on step 3 turns red until this is true. It is the whole fix for
      fields that used to redden just from being tabbed through. */
   const [submitAttempted, setSubmitAttempted] = useState(false);

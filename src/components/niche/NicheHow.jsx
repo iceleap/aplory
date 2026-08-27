@@ -1,7 +1,14 @@
-import { useCopy } from "../i18n";
+import { useCopy } from "../../i18n";
 
-export default function HowItWorks() {
+/**
+ * Same mockup and animation classes as the home page's HowItWorks.jsx (see
+ * base.css's .how-* rules and the reveal timing keyed to -1/-2/-3), with the
+ * missed-call banner and the six-message thread swapped for this niche's own
+ * `demo` data instead of the hardcoded HVAC conversation.
+ */
+export default function NicheHow({ niche }) {
   const copy = useCopy();
+  const [in1, out1, in2, out2, in3, out3] = niche.demo.messages;
 
   return (
     <section className="sec bg-surface" id="kako" aria-labelledby="kako-title">
@@ -13,7 +20,7 @@ export default function HowItWorks() {
         </div>
         <div>
           <h2 id="kako-title" className="h2" data-reveal>
-            {copy.how.title}
+            {copy.how.nicheTitle}
           </h2>
 
           <div className="how-layout mt-12">
@@ -27,8 +34,8 @@ export default function HowItWorks() {
                   </svg>
                 </span>
                 <span>
-                  <b>Propušten poziv</b>
-                  <i>+381 6x xxx xxx</i>
+                  <b>{niche.demo.missedLabel}</b>
+                  <i>{niche.demo.missedNumber}</i>
                 </span>
               </div>
 
@@ -51,32 +58,22 @@ export default function HowItWorks() {
               </div>
 
               <div className="how-mock__thread">
-                <div className="how-bubble how-bubble--in how-bubble--in-1">
-                  Zdravo. Ovde servis klima uređaja. Nismo mogli da se javimo, na terenu smo. Napišite šta vam treba i odgovaramo odmah.
-                </div>
-                <div className="how-bubble how-bubble--out how-bubble--out-1">
-                  Ne radi mi klima u stanu, duva mlako. Može neko danas?
-                </div>
+                <div className="how-bubble how-bubble--in how-bubble--in-1">{in1.text}</div>
+                <div className="how-bubble how-bubble--out how-bubble--out-1">{out1.text}</div>
                 <div className="how-bubble how-bubble--in how-bubble--in-2">
                   <span className="how-dots how-dots-2">
                     <i /><i /><i />
                   </span>
-                  <span className="how-bubble__text how-text-2">
-                    Može. Koji je model i koja adresa?
-                  </span>
+                  <span className="how-bubble__text how-text-2">{in2.text}</span>
                 </div>
-                <div className="how-bubble how-bubble--out how-bubble--out-2">
-                  Gree, dvanaestica. Vojvode Mišića 14, Valjevo.
-                </div>
+                <div className="how-bubble how-bubble--out how-bubble--out-2">{out2.text}</div>
                 <div className="how-bubble how-bubble--in how-bubble--in-3">
                   <span className="how-dots how-dots-3">
                     <i /><i /><i />
                   </span>
-                  <span className="how-bubble__text how-text-3">
-                    Imamo termin danas u 16.30 ili sutra u 9. Šta vam odgovara?
-                  </span>
+                  <span className="how-bubble__text how-text-3">{in3.text}</span>
                 </div>
-                <div className="how-bubble how-bubble--out how-bubble--out-3">Danas u 16.30.</div>
+                <div className="how-bubble how-bubble--out how-bubble--out-3">{out3.text}</div>
               </div>
             </div>
 

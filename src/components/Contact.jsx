@@ -71,7 +71,7 @@ function Tile({ channel, index }) {
   );
 }
 
-export default function Contact() {
+export default function Contact({ initialIndustry } = {}) {
   const copy = useCopy();
 
   /* aria-label, not aria-labelledby: the h2 it used to point at is gone, and a
@@ -98,7 +98,7 @@ export default function Contact() {
             address and number are for people who would rather use their own
             client, which is a footnote to the form, not its equal. */}
         <div className="mt-12" data-reveal>
-          <ContactForm />
+          <ContactForm initialIndustry={initialIndustry} />
         </div>
 
         <ul className="mt-3 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">

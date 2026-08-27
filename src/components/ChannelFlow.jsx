@@ -1,6 +1,6 @@
 import { useCopy } from "../i18n";
 /**
- * Five inbound channels converging into a single answered state — the page's
+ * Four inbound channels converging into a single answered state — the page's
  * one-sentence thesis, drawn.
  *
  * Inline SVG rather than canvas: this is a structural diagram, so it stays sharp
@@ -15,9 +15,6 @@ const ICONS = [
   },
   {
     icon: <path d="M16 9.2a6 6 0 0 1-8.7 5.4L3.6 15.6l1.1-3.6A6 6 0 1 1 16 9.2Z" />,
-  },
-  {
-    icon: <path d="M10 2.6c4 0 6.6 2.4 6.6 6 0 3.7-2.6 6.1-6.6 6.1-.7 0-1.3 0-1.9-.2l-3 2.2.5-3A5.8 5.8 0 0 1 3.4 8.6c0-3.6 2.6-6 6.6-6Z" />,
   },
   {
     icon: (
@@ -38,15 +35,15 @@ const ICONS = [
   },
 ];
 
-const ROW_Y = [40, 104, 168, 232, 296];
+const ROW_Y = [40, 104, 168, 232];
 const HUB_X = 392;
-const HUB_Y = 168;
+const HUB_Y = 136;
 
 export default function ChannelFlow() {
   const copy = useCopy();
   return (
     <svg
-      viewBox="0 0 520 348"
+      viewBox="0 0 520 284"
       className="h-auto w-full max-w-[520px]"
       role="img"
       aria-label={copy.hero.diagramAlt}

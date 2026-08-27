@@ -55,9 +55,10 @@ function Icon({ name, className }) {
    the lead; the rest fall through to the ledger, hence the +1 offset there. */
 const ICON_ORDER = ["message", "nodes", "bell", "star", "window", "layout"];
 
-export default function Services() {
+export default function Services({ titleAs: Title = "h2" }) {
   const copy = useCopy();
   const [lead, ...rest] = copy.services.items;
+  const ItemTitle = Title === "h1" ? "h2" : "h3";
 
   return (
     <section className="sec" id="resenje" aria-labelledby="resenje-title">
@@ -68,9 +69,9 @@ export default function Services() {
           </p>
         </div>
         <div>
-          <h2 id="resenje-title" className="h2" data-reveal>
+          <Title id="resenje-title" className="h2" data-reveal>
             {copy.services.title}
-          </h2>
+          </Title>
 
           {/* The one service the rest of the page is an argument for — the missed
               call in Problem and both ends of the fork in Rezultat resolve here —
@@ -89,9 +90,9 @@ export default function Services() {
               </p>
               {/* Display weight, not the ledger's semibold: this is the one name
                   in the section that carries at heading size. */}
-              <h3 className="font-display mt-4 max-w-[16ch] text-[26px] leading-[1.14] font-normal tracking-[-0.012em] min-[1080px]:text-[32px]">
+              <ItemTitle className="font-display mt-4 max-w-[16ch] text-[26px] leading-[1.14] font-normal tracking-[-0.012em] min-[1080px]:text-[32px]">
                 {lead.name}
-              </h3>
+              </ItemTitle>
             </div>
             {/* Set beside the name rather than under it, bottom-aligned, so the
                 cell fills its own width instead of trailing off into empty space
@@ -117,13 +118,13 @@ export default function Services() {
                   key={ICON_ORDER[i + 1]}
                   className="group grid gap-x-10 gap-y-1.5 border-t border-rule py-5 min-[1080px]:grid-cols-[minmax(0,16rem)_1fr] min-[1080px]:py-6"
                 >
-                  <h3 className="flex items-start gap-3 text-[16px] leading-snug font-semibold tracking-[-0.012em]">
+                  <ItemTitle className="flex items-start gap-3 text-[16px] leading-snug font-semibold tracking-[-0.012em]">
                     <Icon
                       name={ICON_ORDER[i + 1]}
                       className="mt-0.5 size-4 shrink-0 text-faint transition-colors group-hover:text-brand-soft"
                     />
                     {service.name}
-                  </h3>
+                  </ItemTitle>
                   <p className="pl-7 text-[14.5px] leading-relaxed text-muted min-[1080px]:pl-0">
                     {service.line}
                   </p>
