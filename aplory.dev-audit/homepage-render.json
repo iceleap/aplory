@@ -1,0 +1,53 @@
+{
+  "url": "https://aplory.dev/",
+  "status_code": 200,
+  "content": "<!DOCTYPE html><html lang=\"sr\" class=\"reveal-ready lenis plt-desktop md\" mode=\"md\"><head>\n    <meta charset=\"UTF-8\"><style data-styles=\"\">slot-fb{display:contents}slot-fb[hidden]{display:none}acknowledge-message,attachment-grid,audio-player,chat-conversation,chat-feedback,chat-form,chat-input,chat-message,chat-message-status,chat-pane,chat-selection,chat-widget,ion-accordion,ion-accordion-group,ion-action-sheet,ion-alert,ion-app,ion-avatar,ion-back-button,ion-backdrop,ion-badge,ion-breadcrumb,io...",
+  "raw_content": "<!doctype html>\n<html lang=\"sr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n    <title>kad vas neko tra\u017ei \u2014 APLORY odgovara za ...",
+  "is_spa": true,
+  "extracted_text": "Kad vas neko tra\u017ei, APLORY odgovara. Automatski.\nPropu\u0161ten poziv, poruka na WhatsAppu, Instagramu ili sa sajta \u2014 APLORY odmah odgovori umesto vas, na broju i nalozima koje ve\u0107 koristite.\n62% poziva ka malim firmama ne dobije odgovor.411 Locals, 2016 \u00b7 85 firmi, 58 delatnosti.\nPoziv na koji niko ne odgovori je klijent koji zove slede\u0107eg na spisku.\n- Dok raditeRuke su vam pune, a telefon zvoni bez odgovora. Taj poziv se retko ponovi.\n- Posle radnog vremenaVe\u010deri, vikendi, praznici. Ljudi tra\u017ee usl...",
+  "publication_date": "2026-01-01",
+  "accessibility_tree": null,
+  "headers": {
+    "accept-ranges": "bytes",
+    "age": "243",
+    "cache-control": "public,max-age=0,must-revalidate",
+    "cache-status": "\"Netlify Edge\"; hit; ttl=31535757",
+    "content-encoding": "br",
+    "content-length": "1965",
+    "content-type": "text/html; charset=UTF-8",
+    "date": "Thu, 27 Aug 2026 15:40:04 GMT",
+    "etag": "\"caec9aa106fc1a19156167c0e50a0853-ssl-df\"",
+    "server": "Netlify",
+    "strict-transport-security": "max-age=31536000",
+    "vary": "Accept-Encoding",
+    "x-nf-request-id": "01M11Y1PCQSEGZHC24CGT7WKAQ"
+  },
+  "redirect_chain": [],
+  "console_errors": [],
+  "render_diagnostics": [],
+  "render_engine": "playwright-chromium",
+  "render_ms": 2090.781491000598,
+  "mode_used": "rendered",
+  "error": null,
+  "structured_data": {
+    "block_count": 1,
+    "processed_count": 1,
+    "total_bytes": 1982,
+    "truncated": false,
+    "blocks": [
+      {
+        "index": 1,
+        "size_bytes": 1982,
+        "valid": true,
+        "types": [
+          "Offer",
+          "OfferCatalog",
+          "OpeningHoursSpecification",
+          "ProfessionalService",
+          "Service"
+        ],
+        "types_truncated": false
+      }
+    ]
+  }
+}

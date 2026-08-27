@@ -1,0 +1,74 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://aplory.dev/#business",
+  "name": "APLORY",
+  "description": "Automatski odgovor na propušten poziv, preusmeravanje na kanale koje klijenti koriste, podsetnici za termine, Google recenzije, chat na sajtu i izrada sajta.",
+  "email": "office.aplory@gmail.com",
+  "telephone": "+381698440885",
+  "url": "https://aplory.dev/",
+  "image": "https://aplory.dev/og.png",
+  "availableLanguage": "sr",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "RS"
+  },
+  "sameAs": [
+    "[Instagram URL — fill in if it exists]",
+    "[Facebook URL — fill in if it exists]",
+    "[Google Business Profile URL — fill in if it exists]"
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Usluge",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Poruka posle propuštenog poziva"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Preusmeravanje na kanale koje klijenti koriste"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Podsetnici za termine"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Google recenzije" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Chat na sajtu" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Izrada sajta" }
+      }
+    ]
+  }
+}

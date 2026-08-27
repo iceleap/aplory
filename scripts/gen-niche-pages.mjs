@@ -74,7 +74,7 @@ for (const n of niches) {
 `;
 
   const entry = `import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import "../base.css";
 import NicheLanding from "../pages/NicheLanding";
 import { nicheBySlug } from "../data/niches";
@@ -87,7 +87,8 @@ if ("scrollRestoration" in history) {
 }
 window.scrollTo(0, 0);
 
-createRoot(document.getElementById("root")).render(
+hydrateRoot(
+  document.getElementById("root"),
   <StrictMode>
     <NicheLanding niche={nicheBySlug["${n.slug}"]} />
   </StrictMode>,
