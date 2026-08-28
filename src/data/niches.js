@@ -19,7 +19,7 @@ const niches = [
     photo: "/niche/stomatolozi.jpg",
     photoAlt: "Stomatološkinja u ordinaciji",
     eyebrow: "Za stomatološke ordinacije",
-    heroTitle: "Kad pacijent zove, APLORY zakazuje termin. Dok vi radite u stolici.",
+    heroTitle: "Kad pacijent zove, APLORY zakazuje termin. Dok ste u ordinaciji.",
     heroLede:
       "Recepcija ne može da se javi dok traje intervencija. APLORY odgovara na propušten poziv, WhatsApp i Instagram poruku odmah, zakazuje termin i podseti pacijenta pre dolaska.",
     metaTitle: "APLORY za stomatološke ordinacije — automatski odgovor pacijentima",
@@ -27,7 +27,7 @@ const niches = [
       "Propušten poziv dok ste sa pacijentom u stolici? APLORY odmah odgovara na poziv, WhatsApp i Instagram poruku, zakazuje termin i šalje podsetnik pre dolaska.",
     pains: [
       {
-        title: "Telefon zvoni dok ste u stolici",
+        title: "Telefon zvoni dok ste u ordinaciji",
         body: "Ruke su vam zauzete, asistentkinja je takođe. Poziv ostane bez odgovora, a pacijent često pozove sledeću ordinaciju sa liste.",
       },
       {
