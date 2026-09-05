@@ -23,6 +23,12 @@
         "value": "fraunces",
         "createdAt": "2026-08-25T12:01:18.080Z",
         "reason": "pre-existing site design system (src/base.css, PRODUCT.md/DESIGN.md), not introduced by this session's changes"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-09-05T20:34:48.256Z",
+        "reason": "pre-existing site typography (Söhne-style grotesque per base.css direction notes, predates this session); this session only self-hosted the existing Google Fonts files for performance, did not choose the typeface"
       }
     ]
   }

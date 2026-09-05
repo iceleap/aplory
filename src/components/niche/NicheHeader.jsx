@@ -39,7 +39,7 @@ export default function NicheHeader() {
         </a>
 
         <a
-          className="btn btn-primary shrink-0 px-4 py-2.5 text-sm md:px-5"
+          className="btn btn-primary shrink-0 px-4 py-4 text-sm md:px-5 md:py-2.5"
           href="#kontakt"
           onClick={goToContact}
         >

@@ -18,12 +18,12 @@ export default function App() {
       <div className="min-h-screen bg-paper text-ink">
       <Header />
       <main>
-        {/* Problem -> Kako radi -> Za koga: what's broken, what happens, who
-            it's for. "Šta radimo" moved to its own page (sta-radimo.html). */}
+        {/* Kako radi -> Za koga -> Problem: what happens, who it's for, what's
+            broken. "Šta radimo" moved to its own page (sta-radimo.html). */}
         <Hero />
-        <Problem />
         <HowItWorks />
         <Niches />
+        <Problem />
         <Faq />
         <Contact />
       </main>

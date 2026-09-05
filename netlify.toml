@@ -33,6 +33,82 @@
 # No rules needed for the 404: Netlify serves a root 404.html for unknown
 # paths automatically, with the correct status code.
 
+# Netlify's default "pretty URL" rewriting serves e.g. /stomatolozi as a 200
+# with the same content as /stomatolozi.html, which contradicts every page's
+# <link rel="canonical"> (which points to the .html form) and leaves two
+# live, indexable URLs per page. Force a 301 from the extensionless form to
+# the canonical .html form so there's exactly one crawlable URL per page.
+[[redirects]]
+  from = "/sta-radimo"
+  to = "/sta-radimo.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/stomatolozi"
+  to = "/stomatolozi.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/veterinari"
+  to = "/veterinari.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/advokati"
+  to = "/advokati.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/auto-servisi"
+  to = "/auto-servisi.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/saloni"
+  to = "/saloni.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ecommerce"
+  to = "/ecommerce.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/klimatizacija"
+  to = "/klimatizacija.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pvc-stolarija"
+  to = "/pvc-stolarija.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/majstori"
+  to = "/majstori.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/politika-privatnosti"
+  to = "/politika-privatnosti.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/uslovi-koriscenja"
+  to = "/uslovi-koriscenja.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/politika-kolacica"
+  to = "/politika-kolacica.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/izjava-o-pristupacnosti"
+  to = "/izjava-o-pristupacnosti.html"
+  status = 301
+  force = true
+
 # Baseline hardening headers, scoped to allow the third-party origins the
 # site actually loads: Google Fonts, the leadsy.ai visitor tag, and the
 # LeadConnector chat widget (which in turn pulls from GoHighLevel/msgsndr
@@ -40,6 +116,9 @@
 # Report-Only first — it logs violations to the browser console without
 # blocking anything — so a real deploy can confirm the LeadConnector widget's
 # full resource list before switching to an enforced Content-Security-Policy.
+# Reporting-Endpoints + report-to/report-uri send those violations to
+# netlify/functions/csp-report.js (visible in Netlify's function logs)
+# instead of only appearing in each visitor's own DevTools console.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -48,4 +127,5 @@
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=()"
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://r2.leadsy.ai https://widgets.leadconnectorhq.com https://*.leadconnectorhq.com https://*.msgsndr.com https://*.gohighlevel.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.leadconnectorhq.com https://*.msgsndr.com wss://*.leadconnectorhq.com https://r2.leadsy.ai; frame-src https://*.leadconnectorhq.com; base-uri 'self'; form-action 'self'; object-src 'none'"
+    Reporting-Endpoints = "csp-endpoint=\"/.netlify/functions/csp-report\""
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://r2.leadsy.ai https://widgets.leadconnectorhq.com https://*.leadconnectorhq.com https://*.msgsndr.com https://*.gohighlevel.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.leadconnectorhq.com https://*.msgsndr.com wss://*.leadconnectorhq.com https://r2.leadsy.ai; frame-src https://*.leadconnectorhq.com; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; report-uri /.netlify/functions/csp-report"

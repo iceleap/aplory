@@ -8,9 +8,9 @@
 export default {
   htmlLang: "sr",
   meta: {
-    title: "APLORY — kad vas neko traži, odgovara za vas",
+    title: "APLORY — kad vas neko traži, odgovara porukom za vas",
     description:
-      "Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
+      "Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara porukom na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
   },
 
   nav: {
@@ -30,8 +30,8 @@ export default {
 
   hero: {
     kicker: "Za firme koje ne stignu da se jave na svaki poziv",
-    title: "Kad vas neko traži, APLORY odgovara. Automatski.",
-    lede: "Propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta — APLORY odmah odgovori umesto vas, na broju i nalozima koje već koristite.",
+    title: "Kad vas neko traži, APLORY odgovara porukom. Automatski.",
+    lede: "Propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta — APLORY odmah odgovori porukom umesto vas, na broju i nalozima koje već koristite.",
     ctaPrimary: "Zakažite razgovor",
     ctaSecondary: "Kako radi",
     diagramAlt:
@@ -61,7 +61,7 @@ export default {
       value: "62%",
       body: "poziva ka malim firmama ne dobije odgovor.",
       source:
-        "411 Locals, 2016 (SAD) · 85 firmi, 58 delatnosti — orijentacioni podatak, nema ekvivalentno istraživanje za Srbiju.",
+        "Prema istraživanju američke kompanije 411 Locals iz 2016. godine, na uzorku od 85 malih firmi iz 58 delatnosti, 62% dolaznih poziva ostane bez odgovora — orijentacioni podatak iz SAD, jer ekvivalentno istraživanje za Srbiju još ne postoji.",
     },
   },
 
@@ -135,6 +135,35 @@ export default {
     ],
   },
 
+  /* Only used on sta-radimo.html (see StaRadimo.jsx) — the mechanism/data/
+     onboarding depth the SEO content audit flagged as missing from that
+     page. Every claim here restates something already said elsewhere on the
+     site (per-niche FAQ answers, the Contact section's own copy) rather
+     than introducing a new commitment — no SLA numbers or uptime figures
+     are invented here. */
+  mechanism: {
+    eyebrow: "Mehanizam",
+    title: "Kako APLORY funkcioniše, korak po korak.",
+    items: [
+      {
+        name: "Povezivanje bez menjanja broja",
+        line: "APLORY se kači na broj telefona, WhatsApp, Instagram i chat na sajtu koje već koristite — ništa se ne prenosi niti menja. Kad poziv ili poruka ostane bez odgovora, APLORY preuzima razgovor na tom istom kanalu, sa istim brojem ili nalogom koji klijent već vidi.",
+      },
+      {
+        name: "Kako počinje saradnja",
+        line: "Podešavanje počinje kratkim razgovorom bez obaveze, u kom kažete čime se bavite. APLORY se zatim poveže na kanale koje već koristite; broj i nalozi ostaju vaši od prvog dana, bez instaliranja ičega na vašoj strani.",
+      },
+      {
+        name: "Šta se dešava sa podacima koje klijent ostavi",
+        line: "Prikupljaju se samo osnovni podaci potrebni da se odgovori na upit ili zakaže termin — ime, kontakt i razlog obraćanja, prilagođeno delatnosti. Osetljivi podaci poput medicinske dokumentacije, pravnih spisa ili podataka o plaćanju ne prolaze kroz APLORY; ti podaci ostaju deo razgovora koji dalje vodite direktno sa klijentom.",
+      },
+      {
+        name: "Šta ostaje na vama",
+        line: "U svakom trenutku možete preuzeti razgovor i nastaviti ga lično. APLORY ne donosi konačne odluke — ne postavlja dijagnozu, ne daje pravni savet i ne garantuje cenu; prikuplja kontekst i nudi termin na osnovu onoga što vi unapred definišete.",
+      },
+    ],
+  },
+
   faq: {
     eyebrow: "Pitanja",
     title: "Pitanja koja najčešće dobijamo.",
@@ -148,12 +177,16 @@ export default {
         a: "Još ne. Radimo na tome, ali ga ne prodajemo dok ne budemo sigurni da radi kako treba. Sve ostalo sa ove strane je spremno danas.",
       },
       {
+        q: "Da li je ovo samo automatska SMS poruka na propušten poziv?",
+        a: "Ne. Jednokratno automatsko obaveštenje ume da pošalje bilo koji telefon. APLORY vodi ceo razgovor koji sledi — postavlja pitanja, prikuplja ono što je bitno za vašu delatnost i nudi termin, umesto da klijent ostane sa jednom porukom bez odgovora.",
+      },
+      {
         q: "Da li moram da menjam broj telefona ili način rada?",
         a: "Ne. Broj ostaje isti, vaši nalozi ostaju isti. Mi se kačimo na ono što već koristite.",
       },
       {
         q: "Da li je ovo u skladu sa zakonom?",
-        a: "Odgovor na upit koji je klijent sam poslao je pravno najčistiji slučaj. Za kampanje prema staroj bazi traži se izričit pristanak za marketing (Zakon o oglašavanju, čl. 63; Zakon o zaštiti podataka o ličnosti, čl. 17).",
+        a: "APLORY je servis koji malim firmama u Srbiji automatski odgovara na propuštene pozive i poruke. Odgovor na upit koji klijent sam pošalje — propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta — pravno je najčistiji mogući slučaj: to je transakcioni odgovor na nešto što je klijent sam inicirao, ne neželjena marketinška poruka poslata bez povoda. APLORY ne šalje ništa dok upit prvo ne stigne od klijenta, a sadržaj odgovora unapred definiše firma koja ga koristi, nije generisan proizvoljno. Situacija je drugačija samo kod kampanja prema staroj bazi kontakata koji nisu upravo pisali — tu se, po Zakonu o oglašavanju (čl. 63) i Zakonu o zaštiti podataka o ličnosti (čl. 17), traži izričit prethodni pristanak primaoca za marketinšku komunikaciju. APLORY danas ne šalje takve kampanje. Ako se opcija slanja poruka staroj bazi ikad doda, pristanak bi se tražio odvojeno i eksplicitno pre slanja, ne pretpostavljao unapred.",
       },
     ],
     more: {

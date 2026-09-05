@@ -1,255 +1,301 @@
 {
   "summary": {
-    "health_score": 58,
+    "health_score": 71,
     "business_type": "SaaS (B2B automated-response platform) with 9 industry-vertical landing pages, targeting small businesses in Serbia",
     "top_findings": [
-      "Pure client-side rendering: homepage + 10 niche pages ship an empty <div id=\"root\"></div> with no server-rendered content, confirmed via curl and in the dist/ build.",
-      "Product-claim vs. search-intent mismatch: niche pages imply live call-answering, but the homepage FAQ admits the voice agent doesn't exist yet; Serbian SERP is dominated by voice-agent competitors.",
-      "Identical H2 duplicated across 10 URLs; vertical pages carry only ~150-200 unique words each on a shared template.",
-      "Zero trust signals on any vertical page: no FAQ, testimonials, pricing, client logos, About page, or company registration number.",
-      "AI Search Readiness (GEO) scores 34/100, driven almost entirely by the CSR issue plus absence of any citable-length (134-167 word) passages."
+      "stomatolozi.html, the pilot/lead vertical page, is now the thinnest and least-developed of the 9 niches, missing sections its siblings have.",
+      "Content-Security-Policy ships Report-Only with no violation collector, so it provides zero enforced protection and can't safely graduate to enforced.",
+      "Render-blocking Google Fonts + local CSS delay first paint by ~1.4s even though hero content is already server-rendered.",
+      "No trust/authority signals anywhere: no About page, no PIB/registration number, no testimonials, zero backlinks, zero external brand mentions."
     ],
     "quick_wins": [
-      "Defer/lazy-load the LeadConnector chat widget script (largest render-blocking resource, ~1,340ms)",
-      "Publish /llms.txt with a plain-text summary of APLORY",
-      "Compress logo-mark.png (19.6KB of 20.9KB is waste)",
-      "Add missing security headers via netlify.toml [[headers]]",
-      "Reformat the '62% of missed calls' stat into one fully attributed, disclosed sentence"
+      "Update public/sitemap.xml lastmod values for the 11 pages changed on 2026-09-05 (all still show 2026-08-27)",
+      "Add a CSP report-to/report-uri collector so the Report-Only policy can eventually be enforced",
+      "Add a 301 redirect from extensionless URLs to the canonical .html form",
+      "Self-host Fraunces/Inter fonts instead of loading from fonts.googleapis.com",
+      "Re-export the 9 niche hero JPEGs as WebP/AVIF at correct dimensions"
     ]
   },
   "categories": [
     {
       "name": "Technical SEO",
-      "score": 61,
+      "score": 84,
       "what_works": [
-        "robots.txt cleanly allows all UAs and correctly declares sitemap.xml",
-        "sitemap.xml valid, 15 URLs, sensible priority weighting and lastmod",
-        "Every page has correct self-referential canonical, unique title/meta description",
-        "Full OG/Twitter tags present as static tags (unaffected by CSR issue)",
-        "Clean single-hop HTTPS/www redirects, hyphenated URL structure",
-        "Sound cache-control strategy on Netlify; JSON-LD ProfessionalService schema server-rendered on homepage"
+        "Build-time prerendering confirmed live via curl -- every route serves complete HTML, not an empty CSR shell",
+        "robots.txt/sitemap.xml valid and correctly cross-referenced",
+        "Unique canonical, title, and meta description on every page",
+        "Full security header baseline live: HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy",
+        "HTTPS enforced site-wide, single-hop redirects, correct 404 handling with noindex"
       ],
       "findings": [
         {
-          "title": "Homepage and all 10 niche landing pages ship empty <div id=\"root\"></div> - pure CSR, no SSR/prerendering",
-          "severity": "Critical",
-          "description": "Confirmed via curl and in both repo source and dist/ build: 11 of 15 sitemap URLs (all commercially important pages) have zero content in raw HTML. Only the 4 legal pages are genuinely static. No SSG/prerendering plugin configured in vite.config.js despite each route already having its own HTML entry point.",
-          "recommendation": "Add prerendering/SSG (vite-plugin-ssg, vite-plugin-prerender-html, or a custom build-time render step) so each dist/*.html ships fully rendered markup; React can still hydrate on top."
-        },
-        {
-          "title": "No custom security headers beyond default HSTS",
+          "title": "CSP ships Report-Only with no violation collector",
           "severity": "High",
-          "description": "No Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, or Permissions-Policy. HSTS present but missing includeSubDomains/preload.",
-          "recommendation": "Add a netlify.toml [[headers]] block or public/_headers file applied to /* with the missing headers, scoped to allow existing third-party origins (leadconnectorhq.com, fonts.googleapis.com)."
+          "description": "content-security-policy-report-only has no report-to/report-uri directive, so violations are only visible in individual visitors' DevTools consoles -- nobody on the team ever sees them, meaning the policy can never safely graduate to enforced. 'unsafe-inline' on script-src/style-src remains a gap even once enforced.",
+          "recommendation": "Add a report-to/report-uri endpoint (Netlify Function or a free Sentry/Report URI collector). Once a deploy cycle passes with no unexpected violations, promote to enforced Content-Security-Policy. Plan to remove 'unsafe-inline' by externalizing the inline chat-widget-loader script."
         },
         {
-          "title": "LCP gated by JS execution, compounding the CSR issue",
+          "title": "Extensionless URLs duplicate canonical .html pages",
           "severity": "Medium",
-          "description": "Hero images are correctly dimensioned but can't paint until the JS bundle downloads/parses/executes/hydrates, since they only exist in the DOM post-render.",
-          "recommendation": "Fixing the prerendering issue resolves most of this; add fetchpriority=\"high\" to the hero image once part of initial render."
+          "description": "Netlify's pretty-URL rewriting serves /stomatolozi and /stomatolozi.html both as 200 with identical content, and Netlify's own case/trailing-slash redirects point to the extensionless form -- contradicting the canonical tag, which points to the .html form.",
+          "recommendation": "Add an explicit Netlify redirect forcing the extensionless form to 301 to the .html form for every route."
         },
         {
-          "title": "IndexNow protocol not implemented",
-          "severity": "Medium",
-          "description": "No IndexNow key file and no post-deploy submission to api.indexnow.org.",
-          "recommendation": "Add a key file plus a post-deploy hook submitting the 15 sitemap URLs after each Netlify deploy, to speed Bing/Yandex re-crawl."
-        },
-        {
-          "title": "Inconsistent meta name=\"robots\" declaration",
+          "title": "No IndexNow key/endpoint configured",
           "severity": "Low",
-          "description": "Only the 4 legal pages explicitly declare meta robots index,follow; no functional difference from the default.",
-          "recommendation": "Cosmetic only - standardize either way, no priority."
+          "description": "No IndexNow key file at the site root and no reference in robots.txt.",
+          "recommendation": "Generate an IndexNow key, publish it as a static file, and ping the IndexNow API on content changes."
+        },
+        {
+          "title": "Google Fonts stylesheet is render-blocking with no fallback-metrics matching",
+          "severity": "Low",
+          "description": "The Fraunces/Inter stylesheet is a blocking <link rel=\"stylesheet\"> with display=swap but no size-adjust/ascent-override fallback metrics -- a plausible CLS contributor at the hero.",
+          "recommendation": "Add font fallback-metric overrides once field/lab CLS data confirms a shift near text load."
+        },
+        {
+          "title": "No Cross-Origin-Opener-Policy / Cross-Origin-Resource-Policy headers",
+          "severity": "Low",
+          "description": "Minor additional isolation hardening missing alongside the otherwise solid security header set.",
+          "recommendation": "Add COOP: same-origin and CORP: same-site, testing the cross-origin chat widget still functions."
         }
       ]
     },
     {
       "name": "Content Quality",
-      "score": 42,
+      "score": 63,
       "what_works": [
-        "Readability is good - short sentences, concrete scenarios, plain Serbian language",
-        "Demo chat transcripts are genuinely vertical-specific and a real trust/experience signal",
-        "Homepage FAQ candidly admits the voice-agent feature isn't ready yet - a rare, credible trust signal",
-        "62% statistic is at least cited with a working source URL, better than an unsourced claim"
+        "9 vertical pages are genuinely differentiated: distinct problem statements, capability lists, demo transcripts, and FAQ content matching FAQPage schema 1:1",
+        "Core '62% of missed calls' statistic is disclosed honestly with source, year, sample size, and an explicit non-equivalence caveat for Serbia",
+        "Readability is good: short sentences, concrete second-person scenarios, plain language",
+        "llms.txt exists, accurate, and in sync with the niches data file"
       ],
       "findings": [
         {
-          "title": "No FAQ/Q&A content on any of the 9 vertical pages",
-          "severity": "Critical",
-          "description": "The Faq component only renders on the homepage. Vertical pages have zero structured, quotable Q&A content, the highest-value format for featured snippets and LLM citation.",
-          "recommendation": "Add 3-5 vertical-specific FAQ entries per page as prose content (pricing model, integrations, compliance question relevant to that industry)."
-        },
-        {
-          "title": "Exact duplicate H2 across 10 pages",
-          "severity": "Critical",
-          "description": "NichePain.jsx hardcodes the identical sentence as the section heading on all 9 niche pages, and the homepage uses the same sentence for problem.title.",
-          "recommendation": "Write a distinct, vertical-specific H2 for each niche page using the existing pain-card copy as raw material."
-        },
-        {
-          "title": "No About/company/team page or entity trust signals",
+          "title": "No About/company page and no visible entity trust signals",
           "severity": "High",
-          "description": "Only a personal Gmail address and a mobile number are exposed. No founder identity, headcount, testimonials, or third-party recognition anywhere.",
-          "recommendation": "Add an About/Company page with founder details, physical address (currently buried only in legal pages), and PIB/company registration number."
+          "description": "Only a personal Gmail address and mobile number appear in Header/Contact. No founder identity, headcount, client logos, testimonials, or third-party recognition anywhere on the site.",
+          "recommendation": "Add an About/Company page or expand sta-radimo.html with founder identity and the company's registration details and address."
         },
         {
-          "title": "Core statistic is old, small-sample, market-mismatched, and undisclosed",
+          "title": "No company registration number (PIB/maticni broj) disclosed",
           "severity": "High",
-          "description": "The 62% headline stat is sourced to a 2016, 85-company U.S. study, presented without disclosure that it isn't Serbian or current data.",
-          "recommendation": "Either caveat the stat explicitly as a U.S. benchmark, commission Serbia-relevant data, or replace with the company's own aggregated client data."
+          "description": "Absent from every page and both legal documents reviewed -- a standard trust checkpoint for a commercial Serbian service.",
+          "recommendation": "Add PIB/MB to the footer and/or legal pages."
         },
         {
-          "title": "\"How it works\" explainer 100% identical across all 9 vertical pages and homepage",
+          "title": "'How it works' 3-step explainer is identical across all 10 pages",
           "severity": "Medium",
-          "description": "NicheHow.jsx pulls identical eyebrow, title, and step copy from shared sr.js data - nothing niche-specific except the demo chat transcript.",
+          "description": "Confirmed byte-for-byte identical text across stomatolozi.html, veterinari.html, and advokati.html -- the one remaining significant duplicate block on the site.",
           "recommendation": "Localize at least the three step bodies per vertical."
         },
         {
-          "title": "No FAQPage schema despite homepage FAQ content",
+          "title": "sta-radimo.html is thin relative to its role",
           "severity": "Medium",
-          "description": "Homepage FAQ has 4 good Q&As but no structured data wrapping it.",
-          "recommendation": "Add FAQPage schema as a content-organization aid only - do not expect a Google SERP benefit, as FAQ rich results were retired May 2026."
+          "description": "196 rendered words -- a bulleted restatement of services already listed in the homepage schema, with no depth on mechanism, onboarding, SLAs, or data retention.",
+          "recommendation": "Expand with genuine mechanism/SLA/data-handling detail."
         },
         {
-          "title": "Thin overall word count relative to search intent",
+          "title": "stomatolozi.html is now the thinnest of the 9 verticals",
           "severity": "Medium",
-          "description": "Genuinely unique body copy per vertical page is ~150-200 words; sta-radimo.html largely restates homepage copy rather than going deeper.",
-          "recommendation": "Expand sta-radimo.html with mechanism, SLA, and data-handling depth."
+          "description": "622 rendered words vs. 781-869 for the other 8, a 4-item capability list vs. 6-7 for siblings, and missing the proof block entirely.",
+          "recommendation": "Bring stomatolozi's capability list and content depth up to parity with the other 8 niches."
+        },
+        {
+          "title": "Core statistic remains a decade-old, small non-Serbian sample",
+          "severity": "Medium",
+          "description": "The '62%' stat is well-disclosed but still a 2016, 85-company U.S. sample -- an AI answer engine paraphrasing the page could drop the disclaimer and mis-cite it as Serbian data.",
+          "recommendation": "Keep the current honest disclosure; replace with Serbia/Balkans-relevant or first-party client data once available."
+        },
+        {
+          "title": "FAQPage schema present and matching visible content sitewide",
+          "severity": "Info",
+          "description": "A genuine improvement over the prior audit. Google retired FAQ rich results for all sites in May 2026.",
+          "recommendation": "Keep the schema -- it's harmless and correctly matches content -- but don't expect a SERP rich-result or confirmed AI-citation benefit."
         }
       ]
     },
     {
       "name": "On-Page SEO",
-      "score": 58,
+      "score": 70,
       "what_works": [
-        "Unique titles and meta descriptions per page, appropriately localized",
-        "Clean, descriptive, hyphenated URL structure with no query strings",
-        "Correct self-referential canonicals across all 15 pages"
+        "Unique, well-sized titles and meta descriptions across all 15 templates",
+        "Clear H1 per page",
+        "Consistent, flat internal linking structure (one hop from home to every vertical)"
       ],
       "findings": [
         {
-          "title": "Identical H2 and heading structure across 10 URLs",
-          "severity": "High",
-          "description": "Shared template produces near-identical on-page heading hierarchy across all vertical pages, undermining topical differentiation signals.",
-          "recommendation": "See Content Quality findings - de-duplicate H2s and localize section copy per vertical."
+          "title": "No question-phrased H2/H3 headings anywhere",
+          "severity": "Medium",
+          "description": "Every section heading is a declarative statement rather than a question form, limiting how AI retrieval systems are believed to segment pages into answerable chunks.",
+          "recommendation": "Convert section titles into question-style H2s where it reads naturally (e.g. 'Kako APLORY radi?')."
         },
         {
-          "title": "No internal linking depth beyond primary navigation",
+          "title": "No dated content or authorship signals anywhere",
           "severity": "Medium",
-          "description": "No contextual cross-links between related vertical pages or from blog/resource content (none exists) into the commercial pages.",
-          "recommendation": "Once content depth increases (FAQ, expanded sta-radimo.html), add contextual internal links between related pages."
+          "description": "No datePublished/dateModified in JSON-LD, no visible 'last updated' text, and sitemap.xml's static lastmod doesn't help since it's hand-set, not build-generated.",
+          "recommendation": "Add datePublished/dateModified to JSON-LD and/or a visible 'poslednje azurirano' line; generate sitemap lastmod at build/deploy time."
+        },
+        {
+          "title": "Duplicated 'How it works' section drags on-page uniqueness",
+          "severity": "Medium",
+          "description": "Cross-referenced with Content Quality -- the one remaining significant duplicate block across all 10 pages.",
+          "recommendation": "See Content Quality recommendation."
         }
       ]
     },
     {
       "name": "Schema / Structured Data",
-      "score": 72,
+      "score": 78,
       "what_works": [
-        "Server-rendered ProfessionalService + OfferCatalog/Service/Offer JSON-LD, valid, no deprecated types",
-        "Per-niche-page Service schema referencing the same provider with areaServed: RS"
+        "All 20 JSON-LD blocks across 11 pages parse as valid JSON with no syntax errors",
+        "No deprecated types present anywhere",
+        "FAQPage visible content matches JSON-LD Question/Answer text 1:1 on every page that has it",
+        "Schema ships pre-rendered, consistent with the site's build-time SSR",
+        "No placeholder text, all absolute HTTPS URLs"
       ],
       "findings": [
         {
-          "title": "Missing image/logo, sameAs, and address properties",
-          "severity": "Info",
-          "description": "ProfessionalService schema lacks image, sameAs (social/GBP links), and a PostalAddress, all of which support Knowledge Panel eligibility and entity consolidation.",
-          "recommendation": "Add image (reuse existing og:image), sameAs with real profile URLs, and address with at least addressCountry: RS."
+          "title": "ProfessionalService/LocalBusiness is a type mismatch for a remote SaaS product",
+          "severity": "Medium",
+          "description": "APLORY has no storefront or physical service area; its openingHoursSpecification (00:00-23:59 every day) really means 'the software runs continuously,' not 'our premises are staffed.' This risks Google surfacing APLORY as a literal local business for an entity that has neither an address nor hours.",
+          "recommendation": "Model APLORY as an Organization that provider's a Service, not a LocalBusiness subtype. Skip SoftwareApplication too -- it needs app-store-style properties that don't fit a subscription service. Drop openingHoursSpecification entirely."
         },
         {
-          "title": "No FAQPage, Review/AggregateRating, or LocalBusiness/GeoCoordinates schema",
-          "severity": "Medium",
-          "description": "Despite areaServed: RS and the product serving inherently local-service verticals, no LocalBusiness-family schema or review markup exists.",
-          "recommendation": "Add once testimonials/reviews exist; add LocalBusiness/geo schema given the explicit RS service area."
+          "title": "provider object duplicated inline across 10 pages instead of @id reference",
+          "severity": "Low",
+          "description": "Each vertical page repeats a full inline provider object instead of referencing a stable @id -- a maintenance risk since any edit to phone/email/name requires 11 changes instead of one.",
+          "recommendation": "Add an @id to the homepage Organization entity and replace every vertical page's inline provider with an @id reference."
+        },
+        {
+          "title": "No BreadcrumbList anywhere on the site",
+          "severity": "Low",
+          "description": "The site has a clear home -> vertical-page hierarchy that isn't declared in structured data.",
+          "recommendation": "Add a BreadcrumbList to each vertical page reflecting Home -> [Vertical name]. Low priority for a flat, one-hop site."
+        },
+        {
+          "title": "FAQPage present, valid, matches visible content -- no SERP benefit",
+          "severity": "Info",
+          "description": "Google retired FAQ rich results for all sites in May 2026 -- no SERP feature this markup can currently produce.",
+          "recommendation": "Leave existing FAQPage blocks in place; don't invest further effort chasing a SERP benefit that doesn't exist."
+        },
+        {
+          "title": "Homepage entity still missing image/sameAs/address",
+          "severity": "Info",
+          "description": "Already identified in the repo's own SCHEMA-REPORT.md and generated-schema.json but never applied to the live index.html.",
+          "recommendation": "Roll into the Organization migration above; add logo, image, and sameAs using only real, currently-live profile URLs."
         }
       ]
     },
     {
       "name": "Performance",
-      "score": 94,
+      "score": 82,
       "what_works": [
-        "LCP 2.0-2.4s (Pass), CLS 0.03-0.07 (Pass), TBT 20-50ms (Pass) across all 3 pages tested, lab data",
-        "TTFB excellent (67-184ms) with Brotli and Netlify edge caching confirmed working",
-        "No legacy/duplicated JavaScript shipped"
+        "LCP 1.6-1.7s (Good) on both pages tested, lab data -- hero H1 is the LCP element and is already server-rendered",
+        "CLS 0.03-0.07 (Good), TBT 20-30ms (Good)",
+        "TTFB excellent: 176-278ms",
+        "Chat widget is already correctly deferred to first interaction, not blocking initial load",
+        "JS bundle quality is clean -- no unminified code, no unnecessary polyfills"
       ],
       "findings": [
         {
-          "title": "Third-party chat widget script is the largest render-blocking resource",
+          "title": "Render-blocking Google Fonts + local CSS delay first paint by ~1.4s",
           "severity": "High",
-          "description": "widgets.leadconnectorhq.com/loader.js costs ~1,340ms of blocking time; nearly all LCP time (2,086/2,154ms on homepage) sits in element-render-delay rather than TTFB.",
-          "recommendation": "Load the chat widget with defer or on user interaction/scroll rather than blocking initial render."
+          "description": "The hero H1 text is present in the server-rendered HTML and could paint at TTFB (~200ms) but the browser is held at blank/partial paint for ~1.4s while it fetches and parses render-blocking CSS/font requests first.",
+          "recommendation": "Self-host Fraunces/Inter as woff2 instead of fonts.googleapis.com, preload font files, and inline critical above-the-fold CSS. Expected impact: LCP down to ~0.3-0.5s."
         },
         {
-          "title": "Duplicate font loading (Google Fonts + Bunny Fonts) both render-blocking",
+          "title": "Chat widget fires a burst of main-thread work concurrent with the user's first interaction",
           "severity": "High",
-          "description": "Google Fonts CSS costs ~1,418ms; a separate Bunny Fonts Roboto file costs ~685ms - two font origins loading synchronously ahead of render.",
-          "recommendation": "Consolidate to one font provider, ideally self-hosted given the existing self-hosted AdwaitaSans.woff2 precedent."
+          "description": "The ~188KB LeadConnector widget is correctly deferred to first scroll/mousemove/touchstart/keydown, but that means its cost now lands exactly when the user starts reading/scrolling -- a likely source of slow field INP invisible to lab tools.",
+          "recommendation": "Change the trigger to a lazier signal (longer idle delay or scroll-depth gate) and evaluate whether the bundled 44KB libphonenumber-js is needed for the phone field."
         },
         {
-          "title": "Unoptimized logo-mark.png",
+          "title": "Niche hero photos are oversized JPEGs in a legacy format",
           "severity": "Medium",
-          "description": "19.6KB of the file's 20.9KB is wasted - 2x oversized PNG, not in a modern format.",
-          "recommendation": "Re-export as properly sized WebP/AVIF via the existing Vite asset pipeline."
+          "description": "All 9 niche hero photos ship as full-resolution baseline JPEGs 1.3-3.3x larger than display size; one (auto-servisi.jpg) is 452KB with 67% identified as wasted bytes on the equivalent measured image.",
+          "recommendation": "Re-export all nine as WebP/AVIF at correct dimensions via the Vite asset pipeline; expect 60-80% size reduction."
         },
         {
-          "title": "~17KB unused CSS per page",
+          "title": "Footer logo is 2x oversized for its display size",
           "severity": "Medium",
-          "description": "Shared base CSS bundle ships more rules than any single route needs, consistent across all 3 pages tested.",
-          "recommendation": "Verify Tailwind content purge globs cover all 15 HTML entry points; consider per-route CSS chunking."
+          "description": "logo-mark.webp is 12.6KB with 11.3KB estimated wasted -- already WebP, purely a sizing/compression issue.",
+          "recommendation": "Re-export at 2x actual display size with higher compression; expect drop to 1-3KB."
         },
         {
-          "title": "Short cache lifetimes on third-party chat-widget assets",
+          "title": "Fonts served from external origin adds an extra cross-origin hop",
           "severity": "Medium",
-          "description": "8 third-party resources cache for only 4 hours, ~74KB re-download waste per repeat-visit cache miss.",
-          "recommendation": "Third-party controlled; reinforces the case for deferring/lazy-loading the widget instead."
+          "description": "4 separate fonts.gstatic.com woff2 files totaling ~202KB, fetched only after the fonts.googleapis.com CSS resolves -- a secondary contributor to the render-blocking chain.",
+          "recommendation": "Same fix as the render-blocking finding -- self-host the fonts, removing the external dependency chain outright."
+        },
+        {
+          "title": "Speed Index and Time to Interactive trail LCP well behind",
+          "severity": "Low",
+          "description": "Homepage Speed Index 5.9s vs. LCP 1.6s; stomatolozi Speed Index 5.7s vs. LCP 1.7s. Not a failing CWV today but limited margin as more content is added.",
+          "recommendation": "Fixing the render-blocking and oversized-image findings will pull Speed Index down as a side effect."
         }
       ]
     },
     {
       "name": "AI Search Readiness (GEO)",
-      "score": 34,
+      "score": 58,
       "what_works": [
-        "robots.txt cleanly allows all AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.)",
-        "sitemap.xml current and correctly referenced",
-        "Server-rendered ProfessionalService JSON-LD gives non-JS crawlers a usable baseline summary"
+        "Prerendering fix confirmed live -- full content crawlable without JS execution, resolving the prior audit's #1 GEO blocker",
+        "llms.txt exists and is accurate",
+        "FAQPage JSON-LD matches visible content sitewide",
+        "robots.txt cleanly allows all AI crawlers via wildcard"
       ],
       "findings": [
         {
-          "title": "Homepage and all niche pages are fully client-side rendered with an empty body as served",
-          "severity": "Critical",
-          "description": "OpenAI's, Anthropic's, and Perplexity's crawlers have little-to-no reliable JS execution, so the page is effectively text-empty on fetch for those platforms. This caps every other GEO dimension.",
-          "recommendation": "Statically pre-render each route - same fix as the Technical SEO Critical finding."
-        },
-        {
-          "title": "No /llms.txt",
+          "title": "No self-contained passages in the 134-167-word optimal AI citation length",
           "severity": "High",
-          "description": "GET https://aplory.dev/llms.txt returns 404. Optional and doesn't affect Google, but is one of the few channels to hand non-JS crawlers a clean summary today.",
-          "recommendation": "Publish a plain-text llms.txt summarizing what APLORY is, who it serves, and key page links."
-        },
-        {
-          "title": "No long-form, self-contained citable passages anywhere",
-          "severity": "High",
-          "description": "Optimal AI-citation passage length is ~134-167 words; every extractable answer block on the homepage falls well short (16-36 words).",
-          "recommendation": "Add 1-2 expanded 134-167 word paragraphs as prose content, not as FAQPage schema (no Google ranking benefit from the markup itself post-May-2026 retirement)."
+          "description": "FAQ answers run 16-36 words by design -- terse UI copy, not citable standalone paragraphs. The '62%' stat is presented as headline + sentence + footnote-style source, not a single citable sentence.",
+          "recommendation": "Add 1-2 expanded 134-167-word paragraphs per page/niche where it matters most -- the legal-compliance FAQ answer and/or a fully-attributed version of the core statistic."
         },
         {
           "title": "Zero external brand/entity signals",
           "severity": "High",
-          "description": "No Wikipedia entity, Reddit mentions, YouTube presence, or LinkedIn company page found. YouTube/Reddit presence correlates more strongly with AI citation than domain authority.",
-          "recommendation": "Build minimal external entity presence over time: demo/explainer video, LinkedIn company page, encourage early-customer mentions."
+          "description": "No sameAs links, no Wikipedia entity, no YouTube/Reddit/LinkedIn footprint -- a long-horizon problem that cannot be shortcut by markup or copy changes.",
+          "recommendation": "Begin building external presence over time: a demo video, a LinkedIn company page, encouraging early customer mentions. Cannot be accelerated by code changes alone."
+        },
+        {
+          "title": "No question-phrased H2/H3 headings",
+          "severity": "Medium",
+          "description": "Every section heading is declarative rather than question-form, which may limit how AI retrieval systems segment the page.",
+          "recommendation": "Convert at least some section titles to question form where it reads naturally."
+        },
+        {
+          "title": "No visible dates or authorship signals",
+          "severity": "Medium",
+          "description": "No datePublished/dateModified anywhere, and sitemap lastmod is static, not build-generated.",
+          "recommendation": "Add dated/authorship signals; generate sitemap lastmod automatically."
         }
       ]
     },
     {
       "name": "Images",
-      "score": 70,
+      "score": 45,
       "what_works": [
-        "Hero images correctly sized with explicit width/height attributes (good CLS practice)",
-        "loading=\"eager\" correctly applied to above-the-fold hero images"
+        "All images carry explicit width/height attributes (good CLS hygiene)",
+        "Appropriate loading=eager usage for above-the-fold hero images"
       ],
       "findings": [
         {
-          "title": "logo-mark.png oversized and wrong format",
+          "title": "8 of 9 niche hero photos are oversized legacy-format JPEGs",
           "severity": "Medium",
-          "description": "400x81px PNG displayed at 196x40px (2x oversized), not in WebP/AVIF - 95% of its bytes are unnecessary.",
-          "recommendation": "Re-export as WebP/AVIF at correct dimensions."
+          "description": "None are WebP/AVIF; one runs at 452KB with 67% of an equivalent image's bytes identified as waste relative to its actual display size.",
+          "recommendation": "Re-export all as WebP/AVIF at correct dimensions -- see Performance section for full detail."
+        },
+        {
+          "title": "Footer logo is 2x oversized",
+          "severity": "Medium",
+          "description": "Already WebP but sized for 2x its display dimensions.",
+          "recommendation": "Re-export at correct 2x display size with higher compression."
+        },
+        {
+          "title": "No responsive image sets (picture/srcset) in use",
+          "severity": "Low",
+          "description": "Every image ships one fixed size regardless of viewport.",
+          "recommendation": "Consider a srcset/picture approach for the niche hero photos once re-exported in modern formats."
         }
       ]
     }
@@ -260,48 +306,45 @@
         "name": "Phase 1: Critical Fixes",
         "timeframe": "Week 1",
         "items": [
-          "Add prerendering/SSG for the 11 CSR routes so real content ships in initial HTML",
-          "Resolve the voice-vs-text product-claim mismatch on all 9 vertical pages",
-          "De-duplicate the identical H2 across all 10 pages with vertical-specific headlines"
+          "Update public/sitemap.xml lastmod values for the 11 pages changed 2026-09-05",
+          "Add a CSP report-to/report-uri violation collector",
+          "Add a 301 redirect from extensionless URLs to the canonical .html form",
+          "Compress the footer logo to its actual display size",
+          "Fix mobile tap-target sizing on header CTA/hamburger buttons"
         ]
       },
       {
         "name": "Phase 2: High-Impact Improvements",
         "timeframe": "Weeks 2-3",
         "items": [
-          "Defer/lazy-load the LeadConnector chat widget script",
-          "Consolidate font loading to one provider",
-          "Add missing security headers via netlify.toml",
-          "Add an About/Company section with founder, address, and PIB",
-          "Add 3-5 vertical-specific FAQ entries per niche page (prose, not schema)",
-          "Reformat and disclose the '62% of missed calls' statistic",
-          "Publish /llms.txt"
+          "Write the missing proof content block for stomatolozi so it matches the other 8 niches",
+          "Self-host Fraunces/Inter fonts and inline critical above-the-fold CSS",
+          "Re-export the 9 niche hero photos as WebP/AVIF at correct dimensions",
+          "Move voice-vs-text disambiguation into meta description/H1 site-wide and name the Poziv.net-style competitor",
+          "Adjust the chat-widget load trigger to a lazier signal"
         ]
       },
       {
         "name": "Phase 3: Content & Authority",
         "timeframe": "Month 2",
         "items": [
-          "Localize 'How it works' step copy per vertical",
+          "Add an About/Company section with founder identity, PIB, and physical address",
+          "Add 1-2 expanded 134-167-word AI-citation-ready paragraphs",
+          "Localize the 'How it works' 3-step copy per vertical",
           "Expand sta-radimo.html with mechanism/SLA/data-handling depth",
-          "Add directional trust proof (client count or quotes per vertical)",
-          "Publish minimal pricing/packaging",
-          "Add expanded 134-167 word citable paragraphs",
-          "Compress logo-mark.png to WebP/AVIF",
-          "Purge unused CSS (~17KB/page)",
-          "Begin Serbian-market link-building (Startit.rs, Product Hunt, PKS directories)",
-          "Add Organization schema with sameAs, image, and address"
+          "Begin external authority building: Serbian directories, Startit.rs/Netokracija press outreach, Product Hunt/SaaSHub listings, Moz API key",
+          "Migrate JSON-LD from ProfessionalService/LocalBusiness to Organization + Service"
         ]
       },
       {
         "name": "Phase 4: Monitoring & Iteration",
         "timeframe": "Ongoing",
         "items": [
-          "Connect Google Search Console and a PageSpeed Insights API key",
-          "Add a free Moz API key to move backlink tracking to Tier 1",
-          "Verify mobile hamburger menu tap-target size in a real browser",
-          "Re-run the full audit after Phase 1-2 land",
-          "Set an SEO drift baseline"
+          "Configure a PageSpeed Insights/CrUX API key for real field CWV data",
+          "Add a CI smoke check guarding against the prerendering regression",
+          "Add an IndexNow key/endpoint",
+          "Add BreadcrumbList and WebSite/@graph consolidation to structured data",
+          "Re-run Backlinks and GEO audits quarterly to track authority-building progress"
         ]
       }
     ]

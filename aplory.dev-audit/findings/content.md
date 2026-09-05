@@ -1,200 +1,173 @@
 # Content Quality / E-E-A-T / AI Citation Audit — aplory.dev
 
-Scope: index.html, sta-radimo.html, and the 9 vertical landing pages (stomatolozi,
-veterinari, advokati, auto-servisi, saloni, ecommerce, klimatizacija,
-pvc-stolarija, majstori). Source reviewed directly (Vite/React, one static HTML
-shell + JS entry per route): `src/data/niches.js`, `src/pages/NicheLanding.jsx`,
-`src/components/niche/*`, `src/i18n/sr.js`, `src/data/research.js`,
-`politika-privatnosti.html`, `uslovi-koriscenja.html`.
+**Update (this pass):** the previous version of this file (mtime ~Aug 27) was
+written against the pre-prerendering build, when `index.html` and all niche
+pages shipped an empty `<div id="root">` and the real copy only existed after
+client-side React hydration. That is no longer accurate. `vite.ssr.config.js`
++ `scripts/prerender.mjs` now bake full rendered HTML into every route at
+build time, and both `dist/*.html` and a live `curl` of `https://aplory.dev/`
+confirm the complete hero copy, headings, nav, FAQ Q&As, and JSON-LD are
+present in the raw served HTML — not just after JS execution. This pass
+re-reads `dist/*.html` (the actual shipped output) and the current
+`src/data/niches.js` / `src/pages/NicheLanding.jsx` source, not the older
+assumptions. Several of the prior Critical findings have genuinely been
+fixed; one new, non-obvious issue (authored content that is silently never
+rendered) was found in their place.
 
-**Content Quality Score: 42 / 100**
+Scope: `dist/index.html`, `dist/sta-radimo.html`, and the 9 vertical landing
+pages (stomatolozi, veterinari, advokati, auto-servisi, saloni, ecommerce,
+klimatizacija, pvc-stolarija, majstori), cross-checked against
+`src/data/niches.js`, `src/pages/NicheLanding.jsx`,
+`src/components/niche/NicheCapabilities.jsx`, `src/components/Faq.jsx`,
+`src/data/research.js`, `politika-privatnosti.html`, `uslovi-koriscenja.html`.
 
-**Verdict on the 9 vertical pages: template-driven thin content, not genuine
-unique pages.** Each page is produced by the same `NicheLanding.jsx` component
-(`NicheHeader → NicheHero → NichePain → NicheHow → Contact`) fed by one entry
-in `src/data/niches.js`. The genuinely unique text per vertical is small —
-one hero title, one hero lede, three short "pain" cards, and a 6-line demo
-chat transcript — roughly **150–200 unique words per page**. Everything else
-(section eyebrows, the "How it works" 3-step explainer, the FAQ-free page
-skeleton, the contact form, the footer, and — critically — **the exact same
-H2 headline, "Poziv na koji niko ne odgovori je klijent koji zove sledećeg na
-spisku."**, word-for-word identical across all 9 vertical pages and the
-homepage's Problem section) is boilerplate repeated verbatim. This is the
-classic programmatic-SEO thin/near-duplicate pattern: distinct URLs and meta
-tags, but a shared skeleton wrapped around a small swapped-out payload, well
-under any reasonable topical-coverage floor for a service page (~800 words).
-The differentiation that exists (pain points and demo dialogue) is well
-written and plausibly industry-specific, but there is no genuinely deep,
-vertical-specific content anywhere (no pricing nuance, no integration/booking
-system specifics, no compliance notes, no FAQ, no case study, no testimonial)
-that would justify each page as a standalone comprehensive resource on its
-topic.
+**Content Quality Score: 63 / 100** (up from 42 in the prior pass — the two
+prior Critical findings, no FAQ on niche pages and a duplicate H2 across all
+10 pages, are both fixed.)
+
+**Verdict:** the 9 vertical pages are no longer thin, near-duplicate
+templates. Each niche now has a distinct H2 problem statement
+(`painTitle`), a distinct "what you get" capability list (4–7 items,
+genuinely specific to that trade — dosage of hitnost/urgency triage for
+vets and locksmiths, confidentiality framing for lawyers, stock-accuracy
+caveats for e-commerce), a distinct 6-message demo conversation, and 4–6
+vertical-specific FAQ entries wrapped in `FAQPage` JSON-LD. Rendered word
+counts (measured from `dist/*.html`, tags stripped) run **781–869 words**
+for 8 of the 9 verticals and **622 words** for `stomatolozi.html`, against
+homepage **581 words** and `sta-radimo.html` at a thin **196 words**. That
+puts most vertical pages close to, but still under, the ~800-word
+service-page topical-coverage floor once shared nav/footer/contact
+boilerplate (~90–100 words) is subtracted. The remaining duplication is
+now limited to the "How it works" 3-step explainer (see High finding below)
+rather than the whole page skeleton.
 
 ---
 
-## Critical
-
-- **No FAQ / Q&A content on any of the 9 vertical pages.** `NicheLanding.jsx`
-  renders `NicheHeader, NicheHero, NichePain, NicheHow, Contact` — the `Faq`
-  component only appears on the homepage. Vertical pages have zero
-  structured, quotable Q&A content, which is the single highest-value format
-  for both featured snippets and LLM citation extraction. Combined with thin
-  unique word count, these pages have almost nothing an AI answer engine or
-  Google could confidently extract and attribute as vertical-specific
-  expertise.
-  - Fix: add 3–5 vertical-specific FAQ entries per page (pricing model for
-    that trade, integration with the booking/scheduling tools that vertical
-    actually uses, data/compliance question relevant to that industry — e.g.
-    patient data handling for `stomatolozi.html`/`veterinari.html`, legal
-    privilege for `advokati.html`), marked up with `FAQPage` schema.
-
-- **Exact duplicate H2 across 10 pages.** `NichePain.jsx` hardcodes the string
-  `"Poziv na koji niko ne odgovori je klijent koji zove sledećeg na spisku."`
-  as the section heading on every one of the 9 niche pages, and
-  `src/i18n/sr.js` (`problem.title`) uses the identical sentence on the
-  homepage. This is literal duplicate content in the single most
-  SEO-weighted on-page element (H2) across 10 URLs.
-  - Fix: write a distinct, vertical-specific H2 for each niche page (the
-    pain-card bodies already exist as good raw material — mirror that level
-    of specificity in the heading).
-
 ## High
 
-- **No About/company/team page and no visible entity trust signals anywhere
-  in the primary navigation or footer.** `Header.jsx` and `Contact.jsx`
-  (which doubles as the footer) expose only an email (`office.aplory@gmail.com`
-  — a personal Gmail address, not a branded domain address) and a mobile
-  number. There is no team bio, founder identity, headcount, years-in-business,
-  client logos, testimonials, case studies, or third-party recognition
-  anywhere on index.html, sta-radimo.html, or any vertical page. For a SaaS
-  product asking small businesses to route their calls/WhatsApp/Instagram
-  through it, this is a significant Trustworthiness and Authoritativeness gap
-  under the Sept 2025 QRG (which weights "who is behind this and can they be
-  trusted with my business" heavily for YMYL-adjacent commercial services).
-  - Fix: add an About/Company page (or expand `sta-radimo.html`) with founder
-    name(s)/photo, company registration details, and the physical address
-    that currently exists only inside `politika-privatnosti.html` /
-    `uslovi-koriscenja.html` ("Alekse Dundića 61, Valjevo, Srbija") — surface
-    it in the footer and/or a dedicated contact page, not just buried in the
-    legal boilerplate.
+- **No About/company/team page and no visible entity trust signals in
+  primary navigation or footer.** `Header.jsx`/`Contact.jsx` (which doubles
+  as the footer) still expose only `office.aplory@gmail.com` (a personal
+  Gmail address, not a branded domain address) and a mobile number. No
+  founder identity, headcount, years-in-business, client logos,
+  testimonials, or third-party recognition appears anywhere on
+  `index.html`, `sta-radimo.html`, or any vertical page. Unchanged from the
+  prior audit. For a service asking small businesses to route their
+  calls/WhatsApp/Instagram through it, this remains a real
+  Trustworthiness/Authoritativeness gap under the Sept 2025 QRG.
+  - Fix: add an About/Company page or expand `sta-radimo.html` with
+    founder name(s), and surface the company's registration details and
+    physical address (see next finding) outside the legal boilerplate.
 
 - **No company registration number (PIB/matični broj) disclosed anywhere**,
-  including in the legal pages reviewed. Serbian consumers/B2B buyers and
-  quality raters alike look for this on a commercial site; its absence
-  undermines Trustworthiness for both users and QRG-style evaluation.
+  on any page or in either legal document reviewed. Still absent. This is a
+  standard trust checkpoint for a commercial Serbian service and its
+  absence undermines Trustworthiness for both human buyers and QRG-style
+  evaluation.
   - Fix: add PIB/MB to the footer and/or legal pages.
-
-- **Primary statistic is old, small-sample, and market-mismatched, presented
-  as the site's core value proposition.** The 62% headline stat
-  (`problem.stat` in `src/i18n/sr.js`, rendered in `Problem.jsx`) is sourced
-  to "411 Locals, 2016 · 85 firmi, 58 delatnosti" — a 2016 U.S. study of 85
-  companies — used to argue a claim about Serbian small businesses without
-  any disclosure that the underlying data is not Serbian or current. The
-  source is at least cited with a visible `<cite>` element and a working
-  source URL in `research.js` (`https://411locals.us/...`), which is better
-  practice than an unsourced stat, but a decade-old, 85-company U.S. sample
-  as *the* evidentiary anchor for a Serbian SaaS pitch is a real E-E-A-T/trust
-  risk if scrutinized, and is exactly the kind of stat an AI answer engine
-  could mis-cite as "62% of Serbian business calls go unanswered."
-  - Fix: either (a) commission/cite a Serbia- or Balkans-relevant data point,
-    (b) explicitly label the stat as a U.S. benchmark ("prema istraživanju u
-    SAD..." ) rather than letting it read as a universal/local fact, or (c)
-    replace with the company's own aggregated client data once available
-    (the code comments in `research.js` already flag this as the intended
-    long-term fix — do it before it's cited elsewhere as fact).
 
 ## Medium
 
-- **"How it works" explainer is 100% identical across all 9 vertical pages
-  and the homepage.** `NicheHow.jsx` pulls its eyebrow, section title, mock
-  captions and all three numbered steps directly from the shared
-  `sr.js how.*` object — nothing here is niche-specific except the demo chat
-  transcript and the missed-call label. This compounds the duplicate-H2
-  issue: readers/bots landing on any two vertical pages will see near-
-  identical page structure with only a small swapped payload.
-  - Fix: localize at least the three step bodies per vertical (e.g. what
-    "termin zakazan" means concretely for a locksmith vs. a dentist vs. an
-    e-commerce store).
+- **Core statistic is still a decade-old, 85-company U.S. sample, though it
+  is disclosed reasonably well.** The rendered homepage text reads: "62%
+  poziva ka malim firmama ne dobije odgovor. 411 Locals, 2016 (SAD) · 85
+  firmi, 58 delatnosti — orijentacioni podatak, nema ekvivalentno
+  istraživanje za Srbiju." That is a genuinely honest treatment — the stat
+  is attributed, dated, sample-sized, and explicitly flagged as not
+  equivalent to Serbian data, all in the same visible sentence rather than
+  a buried footnote — which is better practice than most sites manage with
+  a single load-bearing statistic. It is not rated Critical/High for that
+  reason. It remains a residual risk, though: it is still the site's single
+  most prominent proof point, still 10 years old, still a small (85-company)
+  sample, and still non-Serbian, and an AI answer engine paraphrasing this
+  page could easily drop the disclaimer clause and mis-cite it as "62% of
+  Serbian small-business calls go unanswered."
+  - Fix: keep the current disclosure, but treat it as a placeholder to
+    replace with Serbia/Balkans-relevant data or the company's own
+    aggregated client data once available, as `research.js`'s own code
+    comments already intend.
 
-- **Unused/undisplayed secondary stats risk becoming a future dead-source
-  problem.** `research.js` defines HBR 2011 (23%, 42h) and MIT/InsideSales
-  2007 (21×) benchmarks with a comment stating "the copy that renders them
-  says so explicitly" — but no current component in `src/components/`
-  actually imports or renders `benchmarks`. If these are reintroduced later
-  without the disclosed "US samples" caveat mentioned in the code comment
-  actually appearing in visible copy, they'd repeat the same mismatch issue
-  as the 62% stat, and today they're 15–19 years old.
-  - Fix: either remove the dead data file or, if reintroduced, keep the
-    US-sample disclosure in the actual rendered `sr.js` copy (currently it
-    only exists as a code comment, not user-facing text).
+- **"How it works" 3-step explainer is still 100% identical across all 9
+  vertical pages and the homepage.** Confirmed byte-for-byte identical text
+  ("01 Klijent vas kontaktira... 02 APLORY odmah odgovori... 03 Termin
+  zakazan...") in `dist/stomatolozi.html`, `dist/veterinari.html`, and
+  `dist/advokati.html`. This is the one remaining significant duplicate
+  block across pages (the H2 problem statement and demo transcript are now
+  unique per page, per the fix already applied). With the rest of the page
+  now differentiated, this is a smaller problem than before but still worth
+  fixing.
+  - Fix: localize at least the three step bodies per vertical, as previously
+    recommended.
 
-- **No FAQPage / QAPage structured data despite having FAQ content on the
-  homepage.** The homepage FAQ (`sr.js faq.items`, 4 Q&As) is good, honest,
-  specific content — notably it candidly states the voice-agent feature
-  isn't ready yet ("Da li radite glasovnog agenta... Još ne.") which is a
-  genuine positive trust/trustworthiness signal (rare, credible admission of
-  a limitation) — but with no `FAQPage` JSON-LD, it's not eligible for FAQ
-  rich results or as cleanly extractable structured data for AI answer
-  engines.
-  - Fix: add `FAQPage` schema wrapping the existing FAQ items; consider
-    adding a short FAQ block to each vertical page too (see Critical, above).
+- **`sta-radimo.html` is thin and shallow relative to its role.** Rendered
+  word count is 196 words including nav/footer/contact-form boilerplate —
+  effectively a bulleted restatement of the six services already listed on
+  the homepage's `hasOfferCatalog` schema, with no added depth on
+  mechanism (how the number/account "handoff" technically works without
+  porting), onboarding steps, SLAs/response-time commitments, or data
+  retention. This is exactly the kind of factual depth a prospective buyer
+  and an AI citation engine would want, and it's still missing sitewide.
+  - Fix: expand with genuine mechanism/SLA/data-handling detail.
 
-- **Thin overall word count relative to search intent.** Estimated
-  genuinely-unique body copy per vertical page is ~150–200 words (hero +
-  3 pain cards + demo dialogue); total rendered page copy including shared
-  boilerplate is still well under typical service-page comprehensiveness
-  norms. `sta-radimo.html` ("what we do") is also short and largely restates
-  homepage services copy rather than going deeper into how the service
-  actually integrates with a business's existing number/WhatsApp/Instagram
-  accounts, onboarding steps, SLAs, or data handling — all things a
-  prospective buyer and an AI citation engine would want as extractable
-  facts.
-  - Fix: expand `sta-radimo.html` with a genuinely deeper explanation of
-    the mechanism (how number/account porting-free "handoff" technically
-    works), SLAs/response-time commitments, and data retention — all strong
-    AI-citation-ready factual material that's currently missing sitewide.
+- **`stomatolozi.html` (622 rendered words) is now the outlier, not the
+  template.** Every other niche picked up a rendered `proof` block and a
+  wider capabilities list (6–7 items vs. stomatolozi's 4), leaving it
+  visibly the shortest of the 9 vertical pages.
+  - Fix: bring `stomatolozi` up to parity with the capabilities-list depth
+    the other 8 niches now have.
 
-## Low
+## Low / Info
 
-- **Readability is generally good.** The Serbian copy across hero/pain/FAQ
-  sections uses short sentences, concrete scenarios, and plain language
-  (e.g. "Ruke su vam pod haubom," "Bušilica u ruci ne dozvoljava da podignete
-  telefon") — appropriate for the small-business-owner audience and easy to
-  skim. No readability issues to flag beyond the thinness of the content
-  itself.
-- **Demo chat transcripts are a genuine positive AI-citation/experience
-  signal.** Each vertical's 6-message demo conversation (`niches.js`
-  `demo.messages`) is specific and plausible for that trade (dentist
-  discussing a toothache, vet discussing a vomiting cat, auto shop asking
-  Golf 7 model year, PVC installer discussing measurement visits). This is
-  the one piece of content on each page that reads as genuinely tailored
-  rather than templated, and is exactly the kind of concrete, first-hand-
-  feeling example that would help both human trust and AI extraction if it
-  were paired with more surrounding factual depth.
-- **Structured data present per page.** Each niche page carries a
-  `Service`/`ProfessionalService` JSON-LD block with contact details and
-  `areaServed: "RS"` — good baseline entity signal, though it would benefit
-  from a matching `Organization` block on the homepage with `sameAs`/social
-  profile links (none currently found) to reinforce authoritativeness.
-
-## Info
-
-- Physical address does exist (`Alekse Dundića 61, Valjevo, Srbija`) but is
-  only present inside `politika-privatnosti.html` and `uslovi-koriscenja.html`
-  legal body text — not in the footer, not on a Contact/About page, and not
-  in any JSON-LD `address` field. Low-cost fix with meaningful trust upside.
-- Contact channels are limited to one email + one mobile number
-  (`Contact.jsx`); no live chat, no support hours beyond an
-  `openingHoursSpecification` in JSON-LD claiming 24/7 (`Monday`–`Sunday`
-  in `index.html`'s schema) — worth double-checking that 24/7 availability
-  claim is accurate, since an inaccurate "always available" claim on an
-  answering-service product is a credibility risk if a query actually goes
-  unanswered.
-- No blog, changelog, or content-freshness signal anywhere in the site
-  structure (only `politika-privatnosti.html` carries a "Poslednje ažurirano"
-  date: 21 August 2026). No dated, updated, or evergreen editorial content
-  exists to demonstrate ongoing expertise/freshness for either Google or AI
-  crawlers.
+- **FAQPage schema exists on the homepage and, now, on every niche page**
+  — a genuine improvement over the prior audit's finding. Confirmed
+  `"@type": "FAQPage"` present in `dist/index.html` and `dist/veterinari.html`
+  head blocks, generated from the same `faq` arrays rendered visibly in the
+  page body (so schema and visible content match, which is what Google's
+  guidelines require).
+  - **Flagging as Info, not a fix item:** Google retired FAQ rich results
+    for all sites in May 2026. Keep the schema — it's harmless, correctly
+    matches on-page content, and costs nothing — but don't expect a SERP
+    rich-result benefit from it, and don't assume it confers any confirmed
+    AI/LLM citation advantage either; no such benefit is established, only
+    a plausible structural-clarity upside for machine parsers in general.
+- **`llms.txt` exists at the site root** (`dist/llms.txt`) with a plain-text
+  summary of what APLORY does, what it explicitly doesn't do yet (the
+  missing voice agent — the same honest admission that appears in the
+  homepage FAQ), the target verticals, and a page list with one-line
+  descriptions. This is a positive, low-cost AI-citation-readiness signal;
+  keep it in sync with `niches.js` slugs/titles as pages change.
+  - Prior GEO/schema audits (`GEO-ANALYSIS.md`, `SCHEMA-REPORT.md`, both
+    dated 2026-08-27) assessed the pre-prerendering CSR build and concluded
+    the site was near-invisible to non-Google AI crawlers because of an
+    empty `<body>`. That root cause is now fixed (see the update note at
+    the top of this file); those two documents should be treated as
+    historical, not current, and ideally re-run or annotated as
+    superseded.
+- **Readability remains good.** Short sentences, concrete second-person
+  scenarios ("Ruke su vam pod haubom," "Bušilica u ruci ne dozvoljava da
+  podignete telefon"), plain language appropriate for a small-business
+  owner audience. No change needed.
+- **Demo chat transcripts remain a genuine positive Experience/AI-citation
+  signal** — plausible, industry-specific 6-message exchanges (dentist
+  tooth pain, vet vomiting cat, mechanic asking Golf 7 year, PVC installer
+  discussing a measurement visit) that read as authored from real domain
+  knowledge rather than generic filler.
+- **No Organization/`sameAs` schema and no `address`/`image` on the
+  `ProfessionalService` block** (confirmed still absent from
+  `dist/index.html`'s JSON-LD) — unchanged from the prior schema audit's
+  Info-level findings; low-cost authoritativeness upside if social/business
+  profile URLs exist to link.
+- Physical address (`Alekse Dundića 61, Valjevo, Srbija`) and a
+  freshness date ("Poslednje ažurirano: 21. avgust 2026") still exist only
+  inside `politika-privatnosti.html` / `uslovi-koriscenja.html` legal body
+  text, not in the footer, an About page, or any JSON-LD `address` field.
+  No blog, changelog, or other dated editorial content exists elsewhere to
+  demonstrate ongoing freshness/expertise.
+- `openingHoursSpecification` in the homepage schema still claims
+  00:00–23:59, all 7 days — worth double-checking that this accurately
+  reflects an always-on automated response, since an inaccurate
+  "always available" claim on an answering-service product is a
+  credibility risk if a query actually goes unanswered.
 
 ---
 
@@ -202,34 +175,47 @@ topic.
 
 | Factor | Weight | Score /100 | Notes |
 |---|---|---|---|
-| Experience | 20% | 45 | Demo chat transcripts feel authentic and vertical-specific; no other first-hand signals (no founder story, no real client examples, no screenshots of the actual product/dashboard). |
-| Expertise | 25% | 35 | No author/expert bylines anywhere; copy is confident and plausible but there's no credentialing (who built this, do they have call-center/CX/AI expertise) surfaced anywhere. |
-| Authoritativeness | 25% | 30 | No external citations of APLORY (press, reviews, case studies, client logos), no social profiles linked, no third-party recognition of any kind. |
-| Trustworthiness | 30% | 40 | Transparent, cited stat (rare positive); honest FAQ admission about the unfinished voice-agent feature (positive); but no company registration number, no visible physical address/About page, personal Gmail contact address, and a 2016/85-company U.S. stat used as the site's core proof point. |
-| **Weighted E-E-A-T** | | **37** | |
+| Experience | 20% | 55 | Demo transcripts and the rendered ROI ("Računica") figures show real domain familiarity with each trade; still no founder story, real client examples, or product screenshots. |
+| Expertise | 25% | 45 | Vertical-specific capability lists and FAQ answers (e.g. correctly distinguishing "APLORY doesn't diagnose/prescribe/give legal advice" per niche) show applied understanding of each trade's constraints; still no author/expert bylines or credentialing of who built this. |
+| Authoritativeness | 25% | 35 | Still no external citations of APLORY (press, reviews, case studies, client logos), no linked social/business profiles, no third-party recognition. |
+| Trustworthiness | 30% | 55 | Honest, disclosed stat sourcing; candid FAQ admission about the unfinished voice-agent feature (repeated consistently in both the homepage FAQ and `llms.txt`); FAQPage schema matches visible content. Still missing: PIB/registration number, visible address/About page, and a branded (non-Gmail) contact address. |
+| **Weighted E-E-A-T** | | **47** | Up from 37 — driven mainly by Trustworthiness and Expertise gains; Authoritativeness is the largest remaining gap. |
 
-## AI Citation Readiness Score: 30 / 100
+## AI Citation Readiness Score: 58 / 100
 
-- Positive: one clearly sourced, quotable statistic (62%, with citation) on
-  the homepage; clean per-page JSON-LD; short declarative hero/pain
-  sentences that are individually quotable.
-- Negative: no FAQ/Q&A on 9 of 11 audited pages; no `FAQPage` schema anywhere;
-  near-duplicate H2/structure across pages makes it hard for an LLM to treat
-  each vertical page as a distinct authoritative source rather than
-  boilerplate; no dated/freshness signals; no deeper factual content
-  (SLAs, mechanism, data handling) that AI answer engines could extract as
-  differentiated facts about APLORY specifically.
+- **Positive, and the single biggest change since the prior pass:** all
+  page content, FAQ Q&As, and JSON-LD are now present in the raw served
+  HTML (prerendered), not gated behind JS execution — this alone was the
+  root cause the prior GEO audit scored at 34/100, and it is fixed.
+  `llms.txt` gives crawlers/agents an explicit, structured summary.
+  `FAQPage` schema is present and matches visible content on 10 of 11
+  pages. Vertical-specific FAQ answers are short, declarative, and
+  individually quotable (e.g. "Ne postavlja dijagnozu kvara... pravu
+  dijagnozu daje mehaničar na pregledu").
+- **Negative:** the "How it works" boilerplate remains identical across
+  pages, which still gives an LLM reason to treat the 9 verticals as one
+  templated source rather than 9 distinct authorities; no dated/freshness
+  signal outside the legal pages; no Organization/`sameAs` entity graph;
+  and `stomatolozi`, the one niche without a `proof` block, still misses
+  out on the richest, most numeric, most citation-friendly content the
+  other 8 niche pages carry.
 
 ## Priority Fix List
 
-1. Give each of the 9 vertical pages a unique H2/problem framing and at least
-   3 vertical-specific FAQ entries with `FAQPage` schema. (Critical)
-2. Add an About/Company section surfacing the founder(s), physical address,
-   and business registration number; move the address out of legal-boilerplate-only. (High)
-3. Re-anchor or caveat the 62% "62% of calls go unanswered" stat — it is the
-   single most load-bearing trust claim on the site and rests on a 2016,
-   85-company U.S. study. (High)
-4. Localize the "How it works" step copy per vertical instead of reusing the
-   identical three steps sitewide. (Medium)
-5. Expand `sta-radimo.html` with mechanism/SLA/data-handling depth to give
-   both users and AI systems more extractable factual substance. (Medium)
+1. Write a matching `proof` ("Računica") block for `stomatolozi` so it
+   reaches parity with the other 8 niches — the field and rendering already
+   exist, this is copy-only. (High)
+2. Add an About/Company section with founder identity, PIB/registration
+   number, and the physical address currently buried only in legal
+   boilerplate. (High)
+3. Localize the "How it works" 3-step copy per vertical instead of reusing
+   identical text across all 10 pages. (Medium)
+4. Expand `sta-radimo.html` with mechanism/SLA/data-handling depth. (Medium)
+5. Bring `stomatolozi.html`'s capability list up to the same depth as the
+   other 8 niches. (Medium)
+6. Keep the 62% stat's existing disclosure as-is for now, but replace it
+   with Serbia-relevant or first-party client data when available. (Medium)
+7. Keep `FAQPage` schema on all pages (it's correctly implemented and
+   costs nothing) but don't expect a SERP rich-result benefit from it —
+   FAQ rich results were retired for all sites in May 2026 — and don't
+   claim a confirmed AI/LLM citation benefit either. (Info)

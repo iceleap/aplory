@@ -3,6 +3,7 @@ import SmoothScroll from "../lib/SmoothScroll";
 import NicheHeader from "../components/niche/NicheHeader";
 import NicheHero from "../components/niche/NicheHero";
 import NicheCapabilities from "../components/niche/NicheCapabilities";
+import NicheProof from "../components/niche/NicheProof";
 import Problem from "../components/Problem";
 import HowItWorks from "../components/HowItWorks";
 import Faq from "../components/Faq";
@@ -39,8 +40,9 @@ export default function NicheLanding({ niche }) {
         <NicheHeader />
         <main>
           <NicheHero niche={niche} />
-          <Problem title={niche.painTitle} cards={niche.pains} />
           <HowItWorks title={niche.howTitle} demo={niche.demo} steps={niche.steps} />
+          <NicheProof proof={niche.proof} />
+          <Problem title={niche.painTitle} cards={niche.pains} />
           <NicheCapabilities capabilities={niche.capabilities} />
           {niche.faq && <Faq title={niche.faqTitle} items={niche.faq} />}
           <Contact initialIndustry={niche.industryValue} />

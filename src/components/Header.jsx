@@ -3,17 +3,19 @@ import { useLenis, useScrollTo } from "../lib/SmoothScroll";
 import { useCopy } from "../i18n";
 
 /* No "Kontakt" tab here on purpose: the CTA button already points at #kontakt,
-   and two adjacent links to the same target is a redundant link. */
-const TAB_IDS = ["problem", "kako", "za-koga", "pitanja"];
+   and two adjacent links to the same target is a redundant link. Order must
+   match the actual top-to-bottom DOM order of the sections in App.jsx — the
+   scroll-spy effect below resolves ties by walking this array in order. */
+const TAB_IDS = ["kako", "za-koga", "problem", "pitanja"];
 
 /* Nav order, mixing in-page scroll targets with real links. "Šta radimo" now
    lives on its own page (sta-radimo.html) rather than as a homepage section,
    so it renders as a plain link instead of being tracked by the scroll-spy
    below, and sits last — right next to the CTA button. */
 const NAV_ITEMS = [
-  { id: "problem" },
   { id: "kako" },
   { id: "za-koga" },
+  { id: "problem" },
   { id: "pitanja" },
   { id: "resenje", href: "/sta-radimo.html" },
 ];
@@ -200,7 +202,7 @@ export default function Header() {
         </nav>
 
         <a
-          className={`btn btn-primary shrink-0 px-3 py-2.5 text-sm sm:px-4 md:inline-flex md:px-5 ${
+          className={`btn btn-primary shrink-0 px-3 py-4 text-sm sm:px-4 md:py-2.5 md:inline-flex md:px-5 ${
             open ? "hidden" : "inline-flex"
           }`}
           href="#kontakt"
@@ -209,6 +211,8 @@ export default function Header() {
           {copy.nav.cta}
         </a>
 
+        {/* size-12 (48px) meets the mobile touch-target guideline; was size-10
+            (40px), which measured under 48px in an audit. */}
         <button
           ref={toggleRef}
           type="button"
@@ -216,7 +220,7 @@ export default function Header() {
           aria-expanded={open}
           aria-controls="site-nav"
           aria-label={open ? copy.nav.closeMenu : copy.nav.openMenu}
-          className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-lg border border-rule text-ink transition-colors hover:border-ink md:hidden"
+          className="grid size-12 shrink-0 cursor-pointer place-items-center rounded-lg border border-rule text-ink transition-colors hover:border-ink md:hidden"
         >
           <span className="relative block h-3 w-5" aria-hidden="true">
             <span

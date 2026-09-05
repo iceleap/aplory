@@ -1,6 +1,6 @@
 # Backlink Profile — aplory.dev
 
-**Date:** 2026-08-27
+**Date:** 2026-09-05
 **Tier available:** 0 (Common Crawl + verification crawler only). Moz and Bing Webmaster API keys are not configured in this environment (`claude-seo run backlinks_auth.py --check --json` confirms `moz.available: false`, `bing.available: false`). DataForSEO extension not installed. No third-party paid data was used.
 
 ## Data Sources Checked

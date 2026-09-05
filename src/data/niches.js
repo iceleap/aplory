@@ -7,8 +7,10 @@
  * so the contact form can be pre-selected to the right step when a visitor
  * arrives from that niche's page.
  *
- * Photos live in /public/niche/<slug>.jpg — free-license stock (Pexels
- * License: free for commercial use, no attribution required).
+ * Photos live in /public/niche/<slug>.webp — free-license stock (Pexels
+ * License: free for commercial use, no attribution required), re-exported
+ * from the original JPEGs at the hero column's 2x display size (see
+ * NicheHero.jsx's 420px-wide, 3:4 column) to cut oversized-image weight.
  *
  * Required per niche: slug, navLabel, industryValue, photo, photoAlt, eyebrow,
  * heroTitle, heroLede, metaTitle, metaDescription, pains (3), demo (6 messages,
@@ -29,7 +31,7 @@ const niches = [
     slug: "stomatolozi",
     navLabel: "Stomatolozi",
     industryValue: "stomatoloske-ordinacije",
-    photo: "/niche/stomatolozi.jpg",
+    photo: "/niche/stomatolozi.webp",
     photoAlt: "Stomatološkinja u ordinaciji",
     eyebrow: "Za stomatološke ordinacije",
     heroTitle: "Kad pacijent zove, APLORY zakazuje termin. Dok ste u ordinaciji.",
@@ -74,6 +76,51 @@ const niches = [
 
     howTitle: "Kako izgleda propušten poziv pacijenta koji traži termin.",
 
+    steps: [
+      {
+        n: "01",
+        title: "Pacijent vas kontaktira",
+        body: "Pozivom, WhatsAppom, Instagramom ili porukom sa sajta — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što pacijent proba sledeću ordinaciju.",
+      },
+      {
+        n: "03",
+        title: "Termin zakazan",
+        body: "Nastavljate pregled kad stignete, sa kontekstom već tu. Broj i nalozi ostaju isti — ništa se ne menja na vašoj strani.",
+      },
+    ],
+
+    proof: {
+      eyebrow: "Računica",
+      title: "Koliko vas košta poziv na koji niko ne stigne da se javi.",
+      lede:
+        "Bez procenata iz tuđih istraživanja — samo aritmetika sa brojevima koje sami znate. Zamenite ih svojima i pogledajte šta ostane.",
+      figures: [
+        {
+          value: "5",
+          label: "propuštenih poziva nedeljno",
+          note: "Pretpostavka za manju ordinaciju sa jednim stomatologom i jednom asistentkinjom na recepciji.",
+        },
+        {
+          value: "2",
+          label: "pacijenta koji pozovu sledeću ordinaciju",
+          note: "Konzervativno: troje ostavi poruku ili pozove ponovo, dvoje ode kod prve ordinacije koja se javi.",
+        },
+        {
+          value: "~28.000 RSD",
+          label: "mesečno u pregledima koji nisu urađeni",
+          note: "2 pacijenta nedeljno × oko 3.500 RSD prosečnog prvog pregleda i osnovne intervencije, puta 4 nedelje.",
+        },
+      ],
+      conclusion:
+        "To je cifra koja lako pokrije trošak asistentkinje na pola radnog vremena — a nastaje od poziva koje niste ni čuli. Kod većih intervencija, kao što je ugradnja implanta ili protetika, iznos raste brže nego broj propuštenih poziva.",
+      source:
+        "Računica je ilustrativna, sa pretpostavkama navedenim uz svaki broj. APLORY ne garantuje broj novih pacijenata.",
+    },
 
     capabilities: {
       eyebrow: "Šta dobijate",
@@ -97,8 +144,6 @@ const niches = [
         },
       ],
     },
-
-
     faqTitle: "Pitanja koja stomatolozi postave pre nego što probaju.",
     faq: [
       {
@@ -123,15 +168,15 @@ const niches = [
     slug: "veterinari",
     navLabel: "Veterinari",
     industryValue: "veterinarske-klinike",
-    photo: "/niche/veterinari.jpg",
+    photo: "/niche/veterinari.webp",
     photoAlt: "Veterinar sa ljubimcem u klinici",
     eyebrow: "Za veterinarske klinike",
-    heroTitle: "Vlasnik ljubimca piše u paničnom trenutku. APLORY mu odmah odgovori.",
+    heroTitle: "Vlasnik ljubimca piše u paničnom trenutku. APLORY mu odmah odgovori porukom.",
     heroLede:
       "Poziv usred pregleda, poruka na WhatsAppu u pola noći — APLORY hvata svaki upit odmah, dok vi i tim ostajete uz pacijenta koji je već na stolu.",
     metaTitle: "APLORY za veterinarske klinike — automatski odgovor vlasnicima ljubimaca",
     metaDescription:
-      "Propušten poziv ili Instagram poruka dobija odgovor za par sekundi. APLORY zakazuje preglede i podseća na vakcinaciju, dok se tim posvećuje pacijentu koji je već tu.",
+      "Propušten poziv ili Instagram poruka dobija odgovor porukom za par sekundi. APLORY zakazuje preglede i podseća na vakcinaciju, dok se tim posvećuje pacijentu koji je već tu.",
     pains: [
       {
         title: "Poziv stiže usred pregleda",
@@ -164,6 +209,24 @@ const niches = [
 
     howTitle: "Kako izgleda propušten poziv vlasnika čiji je ljubimac bolestan.",
 
+    steps: [
+      {
+        n: "01",
+        title: "Vlasnik ljubimca vas kontaktira",
+        body: "Pozivom, WhatsAppom, Instagramom ili porukom sa sajta — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što vlasnik proba sledeću kliniku.",
+      },
+      {
+        n: "03",
+        title: "Termin zakazan",
+        body: "Nastavljate pregled kad stignete, sa kontekstom već tu. Broj i nalozi ostaju isti — ništa se ne menja na vašoj strani.",
+      },
+    ],
+
     proof: {
       eyebrow: "Računica",
       title: "Koliko vas košta poziv na koji niko ne stigne da se javi.",
@@ -181,9 +244,9 @@ const niches = [
           note: "Konzervativno: dvoje se vrate ili napišu, dvoje odu kod prve klinike koja se javi.",
         },
         {
-          value: "~90.000 RSD",
+          value: "~28.000 RSD",
           label: "mesečno u pregledima koji nisu urađeni",
-          note: "2 vlasnika nedeljno × oko 3.500 RSD prosečnog prvog pregleda i terapije.",
+          note: "2 vlasnika nedeljno × oko 3.500 RSD prosečnog prvog pregleda i terapije, puta 4 nedelje.",
         },
       ],
       conclusion:
@@ -227,57 +290,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Sreda u klinici, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poziva. Razlika je samo u tome ko se javlja dok je tim zauzet pacijentom na stolu.",
-      steps: [
-        {
-          time: "09:05",
-          title: "Prvi pacijent na stolu",
-          body: "Telefon zvoni, ruke su zauzete. APLORY se javlja porukom i pita šta se dešava sa ljubimcem.",
-        },
-        {
-          time: "09:06",
-          title: "Mačka povraća, zakazan pregled",
-          body: "Vlasnik opisuje simptome, bira termin u 15.30 i dobija potvrdu bez čekanja da se neko oslobodi.",
-        },
-        {
-          time: "12:40",
-          title: "Instagram poruka o kastraciji",
-          body: "Pitanje o ceni i pripremi dobija vaš odgovor odmah, sa ponudom termina za konsultaciju.",
-        },
-        {
-          time: "15:00",
-          title: "Otkazivanje umesto praznog termina",
-          body: "Vlasnik za popodne pomera termin preko poruke. Slobodan termin ide nekome sa liste čekanja.",
-        },
-        {
-          time: "19:30",
-          title: "Klinika je zatvorena, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor — ako je hitno, uputstvo; ako može da sačeka, termin za sutra.",
-        },
-        {
-          time: "21:00",
-          title: "Podsetnici za sutra su otišli",
-          body: "Svi sutrašnji pacijenti su podsećeni, uključujući reviakcinacije iz kartoteke. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje klinika već ima",
-      tools: [
-        "Postojeći broj klinike",
-        "Propušteni pozivi",
-        "WhatsApp",
-        "Viber",
-        "Instagram poruke",
-        "Poruke sa sajta",
-      ],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, u klinici se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja veterinari postave pre nego što probaju.",
     faq: [
       {
@@ -310,7 +322,7 @@ const niches = [
     slug: "advokati",
     navLabel: "Advokati",
     industryValue: "advokatske-kancelarije",
-    photo: "/niche/advokati.jpg",
+    photo: "/niche/advokati.webp",
     photoAlt: "Advokatkinja u kancelariji",
     eyebrow: "Za advokatske kancelarije",
     heroTitle: "Klijent zove usred ročišta. APLORY odgovara porukom umesto vas.",
@@ -318,7 +330,7 @@ const niches = [
       "Na sudu ili sa strankom ne možete da se javite. APLORY prihvata upit sa poziva, sajta ili poruke, zabeleži o čemu se radi i javi vam se čim budete slobodni.",
     metaTitle: "APLORY za advokatske kancelarije — automatski odgovor na upit klijenta",
     metaDescription:
-      "Propušten poziv dok ste na ročištu ili sa strankom? APLORY odmah odgovara na upit, beleži o čemu se radi i prosleđuje vam kontakt čim ste slobodni.",
+      "Propušten poziv dok ste na ročištu ili sa strankom? APLORY odmah odgovara porukom na upit, beleži o čemu se radi i prosleđuje vam kontakt čim ste slobodni.",
     pains: [
       {
         title: "Nedostupni ste na ročištu",
@@ -349,6 +361,24 @@ const niches = [
     painTitle: "Klijent sa hitnim pravnim problemom ne ostavlja poruku. Zove sledećeg advokata sa liste.",
 
     howTitle: "Kako izgleda propušten poziv klijenta koji traži pravnu pomoć.",
+
+    steps: [
+      {
+        n: "01",
+        title: "Klijent vas kontaktira",
+        body: "Pozivom, porukom sa sajta ili WhatsAppom — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Upit je zabeležen pre nego što klijent pozove sledeću kancelariju.",
+      },
+      {
+        n: "03",
+        title: "Konsultacija zakazana",
+        body: "Javljate se čim ste slobodni, sa opisom slučaja već pri ruci. Broj i nalozi ostaju isti — ništa se ne menja na vašoj strani.",
+      },
+    ],
 
     proof: {
       eyebrow: "Računica",
@@ -413,56 +443,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Utorak sa ročištem, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poziva. Razlika je samo u tome ko se javlja dok ste vi na sudu ili sa strankom.",
-      steps: [
-        {
-          time: "09:00",
-          title: "Ročište počinje, telefon na nemo",
-          body: "Poziv stiže usred ročišta. APLORY se javlja porukom i traži kratak opis o čemu se radi.",
-        },
-        {
-          time: "09:02",
-          title: "Otkaz bez obrazloženja",
-          body: "Klijent ukratko opisuje situaciju i prilaže da ima rešenje o otkazu. Poruka potvrđuje da ćete se javiti čim ročište završi.",
-        },
-        {
-          time: "11:40",
-          title: "Poruka sa sajta o nasledstvu",
-          body: "Upit o podeli nasledstva dobija osnovan odgovor i ponudu termina za konsultaciju, bez vašeg učešća u tom trenutku.",
-        },
-        {
-          time: "13:15",
-          title: "Ročište završeno, spisak čeka",
-          body: "Izlazite sa suda i vidite dva zabeležena upita sa kontekstom, spremna da ih pozovete nazad pripremljeni.",
-        },
-        {
-          time: "18:30",
-          title: "Kancelarija je zatvorena, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor i termin za sutra ujutru, umesto da klijent nastavi da zove dalje niz listu.",
-        },
-        {
-          time: "21:10",
-          title: "Podsetnik za sutrašnju konsultaciju je otišao",
-          body: "Klijent sa zakazanim terminom je podsećen. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje kancelarija već ima",
-      tools: [
-        "Postojeći broj kancelarije",
-        "Propušteni pozivi",
-        "WhatsApp",
-        "Viber",
-        "Poruke sa sajta",
-      ],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, u kancelariji se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja advokati postave pre nego što probaju.",
     faq: [
       {
@@ -495,7 +475,7 @@ const niches = [
     slug: "auto-servisi",
     navLabel: "Auto servisi",
     industryValue: "servisi-i-radionice",
-    photo: "/niche/auto-servisi.jpg",
+    photo: "/niche/auto-servisi.webp",
     photoAlt: "Automehaničar u radionici",
     eyebrow: "Za auto servise i radionice",
     heroTitle: "Ruke su vam pod haubom. APLORY odgovara porukom umesto vas.",
@@ -503,7 +483,7 @@ const niches = [
       "Telefon zvoni dok ste ispod auta ili sa mušterijom. APLORY odmah odgovori, uzme podatke o vozilu i kvaru i zakaže termin — vi nastavljate posao koji ste već započeli.",
     metaTitle: "APLORY za auto servise i radionice — automatski odgovor mušterijama",
     metaDescription:
-      "Propušten poziv dok ste pod haubom? APLORY odmah odgovara, uzima podatke o vozilu i kvaru i zakazuje termin, dok vi nastavljate posao.",
+      "Propušten poziv dok ste pod haubom? APLORY odmah odgovara porukom, uzima podatke o vozilu i kvaru i zakazuje termin, dok vi nastavljate posao.",
     pains: [
       {
         title: "Ruke su vam zauzete poslom",
@@ -534,6 +514,24 @@ const niches = [
     painTitle: "Mušterija sa pokvarenim autom ne čeka da joj se javite. Zove sledeći servis iz pretrage.",
 
     howTitle: "Kako izgleda propušten poziv mušterije koja stoji pored auta na putu.",
+
+    steps: [
+      {
+        n: "01",
+        title: "Mušterija vas kontaktira",
+        body: "Pozivom, WhatsAppom ili porukom sa sajta — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što mušterija proba sledeći servis.",
+      },
+      {
+        n: "03",
+        title: "Termin zakazan",
+        body: "Nastavljate posao kad stignete, sa modelom i kvarom već zabeleženim. Broj i nalozi ostaju isti.",
+      },
+    ],
 
     proof: {
       eyebrow: "Računica",
@@ -598,50 +596,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Četvrtak u radionici, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poziva. Razlika je samo u tome ko se javlja dok su vam ruke pod haubom.",
-      steps: [
-        {
-          time: "08:15",
-          title: "Prvi auto na dizalici",
-          body: "Telefon zvoni, ruke su u motoru. APLORY se javlja porukom i pita šta se dešava sa autom.",
-        },
-        {
-          time: "08:17",
-          title: "Klima ne hladi, zakazan termin",
-          body: "Golf 7, 2016. godište, klima duva mlako. Mušterija bira termin danas u 16.30 i dobija potvrdu.",
-        },
-        {
-          time: "10:50",
-          title: "Poziv sa auto-puta",
-          body: "Mušterija stoji pored auta koji se pokvario. Poruka prepoznaje hitnost i traži adresu, uz odmah obaveštenje vama.",
-        },
-        {
-          time: "13:20",
-          title: "Pitanje o ceni zamene kvačila",
-          body: "Upit sa sajta dobija vaš unapred zadat odgovor i ponudu termina za pregled pre konačne cene.",
-        },
-        {
-          time: "17:45",
-          title: "Radionica je zatvorena, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor i termin za sutra ujutru, umesto da mušterija pozove sledeći servis iz pretrage.",
-        },
-        {
-          time: "20:30",
-          title: "Podsetnici za sutra su otišli",
-          body: "Sutrašnje mušterije su podsećene, uključujući onu čiji tehnički uskoro ističe. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje servis već ima",
-      tools: ["Postojeći broj servisa", "Propušteni pozivi", "WhatsApp", "Viber", "Poruke sa sajta"],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, u radionici se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja vlasnici servisa postave pre nego što probaju.",
     faq: [
       {
@@ -674,7 +628,7 @@ const niches = [
     slug: "saloni",
     navLabel: "Saloni i spa",
     industryValue: "medical-spa-saloni",
-    photo: "/niche/saloni.jpg",
+    photo: "/niche/saloni.webp",
     photoAlt: "Frizerka u salonu",
     eyebrow: "Za salone i medical spa",
     heroTitle: "Klijentkinja piše dok radite na nekom drugom. APLORY odgovara porukom umesto vas.",
@@ -682,7 +636,7 @@ const niches = [
       "Ne stižete da pogledate telefon dok traje tretman. APLORY odmah odgovara na Instagram, WhatsApp i poziv, zakazuje termin i podseti klijentkinju dan pre dolaska.",
     metaTitle: "APLORY za salone i medical spa — automatski odgovor klijentkinjama",
     metaDescription:
-      "Propušten poziv ili Instagram poruka dok radite na klijentkinji? APLORY odmah odgovara, zakazuje termin i šalje podsetnik pre dolaska.",
+      "Propušten poziv ili Instagram poruka dok radite na klijentkinji? APLORY odmah odgovara porukom, zakazuje termin i šalje podsetnik pre dolaska.",
     pains: [
       {
         title: "Ne stižete do telefona tokom tretmana",
@@ -715,6 +669,24 @@ const niches = [
 
     howTitle: "Kako izgleda propuštena Instagram poruka klijentkinje koja traži termin.",
 
+    steps: [
+      {
+        n: "01",
+        title: "Klijentkinja vas kontaktira",
+        body: "Instagram porukom, WhatsAppom ili pozivom — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što klijentkinja zakaže kod nekog drugog.",
+      },
+      {
+        n: "03",
+        title: "Termin zakazan",
+        body: "Nastavljate rad kad stignete, sa terminom već potvrđenim. Nalog i broj ostaju vaši.",
+      },
+    ],
+
     proof: {
       eyebrow: "Računica",
       title: "Koliko vas košta poruka na koju niko ne stigne da odgovori.",
@@ -732,7 +704,7 @@ const niches = [
           note: "Konzervativno: šest ostavi poruku ili pozove ponovo, četiri odu kod prvog salona koji odgovori.",
         },
         {
-          value: "~35.000 RSD",
+          value: "~14.000 RSD",
           label: "nedeljno u terminima koji nisu zakazani",
           note: "4 klijentkinje nedeljno × oko 3.500 RSD prosečnog termina (šišanje, farbanje ili tretman lica).",
         },
@@ -778,50 +750,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Petak u salonu, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poruka. Razlika je samo u tome ko odgovara dok su vam ruke zauzete klijentkinjom u stolici.",
-      steps: [
-        {
-          time: "09:10",
-          title: "Prva klijentkinja u stolici",
-          body: "Instagram poruka stiže dok bojite kosu. APLORY se javlja i pita šta klijentkinja traži.",
-        },
-        {
-          time: "09:11",
-          title: "Zakazano farbanje za sredu",
-          body: "Klijentkinja bira termin u 17h, prvi put dolazi, dobija potvrdu bez čekanja da se oslobodite.",
-        },
-        {
-          time: "12:30",
-          title: "WhatsApp pitanje o ceni tretmana lica",
-          body: "Pitanje o ceni i trajanju dobija vaš unapred zadat odgovor, sa ponudom termina za konsultaciju.",
-        },
-        {
-          time: "15:45",
-          title: "Otkazivanje umesto praznog stolca",
-          body: "Klijentkinja za sutra pomera termin preko poruke. Slobodan termin ide nekoj sa liste čekanja.",
-        },
-        {
-          time: "20:00",
-          title: "Salon je zatvoren, Instagram nije",
-          body: "Poruka posle radnog vremena dobija odgovor i termin za sledeću nedelju, umesto da klijentkinja pronađe drugi salon do jutra.",
-        },
-        {
-          time: "21:30",
-          title: "Podsetnici za sutra su otišli",
-          body: "Sve sutrašnje klijentkinje su podsećene. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje salon već ima",
-      tools: ["Instagram poruke", "WhatsApp", "Viber", "Propušteni pozivi", "Poruke sa sajta"],
-      toolsNote:
-        "Nalog ostaje vaš, broj ostaje isti, u salonu se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja vlasnice salona postave pre nego što probaju.",
     faq: [
       {
@@ -854,15 +782,15 @@ const niches = [
     slug: "ecommerce",
     navLabel: "Online prodavnice",
     industryValue: "ecommerce",
-    photo: "/niche/ecommerce.jpg",
+    photo: "/niche/ecommerce.webp",
     photoAlt: "Vlasnica online prodavnice pakuje porudžbinu",
     eyebrow: "Za online prodavnice",
-    heroTitle: "Kupac pita pre kupovine. APLORY odgovara pre nego što ode kod konkurencije.",
+    heroTitle: "Kupac pita pre kupovine. APLORY odgovara porukom pre nego što ode kod konkurencije.",
     heroLede:
       "Poruka na Instagramu ili sajtu koja ostane bez odgovora par sati je izgubljena porudžbina. APLORY odmah odgovara na pitanja o dostupnosti, veličini i dostavi.",
     metaTitle: "APLORY za online prodavnice — automatski odgovor kupcima",
     metaDescription:
-      "Poruka na Instagramu ili sajtu bez odgovora je izgubljena porudžbina. APLORY odmah odgovara na pitanja o dostupnosti, veličini i dostavi, dok vi pakujete porudžbine.",
+      "Poruka na Instagramu ili sajtu bez odgovora je izgubljena porudžbina. APLORY odmah odgovara porukom na pitanja o dostupnosti, veličini i dostavi, dok vi pakujete porudžbine.",
     pains: [
       {
         title: "Pitanje stiže dok pakujete porudžbine",
@@ -893,6 +821,24 @@ const niches = [
     painTitle: "Kupac koji pita pre kupovine ne čeka. Ode kod prve prodavnice koja odgovori.",
 
     howTitle: "Kako izgleda propuštena poruka kupca koji je spreman da naruči.",
+
+    steps: [
+      {
+        n: "01",
+        title: "Kupac vas kontaktira",
+        body: "Chatom na sajtu, Instagram porukom ili WhatsAppom — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što kupac ode kod konkurencije.",
+      },
+      {
+        n: "03",
+        title: "Porudžbina kreće dalje",
+        body: "Nastavljate pakovanje, sa odgovorom već poslatim. Nalog ostaje vaš — ništa se ne menja na vašoj strani.",
+      },
+    ],
 
     proof: {
       eyebrow: "Računica",
@@ -953,50 +899,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Subota u prodavnici, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poruka. Razlika je samo u tome ko odgovara dok pakujete porudžbine.",
-      steps: [
-        {
-          time: "10:05",
-          title: "Prva porudžbina se pakuje",
-          body: "Poruka sa sajta stiže dok lepite nalepnicu na paket. APLORY se javlja i pita šta kupca zanima.",
-        },
-        {
-          time: "10:06",
-          title: "Pitanje o veličini, zatim porudžbina",
-          body: "Crna jakna u M je na stanju, dostava do Novog Sada traje 1-2 dana. Kupac potvrđuje porudžbinu.",
-        },
-        {
-          time: "13:30",
-          title: "Instagram poruka o materijalu",
-          body: "Pitanje o sastavu tkanine dobija vaš unapred zadat odgovor, sa linkom ka proizvodu.",
-        },
-        {
-          time: "16:15",
-          title: "Isto pitanje o dostavi, deseti put ove nedelje",
-          body: "Isti odgovor stiže istog trenutka, bez da vi prekidate pakovanje da biste ga otkucali ponovo.",
-        },
-        {
-          time: "21:00",
-          title: "Prodavnica je zatvorena, poruke nisu",
-          body: "Kupac koji naručuje uveče dobija odgovor odmah, umesto da do sutra nađe drugu prodavnicu.",
-        },
-        {
-          time: "21:40",
-          title: "Zamolba za recenziju je otišla",
-          body: "Kupcu čija je porudžbina stigla juče stiže poruka sa molbom za Google recenziju. Vi ste zatvorili prodavnicu i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje prodavnica već ima",
-      tools: ["Chat na sajtu", "Instagram poruke", "WhatsApp", "Propušteni pozivi"],
-      toolsNote:
-        "Nalog ostaje vaš, u prodavnici se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja vlasnici online prodavnica postave pre nego što probaju.",
     faq: [
       {
@@ -1029,15 +931,15 @@ const niches = [
     slug: "klimatizacija",
     navLabel: "Klima i grejanje",
     industryValue: "klima-i-grejanje",
-    photo: "/niche/klimatizacija.jpg",
+    photo: "/niche/klimatizacija.webp",
     photoAlt: "Serviser klima uređaja",
     eyebrow: "Za servise klima i grejanja",
-    heroTitle: "Klima se pokvarila usred leta. APLORY odgovara dok ste vi na terenu.",
+    heroTitle: "Klima se pokvarila usred leta. APLORY odgovara porukom dok ste vi na terenu.",
     heroLede:
       "Najviše poziva stiže baš kad ste na drugom terenu i ne možete da se javite. APLORY odmah odgovori, uzme adresu i model uređaja i zakaže izlazak.",
     metaTitle: "APLORY za servise klima uređaja i grejanja — automatski odgovor mušterijama",
     metaDescription:
-      "Propušten poziv dok ste na terenu? APLORY odmah odgovara, uzima adresu i model uređaja i zakazuje izlazak servisera.",
+      "Propušten poziv dok ste na terenu? APLORY odmah odgovara porukom, uzima adresu i model uređaja i zakazuje izlazak servisera.",
     pains: [
       {
         title: "Najviše poziva kad ste najzauzetiji",
@@ -1068,6 +970,24 @@ const niches = [
     painTitle: "Mušterija sa pokvarenom klimom u avgustu ne čeka. Zove sledećeg servisera na spisku.",
 
     howTitle: "Kako izgleda propušten poziv mušterije koja zove nekoliko servisera odjednom.",
+
+    steps: [
+      {
+        n: "01",
+        title: "Mušterija vas kontaktira",
+        body: "Pozivom, WhatsAppom ili porukom sa sajta — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što mušterija pozove sledećeg servisera.",
+      },
+      {
+        n: "03",
+        title: "Izlazak zakazan",
+        body: "Nastavljate posao na terenu, sa adresom i modelom već zabeleženim. Broj i nalozi ostaju isti.",
+      },
+    ],
 
     proof: {
       eyebrow: "Računica",
@@ -1128,50 +1048,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Vrući utorak na terenu, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poziva. Razlika je samo u tome ko se javlja dok ste vi kod druge mušterije.",
-      steps: [
-        {
-          time: "08:30",
-          title: "Prvi izlazak za dan",
-          body: "Telefon zvoni dok montirate klimu kod prethodne mušterije. APLORY se javlja porukom i pita šta se dešava.",
-        },
-        {
-          time: "08:32",
-          title: "Klima duva mlako, zakazan izlazak",
-          body: "Model i adresa stižu odmah. Mušterija bira termin danas u 16.30 i dobija potvrdu.",
-        },
-        {
-          time: "11:15",
-          title: "Drugi poziv u istom trenutku",
-          body: "Dok razgovarate sa jednom mušterijom uživo, sledeći poziv takođe dobija odgovor — nijedan se ne gubi u vršnom opterećenju.",
-        },
-        {
-          time: "14:00",
-          title: "Pitanje o ceni dopune gasa",
-          body: "Upit sa sajta dobija vaš unapred zadat odgovor i ponudu termina za pregled pre konačne cene.",
-        },
-        {
-          time: "19:00",
-          title: "Radni dan je gotov, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor i termin za sutra ujutru, umesto da mušterija pozove sledećeg servisera iz pretrage.",
-        },
-        {
-          time: "20:45",
-          title: "Podsetnici za sutra su otišli",
-          body: "Sutrašnje mušterije su podsećene sa tačnom adresom i vremenom. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje servis već ima",
-      tools: ["Postojeći broj servisa", "Propušteni pozivi", "WhatsApp", "Viber", "Poruke sa sajta"],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, u servisu se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja vlasnici servisa klima i grejanja postave pre nego što probaju.",
     faq: [
       {
@@ -1204,15 +1080,15 @@ const niches = [
     slug: "pvc-stolarija",
     navLabel: "PVC stolarija",
     industryValue: "pvc-stolarija",
-    photo: "/niche/pvc-stolarija.jpg",
+    photo: "/niche/pvc-stolarija.webp",
     photoAlt: "Monter PVC stolarije",
     eyebrow: "Za proizvođače i montere PVC stolarije",
-    heroTitle: "Mušterija traži ponudu za prozore. APLORY je odmah usmeri ka pravom koraku.",
+    heroTitle: "Mušterija traži ponudu za prozore. APLORY joj odmah odgovori porukom.",
     heroLede:
       "Upit za mere i ponudu često stiže dok ste na montaži kod druge mušterije. APLORY odgovori odmah, uzme osnovne podatke i zakaže izlazak na merenje.",
     metaTitle: "APLORY za PVC stolariju — automatski odgovor na upit za ponudu",
     metaDescription:
-      "Propušten poziv za ponudu dok ste na montaži? APLORY odmah odgovara, uzima osnovne podatke o objektu i zakazuje izlazak na merenje.",
+      "Propušten poziv za ponudu dok ste na montaži? APLORY odmah odgovara porukom, uzima osnovne podatke o objektu i zakazuje izlazak na merenje.",
     pains: [
       {
         title: "Poziv za ponudu stiže dok montirate",
@@ -1243,6 +1119,24 @@ const niches = [
     painTitle: "Mušterija koja traži ponudu za prozore ne čeka da razmenite deset poruka. Zove sledećeg iz pretrage.",
 
     howTitle: "Kako izgleda propušten poziv mušterije koja traži ponudu za prozore i vrata.",
+
+    steps: [
+      {
+        n: "01",
+        title: "Mušterija vas kontaktira",
+        body: "Pozivom ili porukom sa sajta — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što mušterija zatraži ponudu od konkurencije.",
+      },
+      {
+        n: "03",
+        title: "Izlazak na merenje zakazan",
+        body: "Nastavljate posao na terenu, sa osnovnim podacima već zabeleženim. Broj i nalozi ostaju isti.",
+      },
+    ],
 
     proof: {
       eyebrow: "Računica",
@@ -1299,50 +1193,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Sreda na terenu, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem upita. Razlika je samo u tome ko odgovara dok ste vi na montaži kod druge mušterije.",
-      steps: [
-        {
-          time: "08:20",
-          title: "Montaža kod prve mušterije",
-          body: "Telefon zvoni dok postavljate prozor. APLORY se javlja porukom i pita šta mušteriji treba.",
-        },
-        {
-          time: "08:22",
-          title: "Upit za 5 prozora, zakazano merenje",
-          body: "Kuća u izgradnji, mušterija bira četvrtak pre podne za izlazak na merenje i dobija potvrdu.",
-        },
-        {
-          time: "12:10",
-          title: "Poruka sa sajta o razlici u profilima",
-          body: "Pitanje o broju komora dobija vaš unapred zadat odgovor, sa ponudom termina za detaljniju konsultaciju.",
-        },
-        {
-          time: "16:00",
-          title: "Pitanje o roku isporuke",
-          body: "Mušterija koja planira useljenje za dva meseca dobija okvirni rok i predlog da se odmah zakaže merenje.",
-        },
-        {
-          time: "19:30",
-          title: "Radni dan je gotov, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor i termin za sutra, umesto da mušterija pozove sledeću firmu iz pretrage.",
-        },
-        {
-          time: "20:50",
-          title: "Podsetnik za sutrašnje merenje je otišao",
-          body: "Mušterija sa zakazanim izlaskom je podsećena na vreme i adresu. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje firma već ima",
-      tools: ["Postojeći broj firme", "Propušteni pozivi", "WhatsApp", "Poruke sa sajta"],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, u firmi se ništa ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja vlasnici firmi za PVC stolariju postave pre nego što probaju.",
     faq: [
       {
@@ -1375,7 +1225,7 @@ const niches = [
     slug: "majstori",
     navLabel: "Majstori",
     industryValue: "majstori",
-    photo: "/niche/majstori.jpg",
+    photo: "/niche/majstori.webp",
     photoAlt: "Majstor sa alatom",
     eyebrow: "Za majstore i kućne servise",
     heroTitle: "Dok ste na jednom poslu, sledeći vas zove. APLORY odgovara porukom umesto vas.",
@@ -1383,7 +1233,7 @@ const niches = [
       "Bušilica u ruci ne dozvoljava da podignete telefon. APLORY odmah odgovori na poziv i poruku, uzme adresu i opis kvara i dogovori termin.",
     metaTitle: "APLORY za majstore i kućne servise — automatski odgovor mušterijama",
     metaDescription:
-      "Propušten poziv dok ste na poslu kod druge mušterije? APLORY odmah odgovara, uzima adresu i opis kvara i dogovara termin dolaska.",
+      "Propušten poziv dok ste na poslu kod druge mušterije? APLORY odmah odgovara porukom, uzima adresu i opis kvara i dogovara termin dolaska.",
     pains: [
       {
         title: "Alat u rukama, telefon bez odgovora",
@@ -1415,6 +1265,24 @@ const niches = [
 
     howTitle: "Kako izgleda propušten poziv mušterije koja ima hitan kvar u kući.",
 
+    steps: [
+      {
+        n: "01",
+        title: "Mušterija vas kontaktira",
+        body: "Pozivom, WhatsAppom ili porukom — kanal koji već koristi.",
+      },
+      {
+        n: "02",
+        title: "APLORY odmah odgovori porukom",
+        body: "Za par sekundi, ne za par sati. Razgovor počinje pre nego što mušterija pozove sledećeg majstora.",
+      },
+      {
+        n: "03",
+        title: "Dolazak dogovoren",
+        body: "Nastavljate posao kod trenutne mušterije, sa adresom i kvarom već zabeleženim.",
+      },
+    ],
+
     proof: {
       eyebrow: "Računica",
       title: "Koliko vas košta poziv na koji niko ne stigne da se javi.",
@@ -1432,7 +1300,7 @@ const niches = [
           note: "Konzervativno: šestoro ostavi poruku ili pozove ponovo, četvoro ode kod prvog majstora koji se javi.",
         },
         {
-          value: "~50.000 RSD",
+          value: "~14.000 RSD",
           label: "nedeljno u poslovima koji nisu dogovoreni",
           note: "4 mušterije nedeljno × oko 3.500 RSD prosečne manje intervencije, bez računanja većih poslova.",
         },
@@ -1474,50 +1342,6 @@ const niches = [
         },
       ],
     },
-
-    scenario: {
-      eyebrow: "Jedan dan",
-      title: "Ponedeljak na terenu, sat po sat.",
-      lede:
-        "Isti dan, sa istim brojem poziva. Razlika je samo u tome ko se javlja dok su vam ruke zauzete alatom.",
-      steps: [
-        {
-          time: "08:10",
-          title: "Prvi posao za dan",
-          body: "Telefon zvoni dok montirate policu kod prve mušterije. APLORY se javlja porukom i pita šta se dešava.",
-        },
-        {
-          time: "08:12",
-          title: "Pukla cev, hitan slučaj",
-          body: "Adresa i opis kvara stižu odmah, uz oznaku hitnosti. Mušterija dobija procenu da stižete za sat vremena.",
-        },
-        {
-          time: "11:40",
-          title: "Poruka o manjem popravku",
-          body: "Upit za montažu lampe dobija predlog termina za kasnije u nedelji, bez pritiska da odmah ostavite trenutni posao.",
-        },
-        {
-          time: "15:20",
-          title: "Pitanje o ceni izlaska",
-          body: "Mušterija koja razmišlja da li da zove dobija vaš unapred zadat odgovor i odlučuje se da zakaže.",
-        },
-        {
-          time: "19:15",
-          title: "Radni dan je gotov, telefon nije",
-          body: "Poziv posle radnog vremena dobija odgovor i procenu hitnosti, umesto da mušterija pozove sledećeg majstora iz pretrage.",
-        },
-        {
-          time: "20:40",
-          title: "Podsetnik za sutrašnji dolazak je otišao",
-          body: "Mušterija sa dogovorenim terminom je podsećena na vreme dolaska. Vi ste kod kuće i niste otkucali nijednu poruku.",
-        },
-      ],
-      toolsTitle: "Radi na kanalima koje već koristite",
-      tools: ["Postojeći broj", "Propušteni pozivi", "WhatsApp", "Viber", "Poruke sa sajta"],
-      toolsNote:
-        "Broj ostaje isti, nalozi ostaju vaši, ništa se ne instalira. Vi u svakom trenutku možete da preuzmete razgovor.",
-    },
-
     faqTitle: "Pitanja koja majstori postave pre nego što probaju.",
     faq: [
       {

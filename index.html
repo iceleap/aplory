@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>kad vas neko traži — APLORY odgovara za vas</title>
+    <title>kad vas neko traži — APLORY odgovara porukom za vas</title>
     <meta
       name="description"
-      content="Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara na svaki upit u roku od nekoliko sekundi. Podsetnici za termine, Google recenzije i izrada sajta."
+      content="Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara porukom na svaki upit u roku od nekoliko sekundi. Podsetnici za termine, Google recenzije i izrada sajta."
     />
     <!-- Matches the page ground so mobile browser chrome stays light too. -->
     <meta name="theme-color" content="#ffffff" />
@@ -16,11 +16,11 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="kad vas neko traži — APLORY odgovara za vas"
+      content="kad vas neko traži — APLORY odgovara porukom za vas"
     />
     <meta
       property="og:description"
-      content="Svaki upit dobija odgovor automatski, u roku od nekoliko sekundi: poziv, WhatsApp, Instagram ili sajt."
+      content="Svaki upit dobija odgovor porukom, automatski, u roku od nekoliko sekundi: poziv, WhatsApp, Instagram ili sajt."
     />
     <meta property="og:locale" content="sr_RS" />
     <meta property="og:url" content="https://aplory.dev/" />
@@ -29,7 +29,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="kad vas neko traži — APLORY odgovara za vas."
+      content="kad vas neko traži — APLORY odgovara porukom za vas."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://aplory.dev/og.png" />
@@ -38,14 +38,14 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="apple-touch-icon" href="/icon.png" />
 
-    <!-- Fraunces (serif display) + Inter (body/UI) — see src/base.css for the
-         direction rationale. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fraunces (serif display) + Inter (body/UI) — self-hosted (see the
+         @font-face rules in src/base.css); preloaded here so the font files
+         start downloading in parallel with HTML parsing instead of waiting
+         on the CSS to resolve first. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-400-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-400-latin-ext.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-ext.woff2" crossorigin />
 
     <!--
       Structured data replaces the old visible "hero-meta" column. Search engines
@@ -55,27 +55,17 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
+        "@type": "Organization",
+        "@id": "https://aplory.dev/#organization",
         "name": "APLORY",
         "description": "Automatski odgovor na propušten poziv, preusmeravanje na kanale koje klijenti koriste, podsetnici za termine, Google recenzije, chat na sajtu i izrada sajta.",
         "email": "office.aplory@gmail.com",
         "telephone": "+381698440885",
         "url": "https://aplory.dev/",
+        "logo": "https://aplory.dev/icon.png",
+        "image": "https://aplory.dev/og.png",
+        "areaServed": "RS",
         "availableLanguage": "sr",
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          "opens": "00:00",
-          "closes": "23:59"
-        },
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Usluge",
@@ -141,6 +131,14 @@
           },
           {
             "@type": "Question",
+            "name": "Da li je ovo samo automatska SMS poruka na propušten poziv?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ne. Jednokratno automatsko obaveštenje ume da pošalje bilo koji telefon. APLORY vodi ceo razgovor koji sledi — postavlja pitanja, prikuplja ono što je bitno za vašu delatnost i nudi termin, umesto da klijent ostane sa jednom porukom bez odgovora."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Da li moram da menjam broj telefona ili način rada?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -152,7 +150,7 @@
             "name": "Da li je ovo u skladu sa zakonom?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Odgovor na upit koji je klijent sam poslao je pravno najčistiji slučaj. Za kampanje prema staroj bazi traži se izričit pristanak za marketing (Zakon o oglašavanju, čl. 63; Zakon o zaštiti podataka o ličnosti, čl. 17)."
+              "text": "APLORY je servis koji malim firmama u Srbiji automatski odgovara na propuštene pozive i poruke. Odgovor na upit koji klijent sam pošalje — propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta — pravno je najčistiji mogući slučaj: to je transakcioni odgovor na nešto što je klijent sam inicirao, ne neželjena marketinška poruka poslata bez povoda. APLORY ne šalje ništa dok upit prvo ne stigne od klijenta, a sadržaj odgovora unapred definiše firma koja ga koristi, nije generisan proizvoljno. Situacija je drugačija samo kod kampanja prema staroj bazi kontakata koji nisu upravo pisali — tu se, po Zakonu o oglašavanju (čl. 63) i Zakonu o zaštiti podataka o ličnosti (čl. 17), traži izričit prethodni pristanak primaoca za marketinšku komunikaciju. APLORY danas ne šalje takve kampanje. Ako se opcija slanja poruka staroj bazi ikad doda, pristanak bi se tražio odvojeno i eksplicitno pre slanja, ne pretpostavljao unapred."
             }
           }
         ]
@@ -190,18 +188,32 @@
     <script type="module" src="/src/main.jsx"></script>
     <script>
       (function () {
-        // Largest render-blocking third-party resource on the page (see
-        // GEO/SEO audits): the LeadConnector chat widget loads on first real
-        // user interaction, or after a short idle fallback so keyboard-only
-        // visitors who never scroll or move the mouse still get it.
+        // Largest third-party resource on the page (see GEO/SEO audits): the
+        // LeadConnector chat widget's ~188KB + main-thread burst is deferred
+        // past first paint either way, but the original trigger set
+        // (scroll/mousemove/touchstart/keydown, each firing the very first
+        // time it happens) meant that burst usually landed within the first
+        // second or two of a visit — competing with the exact moment the
+        // visitor starts reading or scrolling, which is a plausible source of
+        // a slow field INP even though it never shows up in a lab trace.
+        //
+        // Two lazier signals instead: a deliberate tap/click (real intent,
+        // not incidental movement), or having actually scrolled past the
+        // hero into the page body. Mousemove and keydown are dropped as
+        // immediate triggers — almost any visit fires one of those instantly,
+        // which defeated the point of deferring at all. A long idle fallback
+        // still covers a visitor who neither scrolls nor taps anything
+        // (e.g. reading via keyboard Tab without triggering the above).
         var loaded = false;
-        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        var pointerEvents = ["touchstart", "click"];
+
         function loadChatWidget() {
           if (loaded) return;
           loaded = true;
-          events.forEach(function (e) {
+          pointerEvents.forEach(function (e) {
             window.removeEventListener(e, loadChatWidget);
           });
+          window.removeEventListener("scroll", onScroll);
           clearTimeout(fallback);
           var s = document.createElement("script");
           s.src = "https://widgets.leadconnectorhq.com/loader.js";
@@ -212,10 +224,24 @@
           s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
           document.body.appendChild(s);
         }
-        events.forEach(function (e) {
+
+        // Past the hero, not the first pixel of scroll — a visitor still
+        // reading the hero hasn't shown intent to keep going yet.
+        function onScroll() {
+          if (window.scrollY > window.innerHeight * 0.6) loadChatWidget();
+        }
+
+        pointerEvents.forEach(function (e) {
           window.addEventListener(e, loadChatWidget, { passive: true, once: true });
         });
-        var fallback = setTimeout(loadChatWidget, 6000);
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        var idle = window.requestIdleCallback || function (cb, opts) {
+          return setTimeout(cb, (opts && opts.timeout) || 0);
+        };
+        var fallback = setTimeout(function () {
+          idle(loadChatWidget, { timeout: 2000 });
+        }, 18000);
       })();
     </script>
   </body>

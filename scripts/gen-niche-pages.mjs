@@ -58,12 +58,13 @@ for (const n of niches) {
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="apple-touch-icon" href="/icon.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fraunces + Inter, self-hosted — see the @font-face rules in
+         src/base.css; preloaded so the files start downloading in parallel
+         with HTML parsing instead of waiting on the CSS to resolve first. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-400-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-400-latin-ext.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-ext.woff2" crossorigin />
 
     <script type="application/ld+json">
       {
@@ -71,15 +72,11 @@ for (const n of niches) {
         "@type": "Service",
         "name": "APLORY — ${htmlEscape(n.eyebrow)}",
         "description": "${htmlEscape(n.metaDescription)}",
-        "provider": {
-          "@type": "ProfessionalService",
-          "name": "APLORY",
-          "email": "office.aplory@gmail.com",
-          "telephone": "+381698440885",
-          "url": "https://aplory.dev/"
-        },
+        "serviceType": "Automatizovan odgovor na propuštene pozive i poruke",
+        "provider": { "@id": "https://aplory.dev/#organization" },
         "areaServed": "RS",
-        "availableLanguage": "sr"
+        "availableLanguage": "sr",
+        "url": "${url}"
       }
     </script>${faqSchema}
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
@@ -89,18 +86,32 @@ for (const n of niches) {
     <script type="module" src="/src/entries/main-${n.slug}.jsx"></script>
     <script>
       (function () {
-        // Largest render-blocking third-party resource on the page (see
-        // GEO/SEO audits): the LeadConnector chat widget loads on first real
-        // user interaction, or after a short idle fallback so keyboard-only
-        // visitors who never scroll or move the mouse still get it.
+        // Largest third-party resource on the page (see GEO/SEO audits): the
+        // LeadConnector chat widget's ~188KB + main-thread burst is deferred
+        // past first paint either way, but the original trigger set
+        // (scroll/mousemove/touchstart/keydown, each firing the very first
+        // time it happens) meant that burst usually landed within the first
+        // second or two of a visit — competing with the exact moment the
+        // visitor starts reading or scrolling, which is a plausible source of
+        // a slow field INP even though it never shows up in a lab trace.
+        //
+        // Two lazier signals instead: a deliberate tap/click (real intent,
+        // not incidental movement), or having actually scrolled past the
+        // hero into the page body. Mousemove and keydown are dropped as
+        // immediate triggers — almost any visit fires one of those instantly,
+        // which defeated the point of deferring at all. A long idle fallback
+        // still covers a visitor who neither scrolls nor taps anything
+        // (e.g. reading via keyboard Tab without triggering the above).
         var loaded = false;
-        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        var pointerEvents = ["touchstart", "click"];
+
         function loadChatWidget() {
           if (loaded) return;
           loaded = true;
-          events.forEach(function (e) {
+          pointerEvents.forEach(function (e) {
             window.removeEventListener(e, loadChatWidget);
           });
+          window.removeEventListener("scroll", onScroll);
           clearTimeout(fallback);
           var s = document.createElement("script");
           s.src = "https://widgets.leadconnectorhq.com/loader.js";
@@ -111,10 +122,24 @@ for (const n of niches) {
           s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
           document.body.appendChild(s);
         }
-        events.forEach(function (e) {
+
+        // Past the hero, not the first pixel of scroll — a visitor still
+        // reading the hero hasn't shown intent to keep going yet.
+        function onScroll() {
+          if (window.scrollY > window.innerHeight * 0.6) loadChatWidget();
+        }
+
+        pointerEvents.forEach(function (e) {
           window.addEventListener(e, loadChatWidget, { passive: true, once: true });
         });
-        var fallback = setTimeout(loadChatWidget, 6000);
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        var idle = window.requestIdleCallback || function (cb, opts) {
+          return setTimeout(cb, (opts && opts.timeout) || 0);
+        };
+        var fallback = setTimeout(function () {
+          idle(loadChatWidget, { timeout: 2000 });
+        }, 18000);
       })();
     </script>
   </body>

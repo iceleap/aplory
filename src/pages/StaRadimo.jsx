@@ -2,6 +2,7 @@ import useReveal from "../lib/useReveal";
 import SmoothScroll from "../lib/SmoothScroll";
 import NicheHeader from "../components/niche/NicheHeader";
 import Services from "../components/Services";
+import Mechanism from "../components/Mechanism";
 import Contact from "../components/Contact";
 
 /**
@@ -22,6 +23,7 @@ export default function StaRadimo() {
         <NicheHeader />
         <main>
           <Services titleAs="h1" />
+          <Mechanism />
           <Contact />
         </main>
       </div>
