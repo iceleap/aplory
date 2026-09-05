@@ -8,7 +8,7 @@
 export default {
   htmlLang: "sr",
   meta: {
-    title: "APLORY — kad vas neko traži, odgovara porukom za vas",
+    title: "kad vas neko traži — APLORY odgovara porukom za vas",
     description:
       "Propušten poziv, WhatsApp, Instagram ili poruka sa sajta. APLORY automatski odgovara porukom na svaki upit za nekoliko sekundi, dok vi radite nešto drugo.",
   },
