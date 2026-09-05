@@ -47,11 +47,96 @@
         "availableLanguage": "sr"
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Da li vlasnik zna da ne piše sa nama lično?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Da. Poruka jasno kaže da je klinika trenutno zauzeta i da odgovara asistent. Cilj je da vlasnik dobije termin ili uputstvo, ne da bude prevaren."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li APLORY postavlja dijagnozu ili savetuje terapiju?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ne. Ne postavlja dijagnozu i ne preporučuje lečenje. Prikuplja šta se dešava, koliko dugo i koliko je hitno, i na osnovu toga nudi termin — sve ostalo je pregled kod vas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta ako je u pitanju hitan slučaj usred noći?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hitni slučajevi se prepoznaju po opisu (povraćanje krvi, teško disanje, povreda) i poruka daje osnovno uputstvo i informaciju da li klinika ima dežurstvo ili gde je najbliža hitna veterinarska služba."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kako termin završi u našem rasporedu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Termin se nudi iz vremena koje vi odredite kao slobodno i stiže vam potvrđen. Ako vodite raspored u sopstvenom softveru, dogovaramo način upisa na početku — to je deo podešavanja, ne nešto što se rešava kasnije."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta sa pitanjima o ceni kastracije i čipovanja?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Odgovara onako kako vi zadate — rasponom, opsegom ili pozivom na konsultaciju. Ništa se ne izmišlja: ako cena zavisi od pregleda ili težine ljubimca, poruka to kaže i nudi termin."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Koji podaci o ljubimcu i vlasniku se prikupljaju?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ime vlasnika, kontakt, vrsta i ime ljubimca i razlog dolaska — onoliko koliko treba da bi se zakazao termin. Medicinski karton i nalazi ne prolaze kroz APLORY."
+            }
+          }
+        ]
+      }
+    </script>
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/entries/main-veterinari.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>

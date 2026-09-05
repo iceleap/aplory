@@ -32,3 +32,20 @@
 
 # No rules needed for the 404: Netlify serves a root 404.html for unknown
 # paths automatically, with the correct status code.
+
+# Baseline hardening headers, scoped to allow the third-party origins the
+# site actually loads: Google Fonts, the leadsy.ai visitor tag, and the
+# LeadConnector chat widget (which in turn pulls from GoHighLevel/msgsndr
+# infrastructure it doesn't document a fixed domain list for). CSP ships as
+# Report-Only first — it logs violations to the browser console without
+# blocking anything — so a real deploy can confirm the LeadConnector widget's
+# full resource list before switching to an enforced Content-Security-Policy.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=()"
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://r2.leadsy.ai https://widgets.leadconnectorhq.com https://*.leadconnectorhq.com https://*.msgsndr.com https://*.gohighlevel.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.leadconnectorhq.com https://*.msgsndr.com wss://*.leadconnectorhq.com https://r2.leadsy.ai; frame-src https://*.leadconnectorhq.com; base-uri 'self'; form-action 'self'; object-src 'none'"

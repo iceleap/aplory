@@ -47,11 +47,96 @@
         "availableLanguage": "sr"
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Da li mušterija zna da ne piše sa nekim iz servisa lično?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Da. Poruka jasno kaže da je servis trenutno na terenu i da odgovara asistent. Cilj je da mušterija dobije termin, ne da bude prevarena."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li APLORY procenjuje kvar unapred?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ne. Ne postavlja dijagnozu kvara. Prikuplja model uređaja, adresu i opis problema koji mušterija navede, a stvarnu dijagnozu daje serviser na licu mesta."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta ako više mušterija piše istovremeno u sezoni?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "APLORY odgovara svima istog trenutka, bez reda čekanja — svaka mušterija dobije odgovor i ponuđen termin nezavisno od toga koliko ih istovremeno piše."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kako izlazak završi u našem rasporedu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Termin se nudi iz vremena koje vi odredite kao slobodno i stiže vam potvrđen sa adresom i modelom. Ako vodite raspored u sopstvenom softveru, dogovaramo način upisa na početku."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta sa pitanjima o ceni servisiranja i dopune gasa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Odgovara onako kako vi zadate — cenovnikom, rasponom ili pozivom na pregled pre konačne cene. Ništa se ne izmišlja: ako cena zavisi od tipa uređaja, poruka to kaže."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Koji podaci o mušteriji se prikupljaju?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ime, kontakt, adresa i model uređaja — onoliko koliko treba da bi se zakazao izlazak. Ništa se ne deli dalje niti koristi van dogovora oko termina."
+            }
+          }
+        ]
+      }
+    </script>
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/entries/main-klimatizacija.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>

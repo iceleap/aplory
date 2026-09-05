@@ -1,0 +1,45 @@
+# APLORY
+
+> APLORY je automatizovan odgovor na upite za male firme u Srbiji.
+> Odgovara na propušten poziv, WhatsApp, Instagram i poruke sa sajta u
+> roku od nekoliko sekundi, šalje podsetnike za termine, traži Google
+> recenzije i izrađuje sajtove čiji je prvi zadatak da prikupe upit.
+
+Jezik: srpski (sr-RS)
+Kontakt: office.aplory@gmail.com / +381 69 844 0885
+
+## Šta APLORY radi
+
+- Automatski odgovor na propušten poziv
+- Odgovor na kanalu koji klijent već koristi (WhatsApp, Instagram, poruka sa sajta)
+- Podsetnici za termine
+- Traženje Google recenzija
+- Chat na sajtu
+- Izrada sajta
+
+## Šta APLORY (još) ne radi
+
+APLORY ne odgovara na poziv uživo glasom — nema glasovnog agenta koji se
+javlja na telefon. Odgovor uvek stiže kao poruka, na broj i naloge koje
+firma već koristi, bez promene broja telefona ili načina rada.
+
+## Delatnosti kojima je APLORY namenjen
+
+Stomatološke ordinacije, veterinarske klinike, advokatske kancelarije,
+auto servisi i radionice, saloni i medical spa, online prodavnice,
+servisi klima uređaja i grejanja, proizvođači i monteri PVC stolarije,
+majstori i kućni servisi.
+
+## Stranice
+
+- https://aplory.dev/ — početna strana, pregled i najčešća pitanja
+- https://aplory.dev/sta-radimo.html — pun spisak usluga
+- https://aplory.dev/stomatolozi.html — stomatološke ordinacije
+- https://aplory.dev/veterinari.html — veterinarske klinike
+- https://aplory.dev/advokati.html — advokatske kancelarije
+- https://aplory.dev/auto-servisi.html — auto servisi i radionice
+- https://aplory.dev/saloni.html — saloni i medical spa
+- https://aplory.dev/ecommerce.html — online prodavnice
+- https://aplory.dev/klimatizacija.html — servisi klima uređaja i grejanja
+- https://aplory.dev/pvc-stolarija.html — PVC stolarija
+- https://aplory.dev/majstori.html — majstori i kućni servisi

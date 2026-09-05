@@ -60,6 +60,35 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/entries/main-sta-radimo.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>

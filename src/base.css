@@ -376,7 +376,7 @@
      no filter needed here now that the ground is light. */
   .logo {
     display: block;
-    background-image: url("/logo-mark.png");
+    background-image: url("/logo-mark.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: left center;
@@ -443,6 +443,10 @@
     inset: 0;
     border-radius: 999px;
     animation: how-ring 2.2s ease-out infinite;
+  }
+
+  .how-mock__icon--instagram .how-mock__ring {
+    --ring-color: #e1306c;
   }
 
   .how-mock__call b {
@@ -605,13 +609,13 @@
 
 @keyframes how-ring {
   0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-danger) 35%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ring-color, var(--color-danger)) 35%, transparent);
   }
   70% {
-    box-shadow: 0 0 0 9px color-mix(in srgb, var(--color-danger) 0%, transparent);
+    box-shadow: 0 0 0 9px color-mix(in srgb, var(--ring-color, var(--color-danger)) 0%, transparent);
   }
   100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-danger) 0%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ring-color, var(--color-danger)) 0%, transparent);
   }
 }
 

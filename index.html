@@ -117,6 +117,47 @@
         }
       }
     </script>
+    <!-- Mirrors copy.faq.items in src/i18n/sr.js — keep the two in sync. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Šta konkretno dobijam?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Svaki upit koji vam stigne dobija automatski odgovor za par sekundi: propušten poziv, poruka na WhatsAppu, Instagramu ili sa sajta. Razgovor je već počeo pre nego što klijent proba nekog drugog."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li radite glasovnog agenta koji se javlja na telefon?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Još ne. Radimo na tome, ali ga ne prodajemo dok ne budemo sigurni da radi kako treba. Sve ostalo sa ove strane je spremno danas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li moram da menjam broj telefona ili način rada?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ne. Broj ostaje isti, vaši nalozi ostaju isti. Mi se kačimo na ono što već koristite."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li je ovo u skladu sa zakonom?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Odgovor na upit koji je klijent sam poslao je pravno najčistiji slučaj. Za kampanje prema staroj bazi traži se izričit pristanak za marketing (Zakon o oglašavanju, čl. 63; Zakon o zaštiti podataka o ličnosti, čl. 17)."
+            }
+          }
+        ]
+      }
+    </script>
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
   </head>
   <body>
@@ -147,6 +188,35 @@
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>

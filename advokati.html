@@ -47,11 +47,96 @@
         "availableLanguage": "sr"
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Da li klijent zna da ne piše sa vama lično?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Da. Poruka jasno kaže da je kancelarija trenutno zauzeta i da odgovara asistent. Cilj je da klijent ostavi osnovni opis i dobije termin, ne da bude prevaren."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li APLORY daje pravne savete?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ne. Ne tumači propise i ne daje mišljenje o predmetu. Prikuplja o čemu se radi i koliko je hitno, i na osnovu toga nudi konsultaciju — pravni savet ostaje isključivo na vama."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta ako je klijent u hitnoj situaciji, npr. pritvoru ili roku koji ističe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hitnost se prepoznaje po opisu (rok, pritvor, prinudno izvršenje) i takav upit dobija prioritetnu oznaku uz odmah obaveštenje vama, umesto da čeka red kao opšta konsultacija."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Da li se čuva poverljivost onoga što klijent napiše?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Prikuplja se samo osnovni opis potreban da zakažete konsultaciju — ne detalji predmeta ili dokumentacija. Sadržaj same konsultacije ostaje razgovor između vas i klijenta."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Šta sa pitanjima o ceni konsultacije ili zastupanja?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Odgovara onako kako vi zadate — fiksnom cenom, rasponom ili pozivom na konsultaciju za tačan iznos. Ništa se ne izmišlja: ako cena zavisi od predmeta, poruka to kaže."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kako termin završi u mom kalendaru?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Termin se nudi iz vremena koje vi odredite kao slobodno i stiže vam potvrđen. Ako vodite kalendar u sopstvenom softveru, dogovaramo način upisa na početku, kao deo podešavanja."
+            }
+          }
+        ]
+      }
+    </script>
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/entries/main-advokati.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>

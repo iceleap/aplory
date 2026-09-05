@@ -14,6 +14,25 @@ const htmlEscape = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace
 for (const n of niches) {
   const url = `https://aplory.dev/${n.slug}.html`;
 
+  /* FAQPage only when the niche actually has questions — an empty mainEntity
+     is an invalid graph, and Google treats FAQ markup that does not match
+     visible page text as a violation, so this is written from the same array
+     Faq.jsx renders. */
+  const faqSchema = n.faq?.length
+    ? `
+    <script type="application/ld+json">
+      ${JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: n.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }, null, 2).split("\n").join("\n      ")}
+    </script>`
+    : "";
+
   const html = `<!doctype html>
 <html lang="sr">
   <head>
@@ -62,13 +81,42 @@ for (const n of niches) {
         "areaServed": "RS",
         "availableLanguage": "sr"
       }
-    </script>
+    </script>${faqSchema}
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="9EwRUwjpc16QLzvi" data-version="062024"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/entries/main-${n.slug}.jsx"></script>
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a896cfe07754ad08a5225ae"></script>
+    <script>
+      (function () {
+        // Largest render-blocking third-party resource on the page (see
+        // GEO/SEO audits): the LeadConnector chat widget loads on first real
+        // user interaction, or after a short idle fallback so keyboard-only
+        // visitors who never scroll or move the mouse still get it.
+        var loaded = false;
+        var events = ["scroll", "mousemove", "touchstart", "keydown"];
+        function loadChatWidget() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            window.removeEventListener(e, loadChatWidget);
+          });
+          clearTimeout(fallback);
+          var s = document.createElement("script");
+          s.src = "https://widgets.leadconnectorhq.com/loader.js";
+          s.setAttribute(
+            "data-resources-url",
+            "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+          );
+          s.setAttribute("data-widget-id", "6a896cfe07754ad08a5225ae");
+          document.body.appendChild(s);
+        }
+        events.forEach(function (e) {
+          window.addEventListener(e, loadChatWidget, { passive: true, once: true });
+        });
+        var fallback = setTimeout(loadChatWidget, 6000);
+      })();
+    </script>
   </body>
 </html>
 `;

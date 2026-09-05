@@ -60,7 +60,8 @@ export default {
     stat: {
       value: "62%",
       body: "poziva ka malim firmama ne dobije odgovor.",
-      source: "411 Locals, 2016 · 85 firmi, 58 delatnosti.",
+      source:
+        "411 Locals, 2016 (SAD) · 85 firmi, 58 delatnosti — orijentacioni podatak, nema ekvivalentno istraživanje za Srbiju.",
     },
   },
 
@@ -73,6 +74,20 @@ export default {
       connector: "APLORY se javlja za par sekundi",
       legendIn: "APLORY",
       legendOut: "Klijent",
+      /* The generic thread behind HowItWorks.jsx when no niche passes its own
+         (see `demo` in src/data/niches.js for the per-profession versions). */
+      demo: {
+        missedLabel: "Propušten poziv",
+        missedNumber: "+381 6x xxx xxx",
+        messages: [
+          { type: "in", text: "Zdravo. Ovde servis klima uređaja. Nismo mogli da se javimo, na terenu smo. Napišite šta vam treba i odgovaramo odmah." },
+          { type: "out", text: "Ne radi mi klima u stanu, duva mlako. Može neko danas?" },
+          { type: "in", text: "Može. Koji je model i koja adresa?" },
+          { type: "out", text: "Gree, dvanaestica. Vojvode Mišića 14, Valjevo." },
+          { type: "in", text: "Imamo termin danas u 16.30 ili sutra u 9. Šta vam odgovara?" },
+          { type: "out", text: "Danas u 16.30." },
+        ],
+      },
     },
     steps: [
       {
